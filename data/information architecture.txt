@@ -1,0 +1,87 @@
+Leyendas:
+$resumen de receta$:
+  -> imagen y titulo de la receta
+$appbar$:
+  -> titulo de la pagina y buscador
+$appbar receta$:
+  -> titulo y foto de la receta
+  -> boton de favorito
+  -> tabulacion con items -> informacion - ingredientes - preparacion
+$drawer$:
+  -> header drawer -> logo en grande de la aplicacion.
+  -> lista de enlaces de navegation de la aplicacion
+
+
+Ideas:
+separar aplicaciones:
+  -> crear 2 aplicaciones, uno con recetas de comida, y otra con recetas de postres
+distribuir aplicaciones:
+  -> crear aplicacion basica con todo => posible gratis
+  -> crear aplicacion solo comida y otra solo postres => mismo precio ambas
+  -> crear aplicacion con todo => precio un poco menor a la suma de las anteriores
+
+
+Caracteristicas de la aplicacion
+buscador:
+  -> busca solo en la pagina en cuestion
+  -> donde exista $resumen de receta$ buscar en los titulos de las recetas que esten en esa pagina 
+  -> en la pagina por categorias buscar por los titulos de las categorias o subcategorias
+  -> en la pagina de inicio buscar globalmente, tanto titulo de receta como titulo de categoria o subcategoria.
+
+
+Paginas:
+Inicio:
+  -> ideas
+    -> mostrar la categoria y subcategoria mas abundante entre los favoritos, y par de favoritos para llenar la pagina
+Favoritos:
+  -> los seleccionados como favorito
+Por categorias:
+  -> mostrar todas las categorias agrupadas por titulo de categoria, conteniendo las subtegorias en caso de tener, si no tiene, el titulo de la categoria es el enlace.
+De la categoria o subcategoria 
+  -> mostrar todas las recetas relacionadas con la categoria o subcategoria en cuestion
+de la receta:
+  -> mostrar la receta en cuestion
+Equivalencias:
+  -> mostrar equivalencias
+Conversor:
+  -> mostrar conversos de medidas
+creaditos:
+  -> enlace a redes de los que participaron en el desarrollo de la aplicacion
+
+
+Contenido de las paginas:
+Inicio:
+  -> En discucion
+Favoritos:
+  -> $appbar$
+  -> $drawer$
+  -> Lista de $resumen de receta$ de las recetas seleccionadas como favorito
+Por categorias:
+  -> $appbar$
+  -> $drawer$
+  -> Lista de foto y titulo de subcategorias agrupadas por categoria, si la categoria no tiene subcategoria, se pone foto y titulo de la categoria
+De la categoria o subcategoria:
+  -> $appbar$
+  -> $drawer$
+  -> lista de $resumen de receta$ de la categoria o subcategoria en cuestion
+De la receta:
+  -> $appbar receta$
+  -> tabuladores
+    -> detalles
+      -> nivel de elaboracion
+      -> descripcion de la receta
+      -> pais de origen
+      -> categorias y subcategorias
+    -> ingredientes
+      -> añadir conversor automatico para mostrar los ingredientes con las relaciones (1, 1/2, 1/4, 1/x)
+      -> lista de ingredientes
+    -> preparacion
+      -> de ser posible separar la preparacion por pasos
+Equivalencias:
+  -> $appbar$
+  -> $drawer$
+  -> lista de equivalencias agrupadas por producto(ejemeplo: harina, cacao, agua, leche), y esos productos agrupados por estado en una tabulacion(liquidos, solidos)
+Conversor:
+  -> mostrar conversos de medidas
+creaditos:
+  -> lista de personas que participaron en el desarrollo de la aplicacion
