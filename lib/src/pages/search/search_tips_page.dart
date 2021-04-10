@@ -14,7 +14,7 @@ class SearchTipsPage extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: Text("Buscar en tips"),
+          child: Text(this.title),
         ),
       ),
       bottomNavigationBar: BottomNavBar(),

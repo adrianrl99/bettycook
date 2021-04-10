@@ -1,16 +1,26 @@
 import 'package:betsy_s_cookbook/src/components/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
-class SearchAllPage extends StatelessWidget {
+class SweetsPage extends StatelessWidget {
+  final String onPressedSearch;
   final String title;
 
-  const SearchAllPage(this.title, {Key key}) : super(key: key);
+  const SweetsPage(this.title, this.onPressedSearch, {Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(this.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).pushNamed(onPressedSearch);
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Container(

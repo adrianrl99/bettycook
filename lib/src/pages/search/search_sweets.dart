@@ -1,10 +1,10 @@
 import 'package:betsy_s_cookbook/src/components/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
-class SearchAllPage extends StatelessWidget {
+class SearchSweetsPage extends StatelessWidget {
   final String title;
 
-  const SearchAllPage(this.title, {Key key}) : super(key: key);
+  const SearchSweetsPage(this.title, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

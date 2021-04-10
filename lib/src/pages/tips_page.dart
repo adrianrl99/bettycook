@@ -23,7 +23,7 @@ class TipsPage extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: Text("Tips"),
+          child: Text(this.title),
         ),
       ),
       bottomNavigationBar: BottomNavBar(),

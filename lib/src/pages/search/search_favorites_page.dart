@@ -14,7 +14,7 @@ class SearchFavoritesPage extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: Text("Buscar en favoritos"),
+          child: Text(this.title),
         ),
       ),
       bottomNavigationBar: BottomNavBar(),
