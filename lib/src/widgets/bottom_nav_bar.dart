@@ -1,4 +1,9 @@
-import 'package:betsy_s_cookbook/src/components/settings_modal.dart';
+import 'package:betsy_s_cookbook/src/widgets/settings_modal.dart';
+import 'package:betsy_s_cookbook/src/pages/favorites_page.dart';
+import 'package:betsy_s_cookbook/src/pages/home_page.dart';
+import 'package:betsy_s_cookbook/src/pages/search/search_foods.dart';
+import 'package:betsy_s_cookbook/src/pages/search/search_tips_page.dart';
+import 'package:betsy_s_cookbook/src/pages/tips_page.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -10,7 +15,11 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  final List<String> routePaths = ["/", "/favorites", "/tips"];
+  final List<String> routePaths = [
+    HomePage.routeName,
+    FavoritesPage.routeName,
+    TipsPage.routeName
+  ];
   int _currentIndex = 0;
 
   void _onTap(int index) {
@@ -24,12 +33,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
     String routePath = ModalRoute.of(context).settings.name;
     if (routePath != routePaths[index])
       switch (routePaths[index]) {
-        case "/":
-          Navigator.of(context).popUntil(ModalRoute.withName('/'));
+        case HomePage.routeName:
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(HomePage.routeName));
           break;
         default:
-          if (routePath == "/tips" && routePaths[index] == "/favorites" ||
-              routePath == "/favorites" && routePaths[index] == "/tips")
+          if (routePath == TipsPage.routeName &&
+                  routePaths[index] == FavoritesPage.routeName ||
+              routePath == FavoritesPage.routeName &&
+                  routePaths[index] == TipsPage.routeName)
             Navigator.of(context).pushReplacementNamed(routePaths[index]);
           else
             Navigator.of(context).pushNamed(routePaths[index]);
@@ -47,19 +59,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   void _onInit(BuildContext context) {
     switch (ModalRoute.of(context).settings.name) {
-      case "/":
+      case HomePage.routeName:
         setState(() {
           _currentIndex = 0;
         });
         break;
-      case "/favorites":
-      case "/search/favorites":
+      case FavoritesPage.routeName:
+      case SearchFoodsPage.routeName:
         setState(() {
           _currentIndex = 1;
         });
         break;
-      case "/tips":
-      case "/search/tips":
+      case TipsPage.routeName:
+      case SearchTipsPage.routeName:
         setState(() {
           _currentIndex = 2;
         });
@@ -95,10 +107,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
       ],
       currentIndex: _currentIndex,
-      selectedItemColor:
-          _currentIndex == 0 && ModalRoute.of(context).settings.name != "/"
-              ? Theme.of(context).unselectedWidgetColor
-              : Theme.of(context).primaryColor,
+      selectedItemColor: _currentIndex == 0 &&
+              ModalRoute.of(context).settings.name != HomePage.routeName
+          ? Theme.of(context).unselectedWidgetColor
+          : Theme.of(context).primaryColor,
       onTap: (index) => _onTap(index),
     );
   }

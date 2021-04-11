@@ -1,14 +1,17 @@
-import 'package:betsy_s_cookbook/src/components/bottom_nav_bar.dart';
-import 'package:betsy_s_cookbook/src/components/home_page/home_home_favorite_widget.dart';
-import 'package:betsy_s_cookbook/src/components/home_page/home_foods_widget.dart';
-import 'package:betsy_s_cookbook/src/components/home_page/home_sweets_widget.dart';
+import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
+import 'package:betsy_s_cookbook/src/widgets/home_page/home_favorite_widget.dart';
+import 'package:betsy_s_cookbook/src/widgets/home_page/home_foods_widget.dart';
+import 'package:betsy_s_cookbook/src/widgets/home_page/home_sweets_widget.dart';
+import 'package:betsy_s_cookbook/src/widgets/home_page/home_tip_foods.dart';
+import 'package:betsy_s_cookbook/src/widgets/home_page/home_tip_sweets.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  final String onPressedSearch;
-  final String title;
+  static const routeName = "/";
+  static const onPressedSearch = "/search";
+  final String title = "Inicio";
 
-  const HomePage(this.title, this.onPressedSearch, {Key key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +63,8 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(
-                      child: Card(
-                        color: Colors.red,
-                        child: Text("Tip 1"),
-                      ),
-                    ),
-                    Expanded(
-                      child: Card(
-                        color: Colors.red,
-                        child: Text("Tip 2"),
-                      ),
-                    ),
+                    HomeTipFoods(),
+                    HomeTipSweets(),
                   ],
                 ),
               ),

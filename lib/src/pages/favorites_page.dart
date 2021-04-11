@@ -1,12 +1,12 @@
-import 'package:betsy_s_cookbook/src/components/bottom_nav_bar.dart';
+import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesPage extends StatelessWidget {
-  final String onPressedSearch;
-  final String title;
+  static const routeName = "/favorites";
+  static const onPressedSearch = "/search$routeName";
+  final String title = "Favoritos";
 
-  const FavoritesPage(this.title, this.onPressedSearch, {Key key})
-      : super(key: key);
+  const FavoritesPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

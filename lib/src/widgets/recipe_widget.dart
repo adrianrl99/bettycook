@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 
-class HomeFavoriteWidget extends StatelessWidget {
-  const HomeFavoriteWidget({Key key}) : super(key: key);
+class RecipeWidget extends StatelessWidget {
+  final String recipePath;
+  final String title = "Titulo de receta";
+  const RecipeWidget(this.recipePath, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
+    return Container(
+      height: 220,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(this.recipePath);
+        },
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(8.0),
           ),
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          elevation: 8,
+          elevation: 4,
           child: Container(
-            width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/default.png"),
@@ -27,11 +31,15 @@ class HomeFavoriteWidget extends StatelessWidget {
               color: Colors.black.withOpacity(0.35),
               child: ListTile(
                 title: Text(
-                  "Favorito random",
+                  this.title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
+                ),
+                trailing: Icon(
+                  Icons.favorite_border,
+                  color: Colors.red[800],
                 ),
               ),
             ),

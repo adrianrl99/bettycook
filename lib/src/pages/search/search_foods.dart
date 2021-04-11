@@ -1,10 +1,11 @@
-import 'package:betsy_s_cookbook/src/components/bottom_nav_bar.dart';
+import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class SearchFoodsPage extends StatelessWidget {
-  final String title;
+  static const routeName = "/search/foods";
+  final String title = "Buscar en comidas";
 
-  const SearchFoodsPage(this.title, {Key key}) : super(key: key);
+  const SearchFoodsPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

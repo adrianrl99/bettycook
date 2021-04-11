@@ -1,25 +1,25 @@
+import 'package:betsy_s_cookbook/src/pages/foods_page.dart';
 import 'package:flutter/material.dart';
 
-class HomeSweetsWidget extends StatelessWidget {
-  const HomeSweetsWidget({Key key}) : super(key: key);
+class HomeFoodsWidget extends StatelessWidget {
+  const HomeFoodsWidget({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
+        padding: const EdgeInsets.only(right: 8.0),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed("/sweets");
+            Navigator.of(context).pushNamed(FoodsPage.routeName);
           },
           child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(8.0),
             ),
             clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 8,
+            elevation: 4,
             child: Container(
-              width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/default.png"),
@@ -31,7 +31,7 @@ class HomeSweetsWidget extends StatelessWidget {
                 color: Colors.black.withOpacity(0.35),
                 child: ListTile(
                   title: Text(
-                    "Dulces",
+                    "Comidas",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
