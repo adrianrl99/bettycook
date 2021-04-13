@@ -1,7 +1,12 @@
+import 'package:betsy_s_cookbook/src/constants.dart';
+import 'package:betsy_s_cookbook/src/functions.dart';
 import 'package:betsy_s_cookbook/src/models/models.dart';
 import 'package:betsy_s_cookbook/src/pages/pages.dart';
 import 'package:betsy_s_cookbook/src/extensions/extensions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class RecipeWidget extends StatelessWidget {
   final RecipeModel recipe;
@@ -34,18 +39,27 @@ class RecipeWidget extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             child: Container(
               color: Colors.black.withOpacity(0.35),
-              child: ListTile(
-                title: Text(
-                  this.recipe.title.inCaps,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                trailing: Icon(
-                  Icons.favorite_border,
-                  color: Colors.red[800],
-                ),
+              child: ValueListenableBuilder(
+                valueListenable: Hive.box(favoritesBox).listenable(),
+                builder: (BuildContext context, Box box, widget) {
+                  List favorites = box.get("favorites", defaultValue: []);
+                  return ListTile(
+                    title: Text(
+                      this.recipe.title.inCaps,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    trailing: Icon(
+                      favorites.contains(this.recipe.id)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: Colors.red[800],
+                    ),
+                    onTap: () => toggleFavorite(favorites, box, this.recipe.id),
+                  );
+                },
               ),
             ),
           ),

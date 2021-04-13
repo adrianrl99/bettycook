@@ -5,7 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  void dispose() {
+    super.dispose();
+    Hive.box(settingsBox).compact();
+    Hive.box(favoritesBox).compact();
+    Hive.close();
+  }
+
   @override
   Widget build(BuildContext context) {
     RecipesDatabase db = RecipesDatabase();

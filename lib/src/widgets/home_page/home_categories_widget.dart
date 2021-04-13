@@ -21,22 +21,23 @@ class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
         child: Padding(
           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
           child: Container(
-              child: FutureBuilder(
-            future: db.getCategories(),
-            builder: (BuildContext context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (CategoryModel category in snapshot.data)
-                      HomeCategoryWidget(category)
-                  ],
-                );
-              } else {
-                return Container();
-              }
-            },
-          )),
+            child: FutureBuilder(
+              future: db.getCategories(),
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (CategoryModel category in snapshot.data)
+                        HomeCategoryWidget(category)
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ),
         ),
       ),
     );

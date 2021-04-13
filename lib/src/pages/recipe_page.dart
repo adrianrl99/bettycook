@@ -1,4 +1,6 @@
+import 'package:betsy_s_cookbook/src/constants.dart';
 import 'package:betsy_s_cookbook/src/database.dart';
+import 'package:betsy_s_cookbook/src/functions.dart';
 import 'package:betsy_s_cookbook/src/models/models.dart';
 import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
 import 'package:betsy_s_cookbook/src/extensions/extensions.dart';
@@ -6,6 +8,8 @@ import 'package:betsy_s_cookbook/src/widgets/recipe_page/details_tab_widget.dart
 import 'package:betsy_s_cookbook/src/widgets/recipe_page/ingredients_tab_widget.dart';
 import 'package:betsy_s_cookbook/src/widgets/recipe_page/preparation_tab_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class RecipePage extends StatefulWidget {
   static const routeName = "/recipe";
@@ -30,13 +34,22 @@ class _RecipePageState extends State<RecipePage> {
           headerSliverBuilder:
               (BuildContext context, bool innerBoxIsScrolled) => <Widget>[
             SliverAppBar(
-              actions: <IconButton>[
-                IconButton(
-                  icon: Icon(
-                    Icons.favorite_border,
-                    color: Colors.red[800],
-                  ),
-                  onPressed: () {},
+              actions: <Widget>[
+                ValueListenableBuilder(
+                  valueListenable: Hive.box(favoritesBox).listenable(),
+                  builder: (BuildContext context, Box box, w) {
+                    List favorites = box.get("favorites", defaultValue: []);
+                    return IconButton(
+                      icon: Icon(
+                        favorites.contains(widget.recipe.id)
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red[800],
+                      ),
+                      onPressed: () =>
+                          toggleFavorite(favorites, box, widget.recipe.id),
+                    );
+                  },
                 ),
                 IconButton(
                   icon: Icon(

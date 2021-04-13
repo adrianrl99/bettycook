@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class SearchSubCategoryPage extends StatelessWidget {
   static const routeName =
-      "${SearchAllPage.routeName}${SubCategoryPage.routeName}";
+      "${SearchAllPage.routeName}${FavoritesPage.routeName}";
   final String title = "Buscar en Subcategorias";
 
   const SearchSubCategoryPage({Key key}) : super(key: key);

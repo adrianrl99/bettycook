@@ -72,11 +72,32 @@ class RecipesDatabase {
     return results.map((map) => RecipeModel.fromMapBasic(map)).toList();
   }
 
-  getRecipeDetails(int id) async {
+  Future<RecipeModel> getRecipe(int id) async {
+    await _openDB();
+    List<Map<String, dynamic>> results = await _db.query('recipes',
+        where: 'id = ?', whereArgs: [id], columns: ["id", "title"]);
+
+    await _closeDB();
+    return results.map((map) => RecipeModel.fromMapBasic(map)).toList()[0];
+  }
+
+  Future<String> getRecipeDetails(int id) async {
     await _openDB();
     List<Map<String, dynamic>> results = await _db.query('recipes',
         where: 'id = ?', whereArgs: [id], columns: ["details"]);
     await _closeDB();
     return results[0]['details'];
+  }
+
+  Future<List<RecipeModel>> getRecipesById(List ids) async {
+    await _openDB();
+    List<RecipeModel> recipes = [];
+    recipes.addAll(await Future.wait(ids.map((id) async {
+      List<Map<String, dynamic>> results = await _db.query("recipes",
+          where: 'id = ?', whereArgs: [id], columns: ["id", "title"]);
+      return results.map((map) => RecipeModel.fromMapBasic(map)).toList()[0];
+    })));
+    await _closeDB();
+    return recipes;
   }
 }
