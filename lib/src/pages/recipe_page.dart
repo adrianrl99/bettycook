@@ -10,6 +10,7 @@ import 'package:betsy_s_cookbook/src/widgets/recipe_page/preparation_tab_widget.
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:share/share.dart';
 
 class RecipePage extends StatefulWidget {
   static const routeName = "/recipe";
@@ -55,7 +56,9 @@ class _RecipePageState extends State<RecipePage> {
                   icon: Icon(
                     Icons.share,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Share.share(widget.recipe.title);
+                  },
                 )
               ],
               title: Text(widget.recipe.title.inCaps),
