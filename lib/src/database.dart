@@ -91,12 +91,11 @@ class RecipesDatabase {
 
   Future<List<RecipeModel>> getRecipesById(List ids) async {
     await _openDB();
-    List<RecipeModel> recipes = [];
-    recipes.addAll(await Future.wait(ids.map((id) async {
+    List<RecipeModel> recipes = await Future.wait(ids.map((id) async {
       List<Map<String, dynamic>> results = await _db.query("recipes",
           where: 'id = ?', whereArgs: [id], columns: ["id", "title"]);
       return results.map((map) => RecipeModel.fromMapBasic(map)).toList()[0];
-    })));
+    }));
     await _closeDB();
     return recipes;
   }
