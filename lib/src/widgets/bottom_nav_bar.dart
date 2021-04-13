@@ -1,7 +1,7 @@
+import 'package:betsy_s_cookbook/src/pages/search/search_favorites_page.dart';
 import 'package:betsy_s_cookbook/src/widgets/settings_modal.dart';
 import 'package:betsy_s_cookbook/src/pages/favorites_page.dart';
 import 'package:betsy_s_cookbook/src/pages/home_page.dart';
-import 'package:betsy_s_cookbook/src/pages/search/search_foods.dart';
 import 'package:betsy_s_cookbook/src/pages/search/search_tips_page.dart';
 import 'package:betsy_s_cookbook/src/pages/tips_page.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +65,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         });
         break;
       case FavoritesPage.routeName:
-      case SearchFoodsPage.routeName:
+      case SearchFavoritesPage.routeName:
         setState(() {
           _currentIndex = 1;
         });

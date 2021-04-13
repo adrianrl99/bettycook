@@ -1,20 +1,21 @@
 import 'package:betsy_s_cookbook/src/models/models.dart';
-import 'package:betsy_s_cookbook/src/pages/pages.dart';
+import 'package:betsy_s_cookbook/src/pages/subcategory_page.dart';
 import 'package:betsy_s_cookbook/src/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 
-class RecipeWidget extends StatelessWidget {
-  final RecipeModel recipe;
-  const RecipeWidget(this.recipe, {Key key}) : super(key: key);
+class SubCategoryWidget extends StatelessWidget {
+  final SubCategoryModel subcategory;
+
+  const SubCategoryWidget(this.subcategory, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 220,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
           Navigator.of(context)
-              .pushNamed(RecipePage.routeName, arguments: recipe);
+              .pushNamed(SubCategoryPage.routeName, arguments: subcategory);
         },
         child: Card(
           shape: RoundedRectangleBorder(
@@ -23,10 +24,11 @@ class RecipeWidget extends StatelessWidget {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           elevation: 4,
           child: Container(
+            height: 160,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  "assets/images/recipes/${this.recipe.title.format}.png",
+                  "assets/images/subcategories/${this.subcategory.name}.png",
                 ),
                 fit: BoxFit.cover,
               ),
@@ -36,15 +38,11 @@ class RecipeWidget extends StatelessWidget {
               color: Colors.black.withOpacity(0.35),
               child: ListTile(
                 title: Text(
-                  this.recipe.title.inCaps,
+                  this.subcategory.name.inCaps,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
-                ),
-                trailing: Icon(
-                  Icons.favorite_border,
-                  color: Colors.red[800],
                 ),
               ),
             ),

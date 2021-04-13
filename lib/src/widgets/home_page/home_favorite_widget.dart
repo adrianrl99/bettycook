@@ -7,7 +7,7 @@ class HomeFavoriteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: RecipeWidget("/"),
+      child: Container(),
     );
   }
 }

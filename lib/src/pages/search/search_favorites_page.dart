@@ -1,8 +1,10 @@
+import 'package:betsy_s_cookbook/src/pages/pages.dart';
 import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class SearchFavoritesPage extends StatelessWidget {
-  static const routeName = "/search/favorites";
+  static const routeName =
+      "${SearchAllPage.routeName}${FavoritesPage.routeName}";
   final String title = "Buscar en favoritos";
 
   const SearchFavoritesPage({Key key}) : super(key: key);

@@ -1,8 +1,10 @@
 import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
+import 'package:betsy_s_cookbook/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class SearchSubCategoryPage extends StatelessWidget {
-  static const routeName = "/search/subcategory";
+  static const routeName =
+      "${SearchAllPage.routeName}${SubCategoryPage.routeName}";
   final String title = "Buscar en Subcategorias";
 
   const SearchSubCategoryPage({Key key}) : super(key: key);

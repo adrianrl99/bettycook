@@ -12,7 +12,7 @@ class SettingsModal extends StatelessWidget {
       child: Column(
         children: <Widget>[
           ValueListenableBuilder(
-            valueListenable: Hive.box(darkModeBox).listenable(),
+            valueListenable: Hive.box(settingsBox).listenable(),
             builder: (context, box, widget) {
               var darkMode = box.get("darkMode", defaultValue: false);
               return ListTile(

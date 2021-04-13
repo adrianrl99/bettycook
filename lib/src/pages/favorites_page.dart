@@ -1,9 +1,10 @@
+import 'package:betsy_s_cookbook/src/pages/pages.dart';
 import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesPage extends StatelessWidget {
   static const routeName = "/favorites";
-  static const onPressedSearch = "/search$routeName";
+
   final String title = "Favoritos";
 
   const FavoritesPage({Key key}) : super(key: key);
@@ -17,7 +18,7 @@ class FavoritesPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              Navigator.of(context).pushNamed(onPressedSearch);
+              Navigator.of(context).pushNamed(SearchFavoritesPage.routeName);
             },
           ),
         ],

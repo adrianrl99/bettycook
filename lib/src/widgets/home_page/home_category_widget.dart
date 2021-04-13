@@ -1,8 +1,11 @@
-import 'package:betsy_s_cookbook/src/pages/foods_page.dart';
+import 'package:betsy_s_cookbook/src/models/models.dart';
+import 'package:betsy_s_cookbook/src/pages/category_page.dart';
 import 'package:flutter/material.dart';
+import 'package:betsy_s_cookbook/src/extensions/extensions.dart';
 
-class HomeFoodsWidget extends StatelessWidget {
-  const HomeFoodsWidget({Key key}) : super(key: key);
+class HomeCategoryWidget extends StatelessWidget {
+  final CategoryModel category;
+  const HomeCategoryWidget(this.category, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +14,8 @@ class HomeFoodsWidget extends StatelessWidget {
         padding: const EdgeInsets.only(right: 8.0),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(FoodsPage.routeName);
+            Navigator.of(context)
+                .pushNamed(CategoryPage.routeName, arguments: category);
           },
           child: Card(
             shape: RoundedRectangleBorder(
@@ -22,7 +26,8 @@ class HomeFoodsWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/default.png"),
+                  image: AssetImage(
+                      "assets/images/categories/${this.category.name}.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -31,7 +36,7 @@ class HomeFoodsWidget extends StatelessWidget {
                 color: Colors.black.withOpacity(0.35),
                 child: ListTile(
                   title: Text(
-                    "Comidas",
+                    this.category.name.inCaps,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

@@ -1,1 +1,1 @@
-const darkModeBox = 'dark_mode';
+const settingsBox = 'settings_box';

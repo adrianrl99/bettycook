@@ -1,8 +1,9 @@
 import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
+import 'package:betsy_s_cookbook/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class SearchTipsPage extends StatelessWidget {
-  static const routeName = "/search/tips";
+  static const routeName = "${SearchAllPage.routeName}${TipsPage.routeName}";
   final String title = "Buscar en tips";
 
   const SearchTipsPage({Key key}) : super(key: key);

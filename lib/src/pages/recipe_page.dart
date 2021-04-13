@@ -1,11 +1,25 @@
+import 'package:betsy_s_cookbook/src/database.dart';
+import 'package:betsy_s_cookbook/src/models/models.dart';
 import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
+import 'package:betsy_s_cookbook/src/extensions/extensions.dart';
+import 'package:betsy_s_cookbook/src/widgets/recipe_page/details_tab_widget.dart';
+import 'package:betsy_s_cookbook/src/widgets/recipe_page/ingredients_tab_widget.dart';
+import 'package:betsy_s_cookbook/src/widgets/recipe_page/preparation_tab_widget.dart';
 import 'package:flutter/material.dart';
 
-class RecipePage extends StatelessWidget {
+class RecipePage extends StatefulWidget {
   static const routeName = "/recipe";
-  final String title = "Receta";
 
-  const RecipePage({Key key}) : super(key: key);
+  final RecipeModel recipe;
+
+  const RecipePage({this.recipe, Key key}) : super(key: key);
+
+  @override
+  _RecipePageState createState() => _RecipePageState();
+}
+
+class _RecipePageState extends State<RecipePage> {
+  RecipesDatabase db = RecipesDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +45,14 @@ class RecipePage extends StatelessWidget {
                   onPressed: () {},
                 )
               ],
-              title: Text(this.title),
+              title: Text(widget.recipe.title.inCaps),
               expandedHeight: 320,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/default.png"),
+                      image: AssetImage(
+                        "assets/images/recipes/${widget.recipe.title.format}.png",
+                      ),
                       fit: BoxFit.cover),
                 ),
                 child: Container(
@@ -63,9 +79,9 @@ class RecipePage extends StatelessWidget {
           ],
           body: TabBarView(
             children: <Widget>[
-              Text("Detalles"),
-              Text("Ingredientes"),
-              Text("Preparacion"),
+              DetailsTabWidget(widget.recipe.id),
+              IngredientsTabWidget(),
+              PreparationTabWidget(),
             ],
           ),
         ),

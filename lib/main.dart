@@ -6,6 +6,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   await Hive.initFlutter();
-  await Hive.openBox(darkModeBox);
+  if (!Hive.isBoxOpen(settingsBox)) await Hive.openBox(settingsBox);
   runApp(App());
 }
