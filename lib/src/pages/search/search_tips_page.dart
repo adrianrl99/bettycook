@@ -1,5 +1,5 @@
-import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
-import 'package:betsy_s_cookbook/src/pages/pages.dart';
+import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
+import 'package:bettycook/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class SearchTipsPage extends StatelessWidget {

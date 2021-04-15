@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Betsy's CookBook",
+      "name": "BettyCook",
       "request": "launch",
       "type": "dart"
     }

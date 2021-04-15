@@ -1,6 +1,6 @@
-import 'package:betsy_s_cookbook/src/database.dart';
-import 'package:betsy_s_cookbook/src/models/models.dart';
-import 'package:betsy_s_cookbook/src/widgets/home_page/home_category_widget.dart';
+import 'package:bettycook/src/database.dart';
+import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/widgets/home_page/home_category_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeCategoriesWidget extends StatefulWidget {

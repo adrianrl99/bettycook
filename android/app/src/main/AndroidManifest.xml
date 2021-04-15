@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.betsy_s_cookbook">
+    package="com.example.bettycook">
    <application
-        android:label="betsy_s_cookbook"
+        android:label="bettycook"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

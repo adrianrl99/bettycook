@@ -1,8 +1,8 @@
-import 'package:betsy_s_cookbook/src/constants.dart';
-import 'package:betsy_s_cookbook/src/functions.dart';
-import 'package:betsy_s_cookbook/src/models/models.dart';
-import 'package:betsy_s_cookbook/src/pages/pages.dart';
-import 'package:betsy_s_cookbook/src/extensions/extensions.dart';
+import 'package:bettycook/src/constants.dart';
+import 'package:bettycook/src/functions.dart';
+import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/pages/pages.dart';
+import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';

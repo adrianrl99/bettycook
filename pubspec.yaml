@@ -1,4 +1,4 @@
-name: betsy_s_cookbook
+name: bettycook
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -38,14 +38,18 @@ dependencies:
 
   # Utilities
   path_provider: ^2.0.1
-  modal_bottom_sheet: ^2.0.0
   share: ^2.0.1
+
+  # UI
+  modal_bottom_sheet: ^2.0.0
+  flutter_native_splash: ^1.1.7+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^1.0.1
   build_runner: ^1.12.2
+  flutter_launcher_icons: ^0.9.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -93,3 +97,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"

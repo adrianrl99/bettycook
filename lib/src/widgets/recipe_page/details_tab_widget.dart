@@ -1,4 +1,4 @@
-import 'package:betsy_s_cookbook/src/database.dart';
+import 'package:bettycook/src/database.dart';
 import 'package:flutter/material.dart';
 
 class DetailsTabWidget extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:betsy_s_cookbook/src/constants.dart';
+import 'package:bettycook/src/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';

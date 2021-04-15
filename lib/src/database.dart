@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:betsy_s_cookbook/src/models/models.dart';
+import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -12,7 +12,7 @@ class RecipesDatabase {
   Database _db;
   initDB() async {
     var databasesPath = await getDatabasesPath();
-    var path = join(databasesPath, "betsy_s_cookbook.db");
+    var path = join(databasesPath, "bettycook.db");
 
     // Check if the database exists
     var exists = await databaseExists(path);
@@ -36,7 +36,7 @@ class RecipesDatabase {
 
   _openDB() async {
     var databasesPath = await getDatabasesPath();
-    var path = join(databasesPath, "betsy_s_cookbook.db");
+    var path = join(databasesPath, "bettycook.db");
 
     // open the database
     _db = await openReadOnlyDatabase(path);

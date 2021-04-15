@@ -1,9 +1,9 @@
-import 'package:betsy_s_cookbook/src/database.dart';
-import 'package:betsy_s_cookbook/src/models/models.dart';
-import 'package:betsy_s_cookbook/src/pages/pages.dart';
-import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
-import 'package:betsy_s_cookbook/src/widgets/recipe_widget.dart';
-import 'package:betsy_s_cookbook/src/extensions/extensions.dart';
+import 'package:bettycook/src/database.dart';
+import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/pages/pages.dart';
+import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
+import 'package:bettycook/src/widgets/recipe_widget.dart';
+import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 
 class SubCategoryPage extends StatefulWidget {

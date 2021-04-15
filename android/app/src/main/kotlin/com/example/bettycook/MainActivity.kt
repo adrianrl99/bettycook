@@ -1,4 +1,4 @@
-package com.example.betsy_s_cookbook
+package com.example.bettycook
 
 import io.flutter.embedding.android.FlutterActivity
 

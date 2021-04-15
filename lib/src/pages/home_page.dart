@@ -1,8 +1,8 @@
-import 'package:betsy_s_cookbook/src/pages/pages.dart';
-import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
-import 'package:betsy_s_cookbook/src/widgets/home_page/home_categories_widget.dart';
-import 'package:betsy_s_cookbook/src/widgets/home_page/home_favorite_widget.dart';
-import 'package:betsy_s_cookbook/src/widgets/home_page/home_tip.dart';
+import 'package:bettycook/src/pages/pages.dart';
+import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
+import 'package:bettycook/src/widgets/home_page/home_categories_widget.dart';
+import 'package:bettycook/src/widgets/home_page/home_favorite_widget.dart';
+import 'package:bettycook/src/widgets/home_page/home_tip.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
