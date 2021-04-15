@@ -1,5 +1,6 @@
 import 'package:betsy_s_cookbook/src/constants.dart';
 import 'package:betsy_s_cookbook/src/database.dart';
+import 'package:betsy_s_cookbook/src/models/models.dart';
 import 'package:betsy_s_cookbook/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -11,21 +12,33 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  RecipesDatabase db = RecipesDatabase();
+  @override
+  void initState() {
+    super.initState();
+    _getTips();
+  }
+
   @override
   void dispose() {
     super.dispose();
     Hive.box(settingsBox).compact();
     Hive.box(favoritesBox).compact();
+    Hive.box(tipsBox).compact();
     Hive.close();
+  }
+
+  void _getTips() async {
+    TipModel tip = await db.getTipRandom();
+    Hive.box(tipsBox).put('tip', [tip.id, tip.tip]);
   }
 
   @override
   Widget build(BuildContext context) {
-    RecipesDatabase db = RecipesDatabase();
     return ValueListenableBuilder(
       valueListenable: Hive.box(settingsBox).listenable(),
       builder: (context, box, widget) {
-        var darkMode = box.get("darkMode", defaultValue: false);
+        var darkMode = box.get(settingsBoxDarkModeKey, defaultValue: false);
         return FutureBuilder(
           future: db.initDB(),
           builder: (BuildContext context, snapshot) {

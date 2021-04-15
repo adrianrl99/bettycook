@@ -1,10 +1,9 @@
+import 'package:betsy_s_cookbook/src/models/models.dart';
 import 'package:hive/hive.dart';
 
-void toggleFavorite(List favorites, Box box, int id) {
-  if (!favorites.contains(id))
-    box.put("favorites", [...favorites, id]);
-  else {
-    var newFavorites = favorites.where((element) => element != id);
-    box.put("favorites", [...newFavorites]);
-  }
+void toggleFavorite(Box box, int id, String title) {
+  if (box.containsKey(id))
+    box.delete(id);
+  else
+    box.put(id, [id, title]);
 }

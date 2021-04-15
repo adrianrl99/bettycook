@@ -18,7 +18,7 @@ class SettingsModal extends StatelessWidget {
               return ListTile(
                 title: Text("Cambiar tema"),
                 onTap: () {
-                  box.put('darkMode', !darkMode);
+                  box.put(settingsBoxDarkModeKey, !darkMode);
                 },
               );
             },

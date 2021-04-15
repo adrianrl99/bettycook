@@ -39,27 +39,29 @@ class RecipeWidget extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             child: Container(
               color: Colors.black.withOpacity(0.35),
-              child: ValueListenableBuilder(
-                valueListenable: Hive.box(favoritesBox).listenable(),
-                builder: (BuildContext context, Box box, widget) {
-                  List favorites = box.get("favorites", defaultValue: []);
-                  return ListTile(
-                    title: Text(
-                      this.recipe.title.inCaps,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+              child: ListTile(
+                title: Text(
+                  this.recipe.title.inCaps,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                trailing: ValueListenableBuilder(
+                  valueListenable: Hive.box(favoritesBox).listenable(),
+                  builder: (BuildContext context, Box box, _) {
+                    return IconButton(
+                      icon: Icon(
+                        box.containsKey(this.recipe.id)
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red[800],
                       ),
-                    ),
-                    trailing: Icon(
-                      favorites.contains(this.recipe.id)
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: Colors.red[800],
-                    ),
-                    onTap: () => toggleFavorite(favorites, box, this.recipe.id),
-                  );
-                },
+                      onPressed: () => toggleFavorite(
+                          box, this.recipe.id, this.recipe.title),
+                    );
+                  },
+                ),
               ),
             ),
           ),

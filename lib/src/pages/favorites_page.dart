@@ -40,27 +40,18 @@ class _FavoritesPageState extends State<FavoritesPage> {
       body: Container(
         child: ValueListenableBuilder(
           valueListenable: Hive.box(favoritesBox).listenable(),
-          builder: (BuildContext context, Box box, w) {
-            List favorites = box.get("favorites", defaultValue: []);
-            if (favorites.length > 0)
-              return FutureBuilder(
-                future: db.getRecipesById(favorites),
-                builder: (BuildContext context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return ListView(
-                      children: <Widget>[
-                        for (RecipeModel recipe in snapshot.data)
-                          Container(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
-                            child: RecipeWidget(recipe),
-                          )
-                      ],
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
+          builder: (BuildContext context, Box box, _) {
+            if (box.isNotEmpty)
+              return ListView(
+                children: <Widget>[
+                  for (List recipe in box.values)
+                    Container(
+                      padding: const EdgeInsets.only(
+                          top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
+                      child:
+                          RecipeWidget(RecipeModel.basic(recipe[0], recipe[1])),
+                    )
+                ],
               );
             else
               return HomeNotFavoriteWidget();

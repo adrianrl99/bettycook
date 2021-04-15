@@ -1,13 +1,21 @@
+import 'package:betsy_s_cookbook/src/database.dart';
+import 'package:betsy_s_cookbook/src/models/models.dart';
 import 'package:betsy_s_cookbook/src/pages/pages.dart';
 import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
-class TipsPage extends StatelessWidget {
+class TipsPage extends StatefulWidget {
   static const routeName = "/tips";
 
-  final String title = "Tips";
-
   const TipsPage({Key key}) : super(key: key);
+
+  @override
+  _TipsPageState createState() => _TipsPageState();
+}
+
+class _TipsPageState extends State<TipsPage> {
+  final String title = "Tips";
+  RecipesDatabase db = RecipesDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +31,22 @@ class TipsPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Container(
-          child: Text(this.title),
+      body: Container(
+        child: FutureBuilder(
+          future: db.getTips(),
+          builder: (BuildContext context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return ListView(
+                children: <Widget>[
+                  for (TipModel tip in snapshot.data)
+                    ListTile(
+                      title: Text(tip.tip),
+                    )
+                ],
+              );
+            } else
+              return Container();
+          },
         ),
       ),
       bottomNavigationBar: BottomNavBar(),

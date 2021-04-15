@@ -2,8 +2,7 @@ import 'package:betsy_s_cookbook/src/pages/pages.dart';
 import 'package:betsy_s_cookbook/src/widgets/bottom_nav_bar.dart';
 import 'package:betsy_s_cookbook/src/widgets/home_page/home_categories_widget.dart';
 import 'package:betsy_s_cookbook/src/widgets/home_page/home_favorite_widget.dart';
-import 'package:betsy_s_cookbook/src/widgets/home_page/home_tip_foods.dart';
-import 'package:betsy_s_cookbook/src/widgets/home_page/home_tip_sweets.dart';
+import 'package:betsy_s_cookbook/src/widgets/home_page/home_tip.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -51,8 +50,7 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    HomeTipFoods(),
-                    HomeTipSweets(),
+                    HomeTip(),
                   ],
                 ),
               ),

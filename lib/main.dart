@@ -7,6 +7,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter();
   if (!Hive.isBoxOpen(settingsBox)) await Hive.openBox(settingsBox);
+  Hive.deleteBoxFromDisk(favoritesBox);
   if (!Hive.isBoxOpen(favoritesBox)) await Hive.openBox(favoritesBox);
+  if (!Hive.isBoxOpen(tipsBox)) await Hive.openBox(tipsBox);
   runApp(App());
 }

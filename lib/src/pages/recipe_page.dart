@@ -41,15 +41,15 @@ class _RecipePageState extends State<RecipePage> {
                   builder: (BuildContext context, Box box, w) {
                     List favorites = box.get("favorites", defaultValue: []);
                     return IconButton(
-                      icon: Icon(
-                        favorites.contains(widget.recipe.id)
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: Colors.red[800],
-                      ),
-                      onPressed: () =>
-                          toggleFavorite(favorites, box, widget.recipe.id),
-                    );
+                        icon: Icon(
+                          favorites.contains(widget.recipe.id)
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: Colors.red[800],
+                        ),
+                        onPressed: () => {}
+                        // toggleFavorite(favorites, box, widget.recipe.id),
+                        );
                   },
                 ),
                 IconButton(

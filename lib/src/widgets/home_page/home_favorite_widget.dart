@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:betsy_s_cookbook/src/constants.dart';
 import 'package:betsy_s_cookbook/src/database.dart';
+import 'package:betsy_s_cookbook/src/models/models.dart';
 import 'package:betsy_s_cookbook/src/widgets/home_page/home_not_favorite_widget.dart';
 import 'package:betsy_s_cookbook/src/widgets/recipe_widget.dart';
 import 'package:flutter/material.dart';
@@ -27,20 +28,13 @@ class _HomeFavoriteWidgetState extends State<HomeFavoriteWidget> {
         children: [
           ValueListenableBuilder(
             valueListenable: Hive.box(favoritesBox).listenable(),
-            builder: (context, box, widget) {
-              var favorites = box.get("favorites", defaultValue: []);
-              if (favorites.length > 0)
-                return FutureBuilder(
-                  future:
-                      db.getRecipe(favorites[random.nextInt(favorites.length)]),
-                  builder: (BuildContext context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done)
-                      return Expanded(child: RecipeWidget(snapshot.data));
-                    else
-                      return Expanded(child: Container());
-                  },
-                );
-              else
+            builder: (context, Box box, _) {
+              if (box.isNotEmpty) {
+                List favorite = box.getAt(random.nextInt(box.length));
+                return Expanded(
+                    child: RecipeWidget(
+                        RecipeModel.basic(favorite[0], favorite[1])));
+              } else
                 return Expanded(child: HomeNotFavoriteWidget());
             },
           ),

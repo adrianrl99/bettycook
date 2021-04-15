@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:betsy_s_cookbook/src/models/models.dart';
 import 'package:flutter/foundation.dart';
@@ -98,5 +99,44 @@ class RecipesDatabase {
     }));
     await _closeDB();
     return recipes;
+  }
+
+  Future<List<TipModel>> getTips() async {
+    await _openDB();
+    List<Map<String, dynamic>> results =
+        await _db.query("tips", columns: ["id", "tip"]);
+    await _closeDB();
+    return results.map((map) => TipModel.fromMap(map)).toList();
+  }
+
+  Future<int> getTipsLength() async {
+    await _openDB();
+    List<Map<String, dynamic>> results =
+        await _db.query('tips', columns: ["id"]);
+    await _closeDB();
+    return results.length;
+  }
+
+  Future<TipModel> getTipRandom() async {
+    Random random = Random();
+    int tipLength = await getTipsLength();
+    List<Map<String, dynamic>> results = [];
+    await _openDB();
+    do {
+      results = await _db.query("tips",
+          columns: ["id", "tip"],
+          where: 'id = ?',
+          whereArgs: [random.nextInt(tipLength)]);
+    } while (results.length == 0);
+    await _closeDB();
+    return results.map((map) => TipModel.fromMap(map)).toList()[0];
+  }
+
+  Future<TipModel> getTip(int id) async {
+    await _openDB();
+    List<Map<String, dynamic>> results = await _db.query("tips",
+        columns: ["id", "tip"], where: 'id = ?', whereArgs: [id]);
+    await _closeDB();
+    return results.map((map) => TipModel.fromMap(map)).toList()[0];
   }
 }
