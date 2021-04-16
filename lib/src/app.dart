@@ -50,6 +50,7 @@ class _AppState extends State<App> {
           initialRoute: HomePage.routeName,
           onGenerateRoute: (RouteSettings settings) {
             return MaterialPageRoute(
+              settings: settings,
               builder: (BuildContext context) {
                 switch (settings.name) {
                   case SearchAllPage.routeName:
@@ -72,6 +73,8 @@ class _AppState extends State<App> {
                     return SubCategoryPage(subcategory: settings.arguments);
                   case RecipePage.routeName:
                     return RecipePage(recipe: settings.arguments);
+                  case CreditsPage.routeName:
+                    return CreditsPage();
                 }
               },
             );

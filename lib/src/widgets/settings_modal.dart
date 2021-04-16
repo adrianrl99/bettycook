@@ -14,7 +14,8 @@ class SettingsModal extends StatelessWidget {
           ValueListenableBuilder(
             valueListenable: Hive.box(settingsBox).listenable(),
             builder: (context, box, widget) {
-              var darkMode = box.get("darkMode", defaultValue: false);
+              var darkMode =
+                  box.get(settingsBoxDarkModeKey, defaultValue: false);
               return ListTile(
                 title: Text("Cambiar tema"),
                 onTap: () {

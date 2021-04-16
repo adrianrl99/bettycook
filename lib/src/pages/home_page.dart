@@ -1,5 +1,6 @@
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
+import 'package:bettycook/src/widgets/drawer_widget.dart';
 import 'package:bettycook/src/widgets/home_page/home_categories_widget.dart';
 import 'package:bettycook/src/widgets/home_page/home_favorite_widget.dart';
 import 'package:bettycook/src/widgets/home_page/home_tip.dart';
@@ -26,6 +27,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+      drawer: DrawerWidget(),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         child: Column(

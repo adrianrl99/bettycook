@@ -1,9 +1,5 @@
-import 'package:bettycook/src/pages/search/search_favorites_page.dart';
 import 'package:bettycook/src/widgets/settings_modal.dart';
-import 'package:bettycook/src/pages/favorites_page.dart';
-import 'package:bettycook/src/pages/home_page.dart';
-import 'package:bettycook/src/pages/search/search_tips_page.dart';
-import 'package:bettycook/src/pages/tips_page.dart';
+import 'package:bettycook/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 

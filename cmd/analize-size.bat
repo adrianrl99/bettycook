@@ -1,0 +1,1 @@
+flutter build apk --analyze-size
