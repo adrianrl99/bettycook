@@ -29,7 +29,8 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              Navigator.of(context).pushNamed(SearchSubCategoryPage.routeName);
+              Navigator.of(context).pushNamed(SearchSubCategoryPage.routeName,
+                  arguments: widget.subcategory);
             },
           ),
         ],
@@ -42,12 +43,15 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
             if (snapshot.connectionState == ConnectionState.done) {
               return ListView(
                 children: <Widget>[
-                  for (RecipeModel recipe in snapshot.data)
-                    Container(
-                      padding: const EdgeInsets.only(
-                          top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
-                      child: RecipeWidget(recipe),
-                    )
+                  if (snapshot.data != null)
+                    for (RecipeModel recipe in snapshot.data)
+                      Container(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
+                        child: RecipeWidget(recipe),
+                      )
+                  else
+                    Container()
                 ],
               );
             } else {

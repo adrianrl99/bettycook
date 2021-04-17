@@ -62,7 +62,8 @@ class _AppState extends State<App> {
                   case SearchCategoryPage.routeName:
                     return SearchCategoryPage();
                   case SearchSubCategoryPage.routeName:
-                    return SearchSubCategoryPage();
+                    return SearchSubCategoryPage(
+                        subcategory: settings.arguments);
                   case FavoritesPage.routeName:
                     return FavoritesPage();
                   case TipsPage.routeName:
