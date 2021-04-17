@@ -17,10 +17,6 @@ class CreditsPage extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             ListTile(
-              title:
-                  Center(child: Text("Toque los nombres para abrir el perfil")),
-            ),
-            ListTile(
               title: Center(
                 child: Text(
                   "Desarrollador y diseñador UI/UX",

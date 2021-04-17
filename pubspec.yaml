@@ -41,10 +41,6 @@ dependencies:
   share: ^2.0.1
   url_launcher: ^6.0.3
 
-  # UI
-  modal_bottom_sheet: ^2.0.0
-  persistent_bottom_nav_bar: ^4.0.2
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

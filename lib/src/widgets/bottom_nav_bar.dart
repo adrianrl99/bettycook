@@ -1,7 +1,5 @@
-import 'package:bettycook/src/widgets/settings_modal.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class BottomNavBar extends StatefulWidget {
   BottomNavBar({Key key}) : super(key: key);
@@ -17,13 +15,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
     TipsPage.routeName
   ];
   int _currentIndex = 0;
-
-  void _onTap(int index) {
-    if (index == 3)
-      _showSettings();
-    else
-      _pushRoute(index);
-  }
 
   void _pushRoute(int index) {
     String routePath = ModalRoute.of(context).settings.name;
@@ -42,15 +33,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
           else
             Navigator.of(context).pushNamed(routePaths[index]);
       }
-  }
-
-  void _showSettings() {
-    showMaterialModalBottomSheet(
-      context: context,
-      builder: (context) => SingleChildScrollView(
-        child: SettingsModal(),
-      ),
-    );
   }
 
   void _onInit(BuildContext context) {
@@ -97,17 +79,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
           icon: Icon(Icons.lightbulb),
           label: "Tips",
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: "Opciones",
-        ),
       ],
       currentIndex: _currentIndex,
       selectedItemColor: _currentIndex == 0 &&
               ModalRoute.of(context).settings.name != HomePage.routeName
           ? Theme.of(context).unselectedWidgetColor
           : Theme.of(context).primaryColor,
-      onTap: (index) => _onTap(index),
+      onTap: (index) => _pushRoute(index),
     );
   }
 }

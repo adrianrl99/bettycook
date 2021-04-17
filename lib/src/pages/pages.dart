@@ -5,6 +5,7 @@ export './recipe_page.dart';
 export './subcategory_page.dart';
 export './tips_page.dart';
 export './credits_page.dart';
+export './contact_page.dart';
 
 // Search Pages
 export './search/search_all_page.dart';

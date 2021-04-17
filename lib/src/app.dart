@@ -73,6 +73,8 @@ class _AppState extends State<App> {
                     return SubCategoryPage(subcategory: settings.arguments);
                   case RecipePage.routeName:
                     return RecipePage(recipe: settings.arguments);
+                  case ConactPage.routeName:
+                    return ConactPage();
                   case CreditsPage.routeName:
                     return CreditsPage();
                 }
