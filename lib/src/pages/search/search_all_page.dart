@@ -59,7 +59,7 @@ class _SearchAllPageState extends State<SearchAllPage> {
                 },
               ),
             ),
-            if (_isStop)
+            if (_isStop && _text.length > 3)
               FutureBuilder(
                 future: db.getRecipeByTitle(_text),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {

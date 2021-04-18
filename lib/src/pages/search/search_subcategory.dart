@@ -61,7 +61,7 @@ class _SearchSubCategoryPageState extends State<SearchSubCategoryPage> {
                 },
               ),
             ),
-            if (_isStop)
+            if (_isStop && _text.length > 3)
               FutureBuilder(
                 future: db.getRecipeByTitleAndCategory(
                     _text, widget.subcategory.category, widget.subcategory.id),

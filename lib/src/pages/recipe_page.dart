@@ -1,16 +1,20 @@
+import 'dart:io';
+
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/functions.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
-import 'package:bettycook/src/widgets/recipe_page/details_tab_widget.dart';
 import 'package:bettycook/src/widgets/recipe_page/ingredients_tab_widget.dart';
 import 'package:bettycook/src/widgets/recipe_page/preparation_tab_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
+import 'package:path/path.dart';
 
 class RecipePage extends StatefulWidget {
   static const routeName = "/recipe";
@@ -30,7 +34,7 @@ class _RecipePageState extends State<RecipePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 3,
+        length: 2,
         child: NestedScrollView(
           headerSliverBuilder:
               (BuildContext context, bool innerBoxIsScrolled) => <Widget>[
@@ -39,17 +43,16 @@ class _RecipePageState extends State<RecipePage> {
                 ValueListenableBuilder(
                   valueListenable: Hive.box(favoritesBox).listenable(),
                   builder: (BuildContext context, Box box, w) {
-                    List favorites = box.get("favorites", defaultValue: []);
                     return IconButton(
-                        icon: Icon(
-                          favorites.contains(widget.recipe.id)
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: Colors.red[800],
-                        ),
-                        onPressed: () => {}
-                        // toggleFavorite(favorites, box, widget.recipe.id),
-                        );
+                      icon: Icon(
+                        box.containsKey(widget.recipe.id)
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red[800],
+                      ),
+                      onPressed: () => toggleFavorite(
+                          box, widget.recipe.id, widget.recipe.title),
+                    );
                   },
                 ),
                 IconButton(
@@ -57,7 +60,7 @@ class _RecipePageState extends State<RecipePage> {
                     Icons.share,
                   ),
                   onPressed: () {
-                    Share.share(widget.recipe.title);
+                    Share.share(widget.recipe.title, subject: "BettyCook");
                   },
                 )
               ],
@@ -81,9 +84,6 @@ class _RecipePageState extends State<RecipePage> {
                 labelColor: Colors.white,
                 tabs: <Tab>[
                   Tab(
-                    child: Text("Detalles"),
-                  ),
-                  Tab(
                     child: Text("Ingredientes"),
                   ),
                   Tab(
@@ -95,9 +95,8 @@ class _RecipePageState extends State<RecipePage> {
           ],
           body: TabBarView(
             children: <Widget>[
-              DetailsTabWidget(widget.recipe.id),
-              IngredientsTabWidget(),
-              PreparationTabWidget(),
+              IngredientsTabWidget(widget.recipe.id),
+              PreparationTabWidget(widget.recipe.id),
             ],
           ),
         ),

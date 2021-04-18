@@ -1,7 +1,6 @@
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/models/models.dart';
-import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/widgets/home_page/home_not_favorite_widget.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
@@ -28,14 +27,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title.inCaps),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              Navigator.of(context).pushNamed(SearchFavoritesPage.routeName);
-            },
-          ),
-        ],
       ),
       body: Container(
         child: ValueListenableBuilder(

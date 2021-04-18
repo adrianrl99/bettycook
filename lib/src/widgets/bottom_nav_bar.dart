@@ -1,5 +1,8 @@
+import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class BottomNavBar extends StatefulWidget {
   BottomNavBar({Key key}) : super(key: key);
@@ -43,13 +46,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         });
         break;
       case FavoritesPage.routeName:
-      case SearchFavoritesPage.routeName:
         setState(() {
           _currentIndex = 1;
         });
         break;
       case TipsPage.routeName:
-      case SearchTipsPage.routeName:
         setState(() {
           _currentIndex = 2;
         });
@@ -64,28 +65,36 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     _onInit(context);
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Inicio",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: "Favoritos",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.lightbulb),
-          label: "Tips",
-        ),
-      ],
-      currentIndex: _currentIndex,
-      selectedItemColor: _currentIndex == 0 &&
-              ModalRoute.of(context).settings.name != HomePage.routeName
-          ? Theme.of(context).unselectedWidgetColor
-          : Theme.of(context).primaryColor,
-      onTap: (index) => _pushRoute(index),
+    return ValueListenableBuilder(
+      valueListenable: Hive.box(settingsBox).listenable(),
+      builder: (context, box, widget) {
+        var darkMode = box.get(settingsBoxDarkModeKey, defaultValue: false);
+        return BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Inicio",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: "Favoritos",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.lightbulb),
+              label: "Tips",
+            ),
+          ],
+          currentIndex: _currentIndex,
+          selectedItemColor: _currentIndex == 0 &&
+                  ModalRoute.of(context).settings.name != HomePage.routeName
+              ? Theme.of(context).unselectedWidgetColor
+              : darkMode
+                  ? Colors.white
+                  : Theme.of(context).primaryColor,
+          onTap: (index) => _pushRoute(index),
+        );
+      },
     );
   }
 }

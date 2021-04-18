@@ -1,1 +1,1 @@
-flutter build apk --obfuscate --split-debug-info=./log
+flutter build apk --split-per-abi --obfuscate --split-debug-info=./log

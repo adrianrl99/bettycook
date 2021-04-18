@@ -1,6 +1,5 @@
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/models/models.dart';
-import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/widgets/subcategory_widget.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +24,6 @@ class _CategoryPageState extends State<CategoryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.category.name.inCaps),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              Navigator.of(context).pushNamed(SearchCategoryPage.routeName);
-            },
-          ),
-        ],
       ),
       body: Container(
         child: FutureBuilder(
