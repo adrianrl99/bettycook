@@ -3,14 +3,13 @@ import 'package:bettycook/src/functions.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class RecipeWidget extends StatelessWidget {
   final RecipeModel recipe;
-  const RecipeWidget(this.recipe, {Key key}) : super(key: key);
+  const RecipeWidget({required this.recipe}) : super();
 
   @override
   Widget build(BuildContext context) {

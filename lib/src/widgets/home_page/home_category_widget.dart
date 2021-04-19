@@ -5,7 +5,7 @@ import 'package:bettycook/src/extensions/extensions.dart';
 
 class HomeCategoryWidget extends StatelessWidget {
   final CategoryModel category;
-  const HomeCategoryWidget(this.category, {Key key}) : super(key: key);
+  const HomeCategoryWidget({required this.category}) : super();
 
   @override
   Widget build(BuildContext context) {

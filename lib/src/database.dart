@@ -10,7 +10,7 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
 class RecipesDatabase {
-  Database _db;
+  late Database _db;
   initDB() async {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, "bettycook.db");

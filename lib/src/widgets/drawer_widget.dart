@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({Key key}) : super(key: key);
+  const DrawerWidget() : super();
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +51,21 @@ class DrawerWidget extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.support_agent),
-              title: Text("Contáctanos"),
+              title: Text(ConactPage.title),
               onTap: () =>
                   Navigator.of(context).pushNamed(ConactPage.routeName),
+            ),
+            ListTile(
+              leading: Icon(Icons.kitchen),
+              title: Text(IWantCookPage.title),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(IWantCookPage.routeName),
+            ),
+            ListTile(
+              leading: Icon(Icons.calendar_today),
+              title: Text(CalendarPage.title),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(CalendarPage.routeName),
             ),
           ],
         ),

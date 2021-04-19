@@ -4,7 +4,7 @@ import 'package:bettycook/src/widgets/home_page/home_category_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeCategoriesWidget extends StatefulWidget {
-  const HomeCategoriesWidget({Key key}) : super(key: key);
+  const HomeCategoriesWidget() : super();
 
   @override
   _HomeCategoriesWidgetState createState() => _HomeCategoriesWidgetState();
@@ -23,13 +23,13 @@ class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
           child: Container(
             child: FutureBuilder(
               future: db.getCategories(),
-              builder: (BuildContext context, snapshot) {
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       for (CategoryModel category in snapshot.data)
-                        HomeCategoryWidget(category)
+                        HomeCategoryWidget(category: category)
                     ],
                   );
                 } else {

@@ -9,15 +9,15 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   static const routeName = "/";
 
-  final String title = "Inicio";
+  static const String title = "Inicio";
 
-  const HomePage({Key key}) : super(key: key);
+  const HomePage() : super();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.title),
+        title: Text(title),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),

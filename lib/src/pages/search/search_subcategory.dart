@@ -11,7 +11,7 @@ class SearchSubCategoryPage extends StatefulWidget {
       "${SearchAllPage.routeName}${SubCategoryPage.routeName}";
   final SubCategoryModel subcategory;
 
-  const SearchSubCategoryPage({Key key, this.subcategory}) : super(key: key);
+  const SearchSubCategoryPage({required this.subcategory}) : super();
 
   @override
   _SearchSubCategoryPageState createState() => _SearchSubCategoryPageState();
@@ -34,7 +34,7 @@ class _SearchSubCategoryPageState extends State<SearchSubCategoryPage> {
           children: [
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -78,7 +78,7 @@ class _SearchSubCategoryPageState extends State<SearchSubCategoryPage> {
                                     bottom: 8.0,
                                     left: 16.0,
                                     right: 16.0),
-                                child: RecipeWidget(recipe),
+                                child: RecipeWidget(recipe: recipe),
                               )
                           else
                             Container(

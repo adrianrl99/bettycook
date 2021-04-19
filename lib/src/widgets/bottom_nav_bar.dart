@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class BottomNavBar extends StatefulWidget {
-  BottomNavBar({Key key}) : super(key: key);
+  BottomNavBar() : super();
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
@@ -20,7 +20,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _currentIndex = 0;
 
   void _pushRoute(int index) {
-    String routePath = ModalRoute.of(context).settings.name;
+    String routePath = ModalRoute.of(context)!.settings.name!;
     if (routePath != routePaths[index])
       switch (routePaths[index]) {
         case HomePage.routeName:
@@ -39,7 +39,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   void _onInit(BuildContext context) {
-    switch (ModalRoute.of(context).settings.name) {
+    switch (ModalRoute.of(context)!.settings.name) {
       case HomePage.routeName:
         setState(() {
           _currentIndex = 0;
@@ -67,27 +67,27 @@ class _BottomNavBarState extends State<BottomNavBar> {
     _onInit(context);
     return ValueListenableBuilder(
       valueListenable: Hive.box(settingsBox).listenable(),
-      builder: (context, box, widget) {
+      builder: (BuildContext context, Box box, _) {
         var darkMode = box.get(settingsBoxDarkModeKey, defaultValue: false);
         return BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: "Inicio",
+              label: HomePage.title,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.favorite),
-              label: "Favoritos",
+              label: FavoritesPage.title,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.lightbulb),
-              label: "Tips",
+              label: TipsPage.title,
             ),
           ],
           currentIndex: _currentIndex,
           selectedItemColor: _currentIndex == 0 &&
-                  ModalRoute.of(context).settings.name != HomePage.routeName
+                  ModalRoute.of(context)!.settings.name != HomePage.routeName
               ? Theme.of(context).unselectedWidgetColor
               : darkMode
                   ? Colors.white

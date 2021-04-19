@@ -10,7 +10,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeFavoriteWidget extends StatefulWidget {
-  const HomeFavoriteWidget({Key key}) : super(key: key);
+  const HomeFavoriteWidget() : super();
 
   @override
   _HomeFavoriteWidgetState createState() => _HomeFavoriteWidgetState();
@@ -32,8 +32,10 @@ class _HomeFavoriteWidgetState extends State<HomeFavoriteWidget> {
               if (box.isNotEmpty) {
                 List favorite = box.getAt(random.nextInt(box.length));
                 return Expanded(
-                    child: RecipeWidget(
-                        RecipeModel.basic(favorite[0], favorite[1])));
+                  child: RecipeWidget(
+                    recipe: RecipeModel.basic(favorite[0], favorite[1]),
+                  ),
+                );
               } else
                 return Expanded(child: HomeNotFavoriteWidget());
             },

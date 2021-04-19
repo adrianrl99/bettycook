@@ -1,7 +1,7 @@
 class SubCategoryModel {
-  int id;
-  String name;
-  int category;
+  late int id;
+  late String name;
+  late int category;
 
   SubCategoryModel(this.id, this.name, this.category);
 

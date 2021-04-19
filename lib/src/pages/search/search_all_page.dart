@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class SearchAllPage extends StatefulWidget {
   static const routeName = "/search";
 
-  const SearchAllPage({Key key}) : super(key: key);
+  const SearchAllPage() : super();
 
   @override
   _SearchAllPageState createState() => _SearchAllPageState();
@@ -32,7 +32,7 @@ class _SearchAllPageState extends State<SearchAllPage> {
           children: [
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -75,7 +75,7 @@ class _SearchAllPageState extends State<SearchAllPage> {
                                     bottom: 8.0,
                                     left: 16.0,
                                     right: 16.0),
-                                child: RecipeWidget(recipe),
+                                child: RecipeWidget(recipe: recipe),
                               )
                           else
                             Container(

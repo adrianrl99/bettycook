@@ -34,7 +34,7 @@ class _AppState extends State<App> {
 
   MaterialColor createMaterialColor(Color color) {
     List strengths = <double>[.05];
-    Map swatch = <int, Color>{};
+    Map<int, Color> swatch = {};
     final int r = color.red, g = color.green, b = color.blue;
 
     for (int i = 1; i < 10; i++) {
@@ -56,7 +56,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: Hive.box(settingsBox).listenable(),
-      builder: (context, box, widget) {
+      builder: (BuildContext context, Box box, _) {
         var darkMode = box.get(settingsBoxDarkModeKey, defaultValue: false);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -64,6 +64,9 @@ class _AppState extends State<App> {
           themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
           darkTheme: ThemeData.dark(),
           theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              brightness: Brightness.dark,
+            ),
             primarySwatch: createMaterialColor(
               Color(0xFF75414e),
             ),
@@ -79,19 +82,32 @@ class _AppState extends State<App> {
                     return SearchAllPage();
                   case SearchSubCategoryPage.routeName:
                     return SearchSubCategoryPage(
-                        subcategory: settings.arguments);
+                        subcategory: settings.arguments as SubCategoryModel);
                   case FavoritesPage.routeName:
                     return FavoritesPage();
                   case TipsPage.routeName:
                     return TipsPage();
                   case CategoryPage.routeName:
-                    return CategoryPage(category: settings.arguments);
+                    return CategoryPage(
+                        category: settings.arguments as CategoryModel);
                   case SubCategoryPage.routeName:
-                    return SubCategoryPage(subcategory: settings.arguments);
+                    return SubCategoryPage(
+                        subcategory: settings.arguments as SubCategoryModel);
                   case RecipePage.routeName:
-                    return RecipePage(recipe: settings.arguments);
+                    return RecipePage(
+                        recipe: settings.arguments as RecipeModel);
                   case ConactPage.routeName:
                     return ConactPage();
+                  case IWantCookPage.routeName:
+                    return IWantCookPage();
+                  case CalendarPage.routeName:
+                    return CalendarPage();
+                  default:
+                    return Center(
+                      child: Container(
+                        child: Text("404"),
+                      ),
+                    );
                 }
               },
             );

@@ -10,7 +10,7 @@ class CategoryPage extends StatefulWidget {
 
   final CategoryModel category;
 
-  const CategoryPage({this.category, Key key}) : super(key: key);
+  const CategoryPage({required this.category}) : super();
 
   @override
   _CategoryPageState createState() => _CategoryPageState();
@@ -28,14 +28,14 @@ class _CategoryPageState extends State<CategoryPage> {
       body: Container(
         child: FutureBuilder(
           future: db.getSubCategories(widget.category.id),
-          builder: (BuildContext context, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return GridView.count(
                 crossAxisCount: 2,
                 padding: EdgeInsets.all(8),
                 children: [
                   for (SubCategoryModel subcategory in snapshot.data)
-                    SubCategoryWidget(subcategory),
+                    SubCategoryWidget(subcategory: subcategory),
                 ],
               );
             } else {

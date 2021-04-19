@@ -15,7 +15,7 @@ class RecipePage extends StatefulWidget {
 
   final RecipeModel recipe;
 
-  const RecipePage({this.recipe, Key key}) : super(key: key);
+  const RecipePage({required this.recipe}) : super();
 
   @override
   _RecipePageState createState() => _RecipePageState();
@@ -81,8 +81,8 @@ class _RecipePageState extends State<RecipePage> {
           ],
           body: TabBarView(
             children: <Widget>[
-              IngredientsTabWidget(widget.recipe.id),
-              PreparationTabWidget(widget.recipe.id),
+              IngredientsTabWidget(id: widget.recipe.id),
+              PreparationTabWidget(id: widget.recipe.id),
             ],
           ),
         ),

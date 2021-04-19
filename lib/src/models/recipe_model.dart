@@ -1,11 +1,11 @@
 class RecipeModel {
-  int id;
-  String title;
-  String details;
-  String ingredients;
-  String preparation;
-  int category;
-  int subcategory;
+  late int id;
+  late String title;
+  late String details;
+  late String ingredients;
+  late String preparation;
+  late int category;
+  late int subcategory;
 
   // Basic constructors
   RecipeModel.basic(this.id, this.title);

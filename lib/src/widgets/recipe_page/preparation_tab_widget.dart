@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PreparationTabWidget extends StatefulWidget {
   final int id;
-  const PreparationTabWidget(this.id, {Key key}) : super(key: key);
+  const PreparationTabWidget({required this.id}) : super();
 
   @override
   _PreparationTabWidgetState createState() => _PreparationTabWidgetState();
@@ -16,7 +16,7 @@ class _PreparationTabWidgetState extends State<PreparationTabWidget> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: db.getRecipeDetails(widget.id),
-      builder: (BuildContext context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done)
           return Text(snapshot.data);
         else

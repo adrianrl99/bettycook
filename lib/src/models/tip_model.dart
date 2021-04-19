@@ -1,6 +1,6 @@
 class TipModel {
-  int id;
-  String tip;
+  late int id;
+  late String tip;
 
   TipModel(this.id, this.tip);
 

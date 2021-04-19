@@ -5,27 +5,27 @@ import 'package:flutter/material.dart';
 
 class TipsPage extends StatefulWidget {
   static const routeName = "/tips";
+  static const String title = "Tips";
 
-  const TipsPage({Key key}) : super(key: key);
+  const TipsPage() : super();
 
   @override
   _TipsPageState createState() => _TipsPageState();
 }
 
 class _TipsPageState extends State<TipsPage> {
-  final String title = "Tips";
   RecipesDatabase db = RecipesDatabase();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.title),
+        title: Text(TipsPage.title),
       ),
       body: Container(
         child: FutureBuilder(
           future: db.getTips(),
-          builder: (BuildContext context, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return ListView(
                 children: <Widget>[

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ConactPage extends StatelessWidget {
   static const routeName = "/contact";
   static const title = "Contáctanos";
-  const ConactPage({Key key}) : super(key: key);
+  const ConactPage() : super();
 
   @override
   Widget build(BuildContext context) {
