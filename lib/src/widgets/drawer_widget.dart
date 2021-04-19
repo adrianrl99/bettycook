@@ -50,12 +50,6 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.support_agent),
-              title: Text(ConactPage.title),
-              onTap: () =>
-                  Navigator.of(context).pushNamed(ConactPage.routeName),
-            ),
-            ListTile(
               leading: Icon(Icons.kitchen),
               title: Text(IWantCookPage.title),
               onTap: () =>
@@ -66,6 +60,17 @@ class DrawerWidget extends StatelessWidget {
               title: Text(CalendarPage.title),
               onTap: () =>
                   Navigator.of(context).pushNamed(CalendarPage.routeName),
+            ),
+            ListTile(
+              leading: Icon(Icons.shopping_cart),
+              title: Text(ToBuyPage.title),
+              onTap: () => Navigator.of(context).pushNamed(ToBuyPage.routeName),
+            ),
+            ListTile(
+              leading: Icon(Icons.support_agent),
+              title: Text(ConactPage.title),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(ConactPage.routeName),
             ),
           ],
         ),

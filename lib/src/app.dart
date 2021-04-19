@@ -102,6 +102,8 @@ class _AppState extends State<App> {
                     return IWantCookPage();
                   case CalendarPage.routeName:
                     return CalendarPage();
+                  case ToBuyPage.routeName:
+                    return ToBuyPage();
                   default:
                     return Center(
                       child: Container(
