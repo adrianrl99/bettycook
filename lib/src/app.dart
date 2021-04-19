@@ -77,7 +77,6 @@ class _AppState extends State<App> {
                 switch (settings.name) {
                   case SearchAllPage.routeName:
                     return SearchAllPage();
-
                   case SearchSubCategoryPage.routeName:
                     return SearchSubCategoryPage(
                         subcategory: settings.arguments);
@@ -93,8 +92,6 @@ class _AppState extends State<App> {
                     return RecipePage(recipe: settings.arguments);
                   case ConactPage.routeName:
                     return ConactPage();
-                  case CreditsPage.routeName:
-                    return CreditsPage();
                 }
               },
             );

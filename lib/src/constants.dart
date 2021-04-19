@@ -5,3 +5,6 @@ const tipsBox = 'tips_box';
 
 // Box Keys
 const settingsBoxDarkModeKey = 'dark_mode';
+
+// DB Version
+const db_version = 0;

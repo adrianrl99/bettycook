@@ -37,7 +37,7 @@ class DrawerWidget extends StatelessWidget {
                             defaultValue: false);
                         return IconButton(
                           icon: Icon(
-                            darkMode ? Icons.nights_stay : Icons.wb_sunny,
+                            darkMode ? Icons.wb_sunny : Icons.nights_stay,
                             color: Colors.white,
                           ),
                           onPressed: () =>
@@ -50,16 +50,10 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.help),
+              leading: Icon(Icons.support_agent),
               title: Text("Contáctanos"),
               onTap: () =>
                   Navigator.of(context).pushNamed(ConactPage.routeName),
-            ),
-            ListTile(
-              leading: Icon(Icons.people),
-              title: Text("Creditos"),
-              onTap: () =>
-                  Navigator.of(context).pushNamed(CreditsPage.routeName),
             ),
           ],
         ),

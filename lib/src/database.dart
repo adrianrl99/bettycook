@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
@@ -17,7 +18,7 @@ class RecipesDatabase {
     // Check if the database exists
     var exists = await databaseExists(path);
 
-    if (!exists || kDebugMode) {
+    if (!exists || !(await _checkDBVersion()) || kDebugMode) {
       // Should happen only the first time you launch your application
       // Make sure the parent directory exists
       try {
@@ -34,7 +35,14 @@ class RecipesDatabase {
     }
   }
 
-  _openDB() async {
+  Future<bool> _checkDBVersion() async {
+    await _openDB();
+    bool checkVersion = await _db.getVersion() == db_version;
+    await _closeDB();
+    return checkVersion;
+  }
+
+  Future<void> _openDB() async {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, "bettycook.db");
 
@@ -42,7 +50,7 @@ class RecipesDatabase {
     _db = await openReadOnlyDatabase(path);
   }
 
-  _closeDB() async {
+  Future<void> _closeDB() async {
     // close the database
     await _db.close();
   }

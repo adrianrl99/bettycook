@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/functions.dart';
@@ -9,12 +7,8 @@ import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:bettycook/src/widgets/recipe_page/ingredients_tab_widget.dart';
 import 'package:bettycook/src/widgets/recipe_page/preparation_tab_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share/share.dart';
-import 'package:path/path.dart';
 
 class RecipePage extends StatefulWidget {
   static const routeName = "/recipe";
@@ -55,14 +49,6 @@ class _RecipePageState extends State<RecipePage> {
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(
-                    Icons.share,
-                  ),
-                  onPressed: () {
-                    Share.share(widget.recipe.title, subject: "BettyCook");
-                  },
-                )
               ],
               title: Text(widget.recipe.title.inCaps),
               expandedHeight: 320,
