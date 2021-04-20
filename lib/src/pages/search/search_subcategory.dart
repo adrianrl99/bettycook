@@ -11,7 +11,8 @@ class SearchSubCategoryPage extends StatefulWidget {
       "${SearchAllPage.routeName}${SubCategoryPage.routeName}";
   final SubCategoryModel subcategory;
 
-  const SearchSubCategoryPage({required this.subcategory}) : super();
+  const SearchSubCategoryPage({required this.subcategory, Key? key})
+      : super(key: key);
 
   @override
   _SearchSubCategoryPageState createState() => _SearchSubCategoryPageState();

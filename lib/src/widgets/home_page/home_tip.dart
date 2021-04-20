@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeTip extends StatelessWidget {
-  const HomeTip() : super();
+  const HomeTip({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

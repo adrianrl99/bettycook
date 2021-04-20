@@ -1,62 +1,63 @@
-import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/database.dart';
-import 'package:bettycook/src/functions.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
+import 'package:bettycook/src/widgets/calendar_button_widget.dart';
+import 'package:bettycook/src/widgets/recipe_page/calendar_tab_widget.dart';
 import 'package:bettycook/src/widgets/recipe_page/ingredients_tab_widget.dart';
+import 'package:bettycook/src/widgets/recipe_page/notes_widget.dart';
 import 'package:bettycook/src/widgets/recipe_page/preparation_tab_widget.dart';
+import 'package:bettycook/src/widgets/favorite_button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-class RecipePage extends StatefulWidget {
+class RecipePage extends StatelessWidget {
   static const routeName = "/recipe";
 
   final RecipeModel recipe;
 
-  const RecipePage({required this.recipe}) : super();
+  const RecipePage({required this.recipe, Key? key}) : super(key: key);
 
-  @override
-  _RecipePageState createState() => _RecipePageState();
-}
-
-class _RecipePageState extends State<RecipePage> {
-  RecipesDatabase db = RecipesDatabase();
+  void showNotesDialog(BuildContext context) async {
+    await showDialog(
+        context: context,
+        useSafeArea: true,
+        useRootNavigator: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Notas de ${this.recipe.title}"),
+            content: NotesWidget(
+              id: this.recipe.id,
+            ),
+            actions: <Widget>[
+              TextButton(
+                  child: Text("SALIR"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 2,
+        length: 3,
         child: NestedScrollView(
           headerSliverBuilder:
               (BuildContext context, bool innerBoxIsScrolled) => <Widget>[
             SliverAppBar(
               actions: <Widget>[
-                ValueListenableBuilder(
-                  valueListenable: Hive.box(favoritesBox).listenable(),
-                  builder: (BuildContext context, Box box, w) {
-                    return IconButton(
-                      icon: Icon(
-                        box.containsKey(widget.recipe.id)
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: Colors.red[800],
-                      ),
-                      onPressed: () => toggleFavorite(
-                          box, widget.recipe.id, widget.recipe.title),
-                    );
-                  },
-                ),
+                CalendarButtonWidget(recipe: this.recipe),
+                FavoriteButtonWidget(recipe: this.recipe),
               ],
-              title: Text(widget.recipe.title.inCaps),
+              title: Text(this.recipe.title.inCaps),
               expandedHeight: 320,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
-                        "assets/images/recipes/${widget.recipe.title.format}.png",
+                        "assets/images/recipes/${this.recipe.title.format}.png",
                       ),
                       fit: BoxFit.cover),
                 ),
@@ -74,20 +75,30 @@ class _RecipePageState extends State<RecipePage> {
                   ),
                   Tab(
                     child: Text("Preparacion"),
-                  )
+                  ),
+                  Tab(
+                    child: Text("Calendario"),
+                  ),
                 ],
               ),
             )
           ],
           body: TabBarView(
             children: <Widget>[
-              IngredientsTabWidget(id: widget.recipe.id),
-              PreparationTabWidget(id: widget.recipe.id),
+              IngredientsTabWidget(id: this.recipe.id),
+              PreparationTabWidget(id: this.recipe.id),
+              CalendarTabWidget(recipe: this.recipe),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomNavBar(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.notes),
+        onPressed: () {
+          showNotesDialog(context);
+        },
+      ),
     );
   }
 }

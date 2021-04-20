@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class IngredientsTabWidget extends StatefulWidget {
   final int id;
-  const IngredientsTabWidget({required this.id}) : super();
+  const IngredientsTabWidget({required this.id, Key? key}) : super(key: key);
 
   @override
   _IngredientsTabWidgetState createState() => _IngredientsTabWidgetState();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HomeNotFavoriteWidget extends StatelessWidget {
-  const HomeNotFavoriteWidget() : super();
+  const HomeNotFavoriteWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

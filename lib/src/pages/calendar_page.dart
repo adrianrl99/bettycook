@@ -6,7 +6,7 @@ class CalendarPage extends StatefulWidget {
   static const routeName = "/calendar";
   static const title = "Calendario";
 
-  const CalendarPage() : super();
+  const CalendarPage({Key? key}) : super(key: key);
 
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -14,7 +14,6 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   late final ValueNotifier<List<Event>> _selectedEvents;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
@@ -83,6 +82,10 @@ class _CalendarPageState extends State<CalendarPage> {
     }
   }
 
+  void _onHeaderTapped(DateTime dateTime) {
+    print(dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,9 +99,11 @@ class _CalendarPageState extends State<CalendarPage> {
             lastDay: kLastDay,
             focusedDay: _focusedDay,
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+            availableCalendarFormats: const {CalendarFormat.month: "Mes"},
             rangeStartDay: _rangeStart,
             rangeEndDay: _rangeEnd,
-            calendarFormat: _calendarFormat,
+            headerStyle: const HeaderStyle(titleCentered: true),
+            calendarFormat: CalendarFormat.month,
             rangeSelectionMode: _rangeSelectionMode,
             eventLoader: _getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.monday,
@@ -106,15 +111,9 @@ class _CalendarPageState extends State<CalendarPage> {
               // Use `CalendarStyle` to customize the UI
               outsideDaysVisible: true,
             ),
+            onHeaderTapped: _onHeaderTapped,
             onDaySelected: _onDaySelected,
             onRangeSelected: _onRangeSelected,
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
             },
@@ -126,7 +125,7 @@ class _CalendarPageState extends State<CalendarPage> {
               builder: (context, value, _) {
                 return ListView.builder(
                   itemCount: value.length,
-                  itemBuilder: (context, index) {
+                  itemBuilder: (BuildContext context, int index) {
                     return Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 12.0,

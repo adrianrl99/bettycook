@@ -10,7 +10,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeFavoriteWidget extends StatefulWidget {
-  const HomeFavoriteWidget() : super();
+  const HomeFavoriteWidget({Key? key}) : super(key: key);
 
   @override
   _HomeFavoriteWidgetState createState() => _HomeFavoriteWidgetState();

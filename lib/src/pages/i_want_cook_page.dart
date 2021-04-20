@@ -4,7 +4,7 @@ class IWantCookPage extends StatelessWidget {
   static const routeName = "/i_want_cook";
   static const title = '¡Quiero cocinar!';
 
-  const IWantCookPage() : super();
+  const IWantCookPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

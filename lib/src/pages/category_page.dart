@@ -10,7 +10,7 @@ class CategoryPage extends StatefulWidget {
 
   final CategoryModel category;
 
-  const CategoryPage({required this.category}) : super();
+  const CategoryPage({required this.category, Key? key}) : super(key: key);
 
   @override
   _CategoryPageState createState() => _CategoryPageState();

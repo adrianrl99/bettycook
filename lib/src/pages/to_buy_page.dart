@@ -4,7 +4,7 @@ class ToBuyPage extends StatelessWidget {
   static const routeName = "/to_buy";
   static const title = "Por Comprar";
 
-  const ToBuyPage() : super();
+  const ToBuyPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

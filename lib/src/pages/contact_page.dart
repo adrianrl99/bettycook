@@ -1,11 +1,11 @@
-import 'package:bettycook/src/functions.dart';
+import 'package:bettycook/src/utils.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class ConactPage extends StatelessWidget {
   static const routeName = "/contact";
   static const title = "Contáctanos";
-  const ConactPage() : super();
+  const ConactPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

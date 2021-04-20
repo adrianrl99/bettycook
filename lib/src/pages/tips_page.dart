@@ -7,7 +7,7 @@ class TipsPage extends StatefulWidget {
   static const routeName = "/tips";
   static const String title = "Tips";
 
-  const TipsPage() : super();
+  const TipsPage({Key? key}) : super(key: key);
 
   @override
   _TipsPageState createState() => _TipsPageState();

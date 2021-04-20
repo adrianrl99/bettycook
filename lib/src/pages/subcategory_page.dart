@@ -11,7 +11,8 @@ class SubCategoryPage extends StatefulWidget {
 
   final SubCategoryModel subcategory;
 
-  const SubCategoryPage({required this.subcategory}) : super();
+  const SubCategoryPage({required this.subcategory, Key? key})
+      : super(key: key);
 
   @override
   _SubCategoryPageState createState() => _SubCategoryPageState();

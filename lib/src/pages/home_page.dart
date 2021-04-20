@@ -11,13 +11,13 @@ class HomePage extends StatelessWidget {
 
   static const String title = "Inicio";
 
-  const HomePage() : super();
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text("BettyCook"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),

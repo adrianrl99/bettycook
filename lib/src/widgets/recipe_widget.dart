@@ -1,15 +1,13 @@
-import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/functions.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
+import 'package:bettycook/src/widgets/calendar_button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:bettycook/src/widgets/favorite_button_widget.dart';
 
 class RecipeWidget extends StatelessWidget {
   final RecipeModel recipe;
-  const RecipeWidget({required this.recipe}) : super();
+  const RecipeWidget({required this.recipe, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +44,13 @@ class RecipeWidget extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                trailing: ValueListenableBuilder(
-                  valueListenable: Hive.box(favoritesBox).listenable(),
-                  builder: (BuildContext context, Box box, _) {
-                    return IconButton(
-                      icon: Icon(
-                        box.containsKey(this.recipe.id)
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: Colors.red[800],
-                      ),
-                      onPressed: () => toggleFavorite(
-                          box, this.recipe.id, this.recipe.title),
-                    );
-                  },
+                trailing: Wrap(
+                  children: [
+                    CalendarButtonWidget(recipe: this.recipe),
+                    FavoriteButtonWidget(
+                      recipe: this.recipe,
+                    ),
+                  ],
                 ),
               ),
             ),

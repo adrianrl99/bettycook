@@ -12,7 +12,7 @@ class FavoritesPage extends StatefulWidget {
   static const routeName = "/favorites";
   static const String title = "Favoritos";
 
-  const FavoritesPage() : super();
+  const FavoritesPage({Key? key}) : super(key: key);
 
   @override
   _FavoritesPageState createState() => _FavoritesPageState();

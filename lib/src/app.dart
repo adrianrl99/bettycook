@@ -20,11 +20,9 @@ class _AppState extends State<App> {
 
   @override
   void dispose() {
-    super.dispose();
-    Hive.box(settingsBox).compact();
-    Hive.box(favoritesBox).compact();
-    Hive.box(tipsBox).compact();
+    for (String box in boxes) Hive.box(box).compact();
     Hive.close();
+    super.dispose();
   }
 
   void _getTips() async {

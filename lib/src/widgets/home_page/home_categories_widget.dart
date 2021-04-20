@@ -4,7 +4,7 @@ import 'package:bettycook/src/widgets/home_page/home_category_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeCategoriesWidget extends StatefulWidget {
-  const HomeCategoriesWidget() : super();
+  const HomeCategoriesWidget({Key? key}) : super(key: key);
 
   @override
   _HomeCategoriesWidgetState createState() => _HomeCategoriesWidgetState();

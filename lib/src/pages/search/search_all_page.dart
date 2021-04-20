@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class SearchAllPage extends StatefulWidget {
   static const routeName = "/search";
 
-  const SearchAllPage() : super();
+  const SearchAllPage({Key? key}) : super(key: key);
 
   @override
   _SearchAllPageState createState() => _SearchAllPageState();

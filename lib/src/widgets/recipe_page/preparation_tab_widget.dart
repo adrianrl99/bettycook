@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PreparationTabWidget extends StatefulWidget {
   final int id;
-  const PreparationTabWidget({required this.id}) : super();
+  const PreparationTabWidget({required this.id, Key? key}) : super(key: key);
 
   @override
   _PreparationTabWidgetState createState() => _PreparationTabWidgetState();

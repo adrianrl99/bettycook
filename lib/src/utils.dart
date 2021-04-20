@@ -1,6 +1,11 @@
 import 'dart:collection';
 
+import 'package:bettycook/src/hive_functions.dart';
+import 'package:bettycook/src/models/models.dart';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Example event class.
 class Event {
@@ -45,5 +50,70 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
 }
 
 final kNow = DateTime.now();
-final kFirstDay = DateTime(kNow.year, kNow.month - 3, kNow.day);
-final kLastDay = DateTime(kNow.year, kNow.month + 3, kNow.day);
+final kFirstDay = DateTime(kNow.year, DateTime.january, kNow.day);
+final kLastDay = DateTime(kNow.year, DateTime.december, kNow.day);
+
+void launchURL(url) async =>
+    await canLaunch(url) ? await launch(url) : throw 'No se pudo abrir $url';
+
+// Funcions for Edit Calendar
+
+void showPickerCalendar(
+    BuildContext context, Box box, boxRecipe, RecipeModel recipe) async {
+  DateTime? date = await showDatePicker(
+      context: context,
+      initialDate: kNow,
+      firstDate: kFirstDay,
+      lastDate: kLastDay);
+  if (date != null) {
+    TimeOfDay? timeOfDay =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (timeOfDay != null) {
+      DateTime dateTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        timeOfDay.hour,
+        timeOfDay.minute,
+      );
+      showDialogCalendar(context, dateTime, box, boxRecipe, recipe, false);
+    }
+  }
+}
+
+void showDialogCalendar(BuildContext context, DateTime dateTime, Box box,
+    boxRecipe, RecipeModel recipe, bool isEdit) async {
+  await showDialog(
+      context: context,
+      useSafeArea: true,
+      useRootNavigator: true,
+      builder: (BuildContext _) {
+        return AlertDialog(
+          title: Text("Toque la fecha para cambiarla"),
+          content: ListTile(
+            title: Text(
+              dateTime.toString(),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              showPickerCalendar(context, box, boxRecipe, recipe);
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+                child: Text("CANCELAR"),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  if (!isEdit)
+                    addRecipeInCalendar(
+                        box, boxRecipe, recipe.id, recipe.title, dateTime);
+                })
+          ],
+        );
+      });
+}
