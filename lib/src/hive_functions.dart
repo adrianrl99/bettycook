@@ -8,7 +8,8 @@ void toggleFavorite(Box box, int id, String title) {
 }
 
 void addRecipeInCalendar(
-    Box box, boxRecipe, int id, String title, DateTime dateTime) {
+    Box box, boxRecipe, int id, String title, DateTime dateTime,
+    {DateTime? oldDateTime}) {
   if (!box.containsKey(id)) {
     box.put(id, [
       id,
@@ -17,6 +18,7 @@ void addRecipeInCalendar(
     ]);
   } else if (boxRecipe != null) {
     if (!boxRecipe[2].contains(dateTime)) {
+      if (boxRecipe[2].contains(oldDateTime)) boxRecipe[2].remove(oldDateTime);
       boxRecipe[2].add(dateTime);
       box.put(id, boxRecipe);
     }

@@ -1,6 +1,11 @@
+import 'package:bettycook/src/constants.dart';
+import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/utils.dart';
+import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:bettycook/src/extensions/extensions.dart';
 
 class CalendarPage extends StatefulWidget {
   static const routeName = "/calendar";
@@ -37,7 +42,16 @@ class _CalendarPageState extends State<CalendarPage> {
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
-    return kEvents[day] ?? [];
+    Box box = Hive.box(calendarBox);
+    List<Event> events = [];
+    if (box.isNotEmpty) {
+      for (List event in box.values)
+        if (event[2].length > 0)
+          for (DateTime dateTime in event[2])
+            if (dateTime.toString().getDate == day.toString().getDate)
+              events.add(Event(id: event[0], title: event[1]));
+    }
+    return events;
   }
 
   List<Event> _getEventsForRange(DateTime start, DateTime end) {
@@ -82,10 +96,6 @@ class _CalendarPageState extends State<CalendarPage> {
     }
   }
 
-  void _onHeaderTapped(DateTime dateTime) {
-    print(dateTime);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,47 +108,39 @@ class _CalendarPageState extends State<CalendarPage> {
             firstDay: kFirstDay,
             lastDay: kLastDay,
             focusedDay: _focusedDay,
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             availableCalendarFormats: const {CalendarFormat.month: "Mes"},
-            rangeStartDay: _rangeStart,
-            rangeEndDay: _rangeEnd,
-            headerStyle: const HeaderStyle(titleCentered: true),
             calendarFormat: CalendarFormat.month,
-            rangeSelectionMode: _rangeSelectionMode,
-            eventLoader: _getEventsForDay,
-            startingDayOfWeek: StartingDayOfWeek.monday,
+            headerStyle: const HeaderStyle(titleCentered: true),
             calendarStyle: CalendarStyle(
               // Use `CalendarStyle` to customize the UI
               outsideDaysVisible: true,
             ),
-            onHeaderTapped: _onHeaderTapped,
+            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+            rangeStartDay: _rangeStart,
+            rangeEndDay: _rangeEnd,
+            rangeSelectionMode: _rangeSelectionMode,
+            startingDayOfWeek: StartingDayOfWeek.monday,
             onDaySelected: _onDaySelected,
             onRangeSelected: _onRangeSelected,
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
             },
+            eventLoader: _getEventsForDay,
           ),
           const SizedBox(height: 8.0),
           Expanded(
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
-              builder: (context, value, _) {
+              builder: (BuildContext context, List<Event> value, _) {
                 return ListView.builder(
                   itemCount: value.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 4.0,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: ListTile(
-                        onTap: () => print('${value[index]}'),
-                        title: Text('${value[index]}'),
-                      ),
+                      padding: const EdgeInsets.only(
+                          top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
+                      child: RecipeWidget(
+                          recipe: RecipeModel.basic(
+                              value[index].id, value[index].title)),
                     );
                   },
                 );

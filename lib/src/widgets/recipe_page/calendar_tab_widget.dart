@@ -2,6 +2,7 @@ import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/hive_functions.dart';
 import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:bettycook/src/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -27,7 +28,7 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text("¿Seguro que desea eliminar el evento?"),
-            content: Text(dateTime.toString()),
+            content: Text(dateTime.toString().dateString),
             actions: <Widget>[
               TextButton(
                   child: Text("NO"),
@@ -60,7 +61,7 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
               for (DateTime dateTime in boxRecipe[2])
                 ListTile(
                   title: Text(
-                    dateTime.toString(),
+                    dateTime.toString().dateString,
                   ),
                   trailing: Wrap(
                     children: [
@@ -68,7 +69,8 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
                         icon: Icon(Icons.edit),
                         onPressed: () {
                           showDialogCalendar(context, dateTime, box, boxRecipe,
-                              widget.recipe, true);
+                              widget.recipe, true,
+                              oldDateTime: dateTime);
                         },
                       ),
                       IconButton(

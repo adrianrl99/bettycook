@@ -1,40 +1,16 @@
-import 'dart:collection';
-
 import 'package:bettycook/src/hive_functions.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:bettycook/src/extensions/extensions.dart';
 
-/// Example event class.
 class Event {
+  final int id;
   final String title;
 
-  const Event(this.title);
-
-  @override
-  String toString() => title;
+  const Event({required this.id, required this.title});
 }
-
-/// Example events.
-///
-/// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
-final kEvents = LinkedHashMap<DateTime, List<Event>>(
-  equals: isSameDay,
-  hashCode: getHashCode,
-)..addAll(_kEventSource);
-
-final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
-    key: (item) => DateTime.utc(2020, 10, item * 5),
-    value: (item) => List.generate(
-        item % 4 + 1, (index) => Event('Event $item | ${index + 1}')))
-  ..addAll({
-    DateTime.now(): [
-      Event('Today\'s Event 1'),
-      Event('Today\'s Event 2'),
-    ],
-  });
 
 int getHashCode(DateTime key) {
   return key.day * 1000000 + key.month * 10000 + key.year;
@@ -59,7 +35,8 @@ void launchURL(url) async =>
 // Funcions for Edit Calendar
 
 void showPickerCalendar(
-    BuildContext context, Box box, boxRecipe, RecipeModel recipe) async {
+    BuildContext context, Box box, boxRecipe, RecipeModel recipe,
+    {DateTime? oldDateTime}) async {
   DateTime? date = await showDatePicker(
       context: context,
       initialDate: kNow,
@@ -76,13 +53,15 @@ void showPickerCalendar(
         timeOfDay.hour,
         timeOfDay.minute,
       );
-      showDialogCalendar(context, dateTime, box, boxRecipe, recipe, false);
+      showDialogCalendar(context, dateTime, box, boxRecipe, recipe, false,
+          oldDateTime: oldDateTime);
     }
   }
 }
 
 void showDialogCalendar(BuildContext context, DateTime dateTime, Box box,
-    boxRecipe, RecipeModel recipe, bool isEdit) async {
+    boxRecipe, RecipeModel recipe, bool isEdit,
+    {DateTime? oldDateTime}) async {
   await showDialog(
       context: context,
       useSafeArea: true,
@@ -92,11 +71,12 @@ void showDialogCalendar(BuildContext context, DateTime dateTime, Box box,
           title: Text("Toque la fecha para cambiarla"),
           content: ListTile(
             title: Text(
-              dateTime.toString(),
+              dateTime.toString().dateString,
             ),
             onTap: () {
               Navigator.pop(context);
-              showPickerCalendar(context, box, boxRecipe, recipe);
+              showPickerCalendar(context, box, boxRecipe, recipe,
+                  oldDateTime: oldDateTime);
             },
           ),
           actions: <Widget>[
@@ -111,7 +91,8 @@ void showDialogCalendar(BuildContext context, DateTime dateTime, Box box,
                   Navigator.pop(context);
                   if (!isEdit)
                     addRecipeInCalendar(
-                        box, boxRecipe, recipe.id, recipe.title, dateTime);
+                        box, boxRecipe, recipe.id, recipe.title, dateTime,
+                        oldDateTime: oldDateTime);
                 })
           ],
         );

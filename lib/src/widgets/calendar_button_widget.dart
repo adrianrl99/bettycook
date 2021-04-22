@@ -1,6 +1,5 @@
 import 'package:badges/badges.dart';
 import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/hive_functions.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/utils.dart';
 import 'package:flutter/material.dart';

@@ -55,13 +55,23 @@ class _AppState extends State<App> {
     return ValueListenableBuilder(
       valueListenable: Hive.box(settingsBox).listenable(),
       builder: (BuildContext context, Box box, _) {
-        var darkMode = box.get(settingsBoxDarkModeKey, defaultValue: false);
+        bool? darkMode = box.get(settingsBoxDarkModeKey);
+        ThemeMode? darkThemeMode;
+        if (darkMode != null)
+          darkThemeMode = darkMode ? ThemeMode.dark : ThemeMode.light;
+        else
+          darkThemeMode = ThemeMode.system;
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: "BettyCook",
-          themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
-          darkTheme: ThemeData.dark(),
+          themeMode: darkThemeMode,
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            bottomNavigationBarTheme:
+                BottomNavigationBarThemeData(selectedItemColor: Colors.white),
+          ),
           theme: ThemeData(
+            brightness: Brightness.light,
             appBarTheme: AppBarTheme(
               brightness: Brightness.dark,
             ),
@@ -94,8 +104,6 @@ class _AppState extends State<App> {
                   case RecipePage.routeName:
                     return RecipePage(
                         recipe: settings.arguments as RecipeModel);
-                  case ConactPage.routeName:
-                    return ConactPage();
                   case IWantCookPage.routeName:
                     return IWantCookPage();
                   case CalendarPage.routeName:

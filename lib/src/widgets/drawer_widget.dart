@@ -1,5 +1,6 @@
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/pages/pages.dart';
+import 'package:bettycook/src/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -33,15 +34,18 @@ class DrawerWidget extends StatelessWidget {
                     child: ValueListenableBuilder(
                       valueListenable: Hive.box(settingsBox).listenable(),
                       builder: (context, Box box, _) {
-                        var darkMode = box.get(settingsBoxDarkModeKey,
-                            defaultValue: false);
+                        bool? darkMode = box.get(settingsBoxDarkModeKey);
+                        bool iconMode = darkMode == null
+                            ? MediaQuery.platformBrightnessOf(context) ==
+                                Brightness.dark
+                            : darkMode;
                         return IconButton(
                           icon: Icon(
-                            darkMode ? Icons.wb_sunny : Icons.nights_stay,
+                            iconMode ? Icons.wb_sunny : Icons.nights_stay,
                             color: Colors.white,
                           ),
                           onPressed: () =>
-                              box.put(settingsBoxDarkModeKey, !darkMode),
+                              box.put(settingsBoxDarkModeKey, !iconMode),
                         );
                       },
                     ),
@@ -67,10 +71,19 @@ class DrawerWidget extends StatelessWidget {
               onTap: () => Navigator.of(context).pushNamed(ToBuyPage.routeName),
             ),
             ListTile(
-              leading: Icon(Icons.support_agent),
-              title: Text(ConactPage.title),
-              onTap: () =>
-                  Navigator.of(context).pushNamed(ConactPage.routeName),
+                title: Text(
+              "Contáctanos",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )),
+            ListTile(
+              leading: Icon(Icons.send),
+              title: Text("Telegram"),
+              onTap: () => launchURL("https://t.me/bettycook"),
+            ),
+            ListTile(
+              leading: Icon(Icons.mail),
+              title: Text("Email"),
+              onTap: () => launchURL("mailto:bettycooksoporte@gmail.com"),
             ),
           ],
         ),

@@ -39,22 +39,24 @@ class _SearchAllPageState extends State<SearchAllPage> {
                   labelText: 'Buscar',
                 ),
                 onChanged: (String text) {
-                  if (text.length > 3) {
-                    setState(() {
-                      _isStop = false;
-                      _text = "";
-                    });
-                    _timeSleepSearch.run(() {
+                  if (text != this._text) {
+                    if (text.length > 3) {
                       setState(() {
-                        _isStop = true;
-                        _text = text;
+                        _isStop = false;
+                        _text = "";
                       });
-                    });
-                  } else {
-                    setState(() {
-                      _isStop = false;
-                      _text = "Escribe más de 3 caracteres";
-                    });
+                      _timeSleepSearch.run(() {
+                        setState(() {
+                          _isStop = true;
+                          _text = text;
+                        });
+                      });
+                    } else {
+                      setState(() {
+                        _isStop = false;
+                        _text = "Escribe más de 3 caracteres";
+                      });
+                    }
                   }
                 },
               ),
