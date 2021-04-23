@@ -110,6 +110,10 @@ class _AppState extends State<App> {
                     return CalendarPage();
                   case ToBuyPage.routeName:
                     return ToBuyPage();
+                  case ConverterPage.routeName:
+                    return ConverterPage();
+                  case AboutPage.routeName:
+                    return AboutPage();
                   default:
                     return Center(
                       child: Container(

@@ -11,7 +11,7 @@ class FullScreenPhotoWidget extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
       ),
       body: Container(
         child: PhotoView(

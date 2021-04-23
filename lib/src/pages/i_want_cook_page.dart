@@ -14,7 +14,7 @@ class IWantCookPage extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: Text('Quiero cocinar'),
+          child: Text('En desarrollo'),
         ),
       ),
     );
