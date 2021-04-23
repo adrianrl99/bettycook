@@ -7,6 +7,27 @@ String convertUnit(
       case "mg":
         converted = convertFrommg(to, converted, toConvert);
         break;
+      case "cg":
+        converted = convertFromcg(to, converted, toConvert);
+        break;
+      case "dg":
+        converted = convertFromdg(to, converted, toConvert);
+        break;
+      case "g":
+        converted = convertFromg(to, converted, toConvert);
+        break;
+      case "dag":
+        converted = convertFromdag(to, converted, toConvert);
+        break;
+      case "hg":
+        converted = convertFromhg(to, converted, toConvert);
+        break;
+      case "kg":
+        converted = convertFromkg(to, converted, toConvert);
+        break;
+      case "t":
+        converted = convertFromt(to, converted, toConvert);
+        break;
     }
   }
 
