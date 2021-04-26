@@ -12,7 +12,9 @@ class HomeCategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: this.category.id == 1
+            ? const EdgeInsets.only(right: 8.0)
+            : const EdgeInsets.only(left: 8.0),
         child: GestureDetector(
           onTap: () {
             Navigator.of(context)

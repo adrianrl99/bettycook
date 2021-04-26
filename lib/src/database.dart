@@ -1,13 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
 import 'package:bettycook/src/constants.dart';
+import 'package:bettycook/src/models/ingredient_model.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
+
+import 'models/preparation_model.dart';
 
 class RecipesDatabase {
   late Database _db;
@@ -113,12 +117,23 @@ class RecipesDatabase {
     return results.map((map) => RecipeModel.fromMapBasic(map)).toList();
   }
 
-  Future<String> getRecipeDetails(int id) async {
+  Future<List<PreparationModel>> getRecipePreparation(int id) async {
     await _openDB();
     List<Map<String, dynamic>> results = await _db.query('recipes',
-        where: 'id = ?', whereArgs: [id], columns: ["details"]);
+        where: 'id = ?', whereArgs: [id], columns: ["preparation"]);
+    List preparation = jsonDecode(results[0]['preparation']);
     await _closeDB();
-    return results[0]['details'];
+    return preparation.map((map) => PreparationModel.fromMap(map)).toList();
+  }
+
+  Future<List<IngredientModel>> getRecipeIngredients(int id) async {
+    await _openDB();
+    List<Map<String, dynamic>> results = await _db.query('recipes',
+        where: 'id = ?', whereArgs: [id], columns: ["ingredients"]);
+
+    List ingredients = jsonDecode(results[0]['ingredients']);
+    await _closeDB();
+    return ingredients.map((map) => IngredientModel.fromMap(map)).toList();
   }
 
   Future<List<RecipeModel>> getRecipesById(List ids) async {

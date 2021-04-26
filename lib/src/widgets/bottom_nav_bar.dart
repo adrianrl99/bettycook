@@ -18,20 +18,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   void _pushRoute(int index) {
     String routePath = ModalRoute.of(context)!.settings.name!;
-
-    switch (routePaths[index]) {
-      case HomePage.routeName:
-        Navigator.of(context).popUntil(ModalRoute.withName(routePaths[index]));
-        break;
-      default:
-        if (routePath == TipsPage.routeName &&
-                routePaths[index] == FavoritesPage.routeName ||
-            routePath == FavoritesPage.routeName &&
-                routePaths[index] == TipsPage.routeName)
-          Navigator.of(context).pushReplacementNamed(routePaths[index]);
-        else
-          Navigator.of(context).pushNamed(routePaths[index]);
-    }
+    if (routePath != routePaths[index])
+      switch (routePaths[index]) {
+        case HomePage.routeName:
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(routePaths[index]));
+          break;
+        default:
+          if (routePath == TipsPage.routeName &&
+                  routePaths[index] == FavoritesPage.routeName ||
+              routePath == FavoritesPage.routeName &&
+                  routePaths[index] == TipsPage.routeName)
+            Navigator.of(context).pushReplacementNamed(routePaths[index]);
+          else
+            Navigator.of(context).pushNamed(routePaths[index]);
+      }
   }
 
   void _onInit(BuildContext context) {

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class SubCategoryWidget extends StatelessWidget {
   final SubCategoryModel subcategory;
-
   const SubCategoryWidget({required this.subcategory, Key? key})
       : super(key: key);
 

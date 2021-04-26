@@ -19,7 +19,7 @@ class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
       child: Flexible(
         fit: FlexFit.tight,
         child: Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Container(
             child: FutureBuilder(
               future: db.getCategories(),
