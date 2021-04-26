@@ -14,7 +14,7 @@ class ToBuyPage extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: Text('Hello World'),
+          child: Text('En desarrollo'),
         ),
       ),
     );

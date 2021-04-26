@@ -1,0 +1,24 @@
+[
+  {
+    "target": "Panetela",
+    "ingredients": [
+      {
+        "amount": "10",
+        "measure": "cucharada",
+        "ingredient": "azucar",
+        "comment": ""
+      }
+    ]
+  },
+  {
+    "target": "Merengue",
+    "ingredients": [
+      {
+        "amount": "1",
+        "measure": "cucharada",
+        "ingredient": "azucar",
+        "comment": ""
+      }
+    ]
+  }
+]

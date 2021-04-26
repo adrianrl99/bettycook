@@ -32,7 +32,7 @@ class _CategoryPageState extends State<CategoryPage> {
             if (snapshot.connectionState == ConnectionState.done) {
               return GridView.count(
                 crossAxisCount: 2,
-                padding: EdgeInsets.all(8),
+                padding:const EdgeInsets.all(8),
                 children: [
                   for (SubCategoryModel subcategory in snapshot.data)
                     SubCategoryWidget(subcategory: subcategory),

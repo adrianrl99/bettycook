@@ -12,3 +12,15 @@ const settingsBoxDarkModeKey = 'dark_mode';
 
 // DB Version
 const db_version = 0;
+
+// Units
+const Map<String, String> listUnits = {
+  "mg": "Miligramos (mg)",
+  "cg": "Centigramos (cg)",
+  "dg": "Decigramos (dg)",
+  "g": "Gramos (g)",
+  "dag": "Decagramos (dag)",
+  "hg": "Hectogramos (hg)",
+  "kg": "Kilogramos (kg)",
+  "t": "Toneladas (t)"
+};

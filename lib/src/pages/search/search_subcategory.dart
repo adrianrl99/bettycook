@@ -35,7 +35,7 @@ class _SearchSubCategoryPageState extends State<SearchSubCategoryPage> {
           children: [
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),

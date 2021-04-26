@@ -14,76 +14,94 @@ class DrawerWidget extends StatelessWidget {
       child: Drawer(
         child: Column(
           children: <Widget>[
-            DrawerHeader(
+            UserAccountsDrawerHeader(
+              margin: EdgeInsets.zero,
+              otherAccountsPictures: [
+                Container(
+                  alignment: Alignment.topRight,
+                  child: ValueListenableBuilder(
+                    valueListenable: Hive.box(settingsBox).listenable(),
+                    builder: (context, Box box, _) {
+                      bool? darkMode = box.get(settingsBoxDarkModeKey);
+                      bool iconMode = darkMode == null
+                          ? MediaQuery.platformBrightnessOf(context) ==
+                              Brightness.dark
+                          : darkMode;
+                      return IconButton(
+                        icon: Icon(
+                          iconMode ? Icons.wb_sunny : Icons.nights_stay,
+                          color: Colors.white,
+                        ),
+                        onPressed: () =>
+                            box.put(settingsBoxDarkModeKey, !iconMode),
+                      );
+                    },
+                  ),
+                ),
+              ],
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
               ),
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/icon/icon.png"),
-                      ),
-                    ),
+              accountName: Text("BettyCook"),
+              accountEmail: Text("Tus recetas en un solo lugar"),
+              currentAccountPicture: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/icon/icon.png"),
                   ),
-                  Container(
-                    alignment: Alignment.topRight,
-                    child: ValueListenableBuilder(
-                      valueListenable: Hive.box(settingsBox).listenable(),
-                      builder: (context, Box box, _) {
-                        bool? darkMode = box.get(settingsBoxDarkModeKey);
-                        bool iconMode = darkMode == null
-                            ? MediaQuery.platformBrightnessOf(context) ==
-                                Brightness.dark
-                            : darkMode;
-                        return IconButton(
-                          icon: Icon(
-                            iconMode ? Icons.wb_sunny : Icons.nights_stay,
-                            color: Colors.white,
-                          ),
-                          onPressed: () =>
-                              box.put(settingsBoxDarkModeKey, !iconMode),
-                        );
-                      },
-                    ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <ListTile>[
+                  ListTile(
+                    leading: Icon(Icons.kitchen),
+                    title: Text(IWantCookPage.title),
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(IWantCookPage.routeName),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.calendar_today),
+                    title: Text(CalendarPage.title),
+                    onTap: () =>
+                        Navigator.of(context).pushNamed(CalendarPage.routeName),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.shopping_cart),
+                    title: Text(ToBuyPage.title),
+                    onTap: () =>
+                        Navigator.of(context).pushNamed(ToBuyPage.routeName),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.swap_horiz),
+                    title: Text(ConverterPage.title),
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(ConverterPage.routeName),
+                  ),
+                  ListTile(
+                      title: Text(
+                    "Contáctanos",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  ListTile(
+                    leading: Icon(Icons.send),
+                    title: Text("Telegram"),
+                    onTap: () => launchURL("https://t.me/bettycook"),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.mail),
+                    title: Text("Correo"),
+                    onTap: () => launchURL("mailto:bettycooksoporte@gmail.com"),
                   ),
                 ],
               ),
             ),
             ListTile(
-              leading: Icon(Icons.kitchen),
-              title: Text(IWantCookPage.title),
-              onTap: () =>
-                  Navigator.of(context).pushNamed(IWantCookPage.routeName),
-            ),
-            ListTile(
-              leading: Icon(Icons.calendar_today),
-              title: Text(CalendarPage.title),
-              onTap: () =>
-                  Navigator.of(context).pushNamed(CalendarPage.routeName),
-            ),
-            ListTile(
-              leading: Icon(Icons.shopping_cart),
-              title: Text(ToBuyPage.title),
-              onTap: () => Navigator.of(context).pushNamed(ToBuyPage.routeName),
-            ),
-            ListTile(
-                title: Text(
-              "Contáctanos",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            )),
-            ListTile(
-              leading: Icon(Icons.send),
-              title: Text("Telegram"),
-              onTap: () => launchURL("https://t.me/bettycook"),
-            ),
-            ListTile(
-              leading: Icon(Icons.mail),
-              title: Text("Email"),
-              onTap: () => launchURL("mailto:bettycooksoporte@gmail.com"),
+              leading: Icon(Icons.help_outline),
+              title: Text(AboutPage.title),
+              onTap: () => Navigator.of(context).pushNamed(AboutPage.routeName),
             ),
           ],
         ),

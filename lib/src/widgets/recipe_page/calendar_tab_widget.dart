@@ -55,7 +55,8 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
         var boxRecipe = box.get(widget.recipe.id);
         boxRecipe?[2].sort();
 
-        return Column(
+        return ListView(
+          padding: EdgeInsets.zero,
           children: <Widget>[
             if (boxRecipe != null && boxRecipe[2].length > 0)
               for (DateTime dateTime in boxRecipe[2])
@@ -86,6 +87,7 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: Container(
+                  alignment: Alignment.topCenter,
                   child: Text("No has planificado esta receta"),
                 ),
               )

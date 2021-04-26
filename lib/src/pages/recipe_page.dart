@@ -66,7 +66,7 @@ class RecipePage extends StatelessWidget {
                     ),
                     Container(
                       alignment: Alignment.bottomRight,
-                      padding: EdgeInsets.only(bottom: 50, right: 10),
+                      padding: const EdgeInsets.only(bottom: 50, right: 10),
                       child: IconButton(
                         color: Colors.white,
                         icon: Icon(Icons.fullscreen),
