@@ -1,7 +1,8 @@
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/models/models.dart';
-import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
+import 'package:bettycook/src/widgets/drawer_widget.dart';
+import 'package:bettycook/src/widgets/floating_home_widget.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:flutter/material.dart';
@@ -25,17 +26,17 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        centerTitle: true,
         title: Text(this.widget.subcategory.name.inCaps),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              Navigator.of(context).pushNamed(SearchSubCategoryPage.routeName,
-                  arguments: widget.subcategory);
-            },
-          ),
-        ],
       ),
+      drawer: DrawerWidget(),
       body: Container(
         child: FutureBuilder(
           future:
@@ -61,7 +62,9 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
           },
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      floatingActionButton: FloatingHomeWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavBar(subcategory: widget.subcategory),
     );
   }
 }

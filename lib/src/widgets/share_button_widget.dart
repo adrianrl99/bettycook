@@ -15,7 +15,10 @@ class ShareButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.share),
+      icon: Icon(
+        Icons.share,
+        color: Colors.white,
+      ),
       onPressed: () async {
         final path = await getApplicationDocumentsDirectory();
         final RenderBox box = context.findRenderObject() as RenderBox;

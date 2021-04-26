@@ -1,6 +1,8 @@
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
+import 'package:bettycook/src/widgets/drawer_widget.dart';
+import 'package:bettycook/src/widgets/floating_home_widget.dart';
 import 'package:bettycook/src/widgets/subcategory_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
@@ -23,8 +25,17 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        centerTitle: true,
         title: Text(widget.category.name.inCaps),
       ),
+      drawer: DrawerWidget(),
       body: Container(
         child: FutureBuilder(
           future: db.getSubCategories(widget.category.id),
@@ -32,7 +43,7 @@ class _CategoryPageState extends State<CategoryPage> {
             if (snapshot.connectionState == ConnectionState.done) {
               return GridView.count(
                 crossAxisCount: 2,
-                padding:const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 children: [
                   for (SubCategoryModel subcategory in snapshot.data)
                     SubCategoryWidget(subcategory: subcategory),
@@ -44,7 +55,11 @@ class _CategoryPageState extends State<CategoryPage> {
           },
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      floatingActionButton: FloatingHomeWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavBar(
+        category: widget.category,
+      ),
     );
   }
 }

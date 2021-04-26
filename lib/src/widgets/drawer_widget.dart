@@ -58,28 +58,52 @@ class DrawerWidget extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 children: <ListTile>[
                   ListTile(
+                      leading: Icon(Icons.favorite),
+                      title: Text(FavoritesPage.title),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context)
+                            .pushNamed(FavoritesPage.routeName);
+                      }),
+                  ListTile(
+                    leading: Icon(Icons.lightbulb),
+                    title: Text(TipsPage.title),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(TipsPage.routeName);
+                    },
+                  ),
+                  ListTile(
                     leading: Icon(Icons.kitchen),
                     title: Text(IWantCookPage.title),
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(IWantCookPage.routeName),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(IWantCookPage.routeName);
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.calendar_today),
                     title: Text(CalendarPage.title),
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(CalendarPage.routeName),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(CalendarPage.routeName);
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.shopping_cart),
                     title: Text(ToBuyPage.title),
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(ToBuyPage.routeName),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(ToBuyPage.routeName);
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.swap_horiz),
                     title: Text(ConverterPage.title),
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(ConverterPage.routeName),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(ConverterPage.routeName);
+                    },
                   ),
                   ListTile(
                       title: Text(
@@ -109,7 +133,10 @@ class DrawerWidget extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.help_outline),
               title: Text(AboutPage.title),
-              onTap: () => Navigator.of(context).pushNamed(AboutPage.routeName),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(AboutPage.routeName);
+              },
             ),
           ],
         ),

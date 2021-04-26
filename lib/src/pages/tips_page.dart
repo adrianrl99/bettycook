@@ -1,6 +1,5 @@
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/models/models.dart';
-import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class TipsPage extends StatefulWidget {
@@ -20,6 +19,7 @@ class _TipsPageState extends State<TipsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(TipsPage.title),
       ),
       body: Container(
@@ -40,7 +40,6 @@ class _TipsPageState extends State<TipsPage> {
           },
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

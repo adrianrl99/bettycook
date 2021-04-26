@@ -1,5 +1,4 @@
 import 'package:bettycook/src/utils.dart';
-import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
@@ -11,6 +10,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(title),
       ),
       body: Container(
@@ -71,7 +71,6 @@ class AboutPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

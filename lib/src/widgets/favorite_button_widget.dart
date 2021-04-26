@@ -20,7 +20,9 @@ class FavoriteButtonWidget extends StatelessWidget {
             box.containsKey(this.recipe.id)
                 ? Icons.favorite
                 : Icons.favorite_border,
-            color: Colors.red[800],
+            color: box.containsKey(this.recipe.id)
+                ? Colors.red[800]
+                : Colors.white,
           ),
           onPressed: () =>
               toggleFavorite(box, this.recipe.id, this.recipe.title),

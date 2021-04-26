@@ -72,6 +72,7 @@ class _ConverterPageState extends State<ConverterPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.black.withOpacity(0.3),
         title: Text(ConverterPage.title),

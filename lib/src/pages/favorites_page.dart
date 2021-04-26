@@ -1,7 +1,6 @@
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/models/models.dart';
-import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/widgets/home_page/home_not_favorite_widget.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +24,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(FavoritesPage.title),
       ),
       body: Container(
@@ -49,7 +49,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
           },
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

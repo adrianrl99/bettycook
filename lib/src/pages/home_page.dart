@@ -1,4 +1,3 @@
-import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/widgets/drawer_widget.dart';
 import 'package:bettycook/src/widgets/home_page/home_categories_widget.dart';
@@ -17,15 +16,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         title: Text("BettyCook"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              Navigator.of(context).pushNamed(SearchAllPage.routeName);
-            },
-          ),
-        ],
       ),
       drawer: DrawerWidget(),
       body: Container(
