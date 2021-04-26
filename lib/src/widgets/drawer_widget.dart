@@ -4,6 +4,7 @@ import 'package:bettycook/src/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:share/share.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -47,7 +48,7 @@ class DrawerWidget extends StatelessWidget {
               currentAccountPicture: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/icon/icon.png"),
+                    image: AssetImage("assets/icon/splash.png"),
                   ),
                 ),
               ),
@@ -97,6 +98,13 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            ListTile(
+              leading: Icon(Icons.share),
+              title: Text("Comparte nuestra app"),
+              onTap: () => Share.share(
+                  "Descarga BettyCook en https://www.apklis.cu/\nTus recetas en un solo lugar",
+                  subject: "BettyCook"),
             ),
             ListTile(
               leading: Icon(Icons.help_outline),

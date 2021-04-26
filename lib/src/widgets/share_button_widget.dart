@@ -26,8 +26,8 @@ class ShareButtonWidget extends StatelessWidget {
             data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
         await imgFile.writeAsBytes(bytes, flush: true);
         await Share.shareFiles([imgFile.path],
-            subject: 'BettyCook',
-            text: this.recipe.title,
+            text:
+                "${this.recipe.title} en BettyCook\nDescarga BettyCook en https://www.apklis.cu/\nTus recetas en un solo lugar",
             sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
         await imgFile.delete();
       },
