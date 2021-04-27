@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/home_page/home_not_favorite_widget.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
@@ -17,7 +16,6 @@ class HomeFavoriteWidget extends StatefulWidget {
 }
 
 class _HomeFavoriteWidgetState extends State<HomeFavoriteWidget> {
-  RecipesDatabase db = RecipesDatabase();
   Random random = Random();
 
   @override
@@ -27,7 +25,7 @@ class _HomeFavoriteWidgetState extends State<HomeFavoriteWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ValueListenableBuilder(
-            valueListenable: Hive.box(favoritesBox).listenable(),
+            valueListenable: Hive.box(favoritesBoxKey).listenable(),
             builder: (context, Box box, _) {
               if (box.isNotEmpty) {
                 List favorite = box.getAt(random.nextInt(box.length));

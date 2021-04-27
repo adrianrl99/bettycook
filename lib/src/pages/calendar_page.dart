@@ -42,7 +42,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
-    Box box = Hive.box(calendarBox);
+    Box box = Hive.box(calendarBoxKey);
     List<Event> events = [];
     if (box.isNotEmpty) {
       for (List event in box.values)

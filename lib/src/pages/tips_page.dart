@@ -1,4 +1,4 @@
-import 'package:bettycook/src/database.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +13,6 @@ class TipsPage extends StatefulWidget {
 }
 
 class _TipsPageState extends State<TipsPage> {
-  RecipesDatabase db = RecipesDatabase();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -13,7 +13,7 @@ class FavoriteButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: Hive.box(favoritesBox).listenable(),
+      valueListenable: Hive.box(favoritesBoxKey).listenable(),
       builder: (BuildContext context, Box box, _) {
         return IconButton(
           icon: Icon(

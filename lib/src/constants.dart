@@ -1,11 +1,17 @@
 // Boxs
-const settingsBox = 'settings_box';
-const favoritesBox = 'favorites_box';
-const tipsBox = 'tips_box';
-const calendarBox = 'calendar_box';
-const notesBox = 'notes_box';
+const settingsBoxKey = 'settings_box';
+const favoritesBoxKey = 'favorites_box';
+const tipsBoxKey = 'tips_box';
+const calendarBoxKey = 'calendar_box';
+const notesBoxKey = 'notes_box';
 
-const boxes = [settingsBox, favoritesBox, tipsBox, calendarBox, notesBox];
+const boxes = [
+  settingsBoxKey,
+  favoritesBoxKey,
+  tipsBoxKey,
+  calendarBoxKey,
+  notesBoxKey
+];
 
 // Box Keys
 const settingsBoxDarkModeKey = 'dark_mode';

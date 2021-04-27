@@ -43,7 +43,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
             TextButton(
                 child: Text("BORRAR"),
                 onPressed: () {
-                  Box box = Hive.box(notesBox);
+                  Box box = Hive.box(notesBoxKey);
                   box.delete(widget.noteKey);
                   Navigator.pop(context);
                 }),
@@ -60,7 +60,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
                 if (_text != null &&
                     _text!.isNotEmpty &&
                     _text != widget.initialText) {
-                  Box box = Hive.box(notesBox);
+                  Box box = Hive.box(notesBoxKey);
                   if (widget.initialText != null && widget.noteKey != null)
                     box.put(widget.noteKey, _text);
                   else

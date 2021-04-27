@@ -1,10 +1,9 @@
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class App extends StatefulWidget {
   @override
@@ -16,18 +15,24 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     _getTips();
+    currentTheme.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
-  void dispose() {
-    for (String box in boxes) Hive.box(box).compact();
-    Hive.close();
+  Future<void> dispose() async {
+    await Future.wait(boxes.map((String box) async {
+      await Hive.box(box).compact();
+    }));
+    await Hive.close();
+    await db.closeDB();
     super.dispose();
   }
 
   void _getTips() async {
-    TipModel tip = await RecipesDatabase().getTipRandom();
-    Hive.box(tipsBox).put('tip', [tip.id, tip.tip]);
+    TipModel tip = await db.getTipRandom();
+    Hive.box(tipsBoxKey).put('tip', [tip.id, tip.tip]);
   }
 
   MaterialColor createMaterialColor(Color color) {
@@ -52,77 +57,90 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: Hive.box(settingsBox).listenable(),
-      builder: (BuildContext context, Box box, _) {
-        bool? darkMode = box.get(settingsBoxDarkModeKey);
-        ThemeMode? darkThemeMode;
-        if (darkMode != null)
-          darkThemeMode = darkMode ? ThemeMode.dark : ThemeMode.light;
-        else
-          darkThemeMode = ThemeMode.system;
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "BettyCook",
-          themeMode: darkThemeMode,
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            bottomNavigationBarTheme:
-                BottomNavigationBarThemeData(selectedItemColor: Colors.white),
-          ),
-          theme: ThemeData(
-            brightness: Brightness.light,
-            appBarTheme: AppBarTheme(
-              brightness: Brightness.dark,
-            ),
-            primarySwatch: createMaterialColor(
-              Color(0xFF75414e),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "BettyCook",
+      themeMode: currentTheme.currentTheme(),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        indicatorColor: Color(0xFF5B178E),
+        splashColor: Color(0xFF5B178E),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(
+              Color(0xFF5B178E),
             ),
           ),
-          home: HomePage(),
-          initialRoute: HomePage.routeName,
-          onGenerateRoute: (RouteSettings settings) {
-            return MaterialPageRoute(
-              settings: settings,
-              builder: (BuildContext context) {
-                switch (settings.name) {
-                  case SearchAllPage.routeName:
-                    return SearchAllPage();
-                  case SearchSubCategoryPage.routeName:
-                    return SearchSubCategoryPage(
-                        subcategory: settings.arguments as SubCategoryModel);
-                  case FavoritesPage.routeName:
-                    return FavoritesPage();
-                  case TipsPage.routeName:
-                    return TipsPage();
-                  case CategoryPage.routeName:
-                    return CategoryPage(
-                        category: settings.arguments as CategoryModel);
-                  case SubCategoryPage.routeName:
-                    return SubCategoryPage(
-                        subcategory: settings.arguments as SubCategoryModel);
-                  case RecipePage.routeName:
-                    return RecipePage(
-                        recipe: settings.arguments as RecipeModel);
-                  case IWantCookPage.routeName:
-                    return IWantCookPage();
-                  case CalendarPage.routeName:
-                    return CalendarPage();
-                  case ToBuyPage.routeName:
-                    return ToBuyPage();
-                  case ConverterPage.routeName:
-                    return ConverterPage();
-                  case AboutPage.routeName:
-                    return AboutPage();
-                  default:
-                    return Center(
-                      child: Container(
-                        child: Text("404"),
-                      ),
-                    );
-                }
-              },
-            );
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(
+              Colors.white,
+            ),
+          ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          foregroundColor: Colors.white,
+          backgroundColor: Color(0xFF5B178E),
+        ),
+        bottomNavigationBarTheme:
+            BottomNavigationBarThemeData(selectedItemColor: Colors.white),
+        primarySwatch: createMaterialColor(
+          Color(0xFF5B178E),
+        ),
+        primaryColor: Color(0xFF5B178E),
+      ),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.dark,
+        ),
+        primarySwatch: createMaterialColor(
+          Color(0xFF5B178E),
+        ),
+        primaryColor: Color(0xFF5B178E),
+      ),
+      home: HomePage(),
+      initialRoute: HomePage.routeName,
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) {
+            switch (settings.name) {
+              case SearchAllPage.routeName:
+                return SearchAllPage();
+              case SearchSubCategoryPage.routeName:
+                return SearchSubCategoryPage(
+                    subcategory: settings.arguments as SubCategoryModel);
+              case FavoritesPage.routeName:
+                return FavoritesPage();
+              case TipsPage.routeName:
+                return TipsPage();
+              case CategoryPage.routeName:
+                return CategoryPage(
+                    category: settings.arguments as CategoryModel);
+              case SubCategoryPage.routeName:
+                return SubCategoryPage(
+                    subcategory: settings.arguments as SubCategoryModel);
+              case RecipePage.routeName:
+                return RecipePage(recipe: settings.arguments as RecipeModel);
+              case IWantCookPage.routeName:
+                return IWantCookPage();
+              case CalendarPage.routeName:
+                return CalendarPage();
+              case ToBuyPage.routeName:
+                return ToBuyPage();
+              case ConverterPage.routeName:
+                return ConverterPage();
+              case AboutPage.routeName:
+                return AboutPage();
+              default:
+                return Center(
+                  child: Container(
+                    child: Text("404"),
+                  ),
+                );
+            }
           },
         );
       },

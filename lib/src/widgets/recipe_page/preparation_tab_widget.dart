@@ -1,4 +1,4 @@
-import 'package:bettycook/src/database.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/models/preparation_model.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +11,6 @@ class PreparationTabWidget extends StatefulWidget {
 }
 
 class _PreparationTabWidgetState extends State<PreparationTabWidget> {
-  RecipesDatabase db = RecipesDatabase();
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

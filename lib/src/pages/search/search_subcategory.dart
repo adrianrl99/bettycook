@@ -1,4 +1,4 @@
-import 'package:bettycook/src/database.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/pages/pages.dart';
@@ -19,7 +19,6 @@ class SearchSubCategoryPage extends StatefulWidget {
 }
 
 class _SearchSubCategoryPageState extends State<SearchSubCategoryPage> {
-  RecipesDatabase db = RecipesDatabase();
   final _timeSleepSearch = TimeSleepSearch(milliseconds: 1000);
   String _text = "";
   bool _isStop = false;

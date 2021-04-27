@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
   static const routeName = "/about";
-  static const title = "Acerca de la app";
+  static const title = "Sobre BettyCook";
   const AboutPage({Key? key}) : super(key: key);
 
   @override

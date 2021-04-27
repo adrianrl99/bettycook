@@ -14,7 +14,7 @@ class CalendarButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: Hive.box(calendarBox).listenable(),
+      valueListenable: Hive.box(calendarBoxKey).listenable(),
       builder: (BuildContext context, Box box, _) {
         var boxRecipe = box.get(this.recipe.id);
         return IconButton(

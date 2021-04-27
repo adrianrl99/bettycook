@@ -1,4 +1,4 @@
-import 'package:bettycook/src/database.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/home_page/home_category_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +11,6 @@ class HomeCategoriesWidget extends StatefulWidget {
 }
 
 class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
-  RecipesDatabase db = RecipesDatabase();
-
   @override
   Widget build(BuildContext context) {
     return Container(

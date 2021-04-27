@@ -1,3 +1,4 @@
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/utils.dart';
@@ -21,9 +22,10 @@ class DrawerWidget extends StatelessWidget {
                 Container(
                   alignment: Alignment.topRight,
                   child: ValueListenableBuilder(
-                    valueListenable: Hive.box(settingsBox).listenable(),
+                    valueListenable: Hive.box(settingsBoxKey).listenable(),
                     builder: (context, Box box, _) {
                       bool? darkMode = box.get(settingsBoxDarkModeKey);
+
                       bool iconMode = darkMode == null
                           ? MediaQuery.platformBrightnessOf(context) ==
                               Brightness.dark
@@ -33,8 +35,7 @@ class DrawerWidget extends StatelessWidget {
                           iconMode ? Icons.wb_sunny : Icons.nights_stay,
                           color: Colors.white,
                         ),
-                        onPressed: () =>
-                            box.put(settingsBoxDarkModeKey, !iconMode),
+                        onPressed: () => currentTheme.switchTheme(context),
                       );
                     },
                   ),

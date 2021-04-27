@@ -1,5 +1,6 @@
-import 'package:bettycook/src/database.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/models/ingredient_model.dart';
+import 'package:bettycook/src/widgets/recipe_page/ingredient_widget.dart';
 import 'package:flutter/material.dart';
 
 class IngredientsTabWidget extends StatefulWidget {
@@ -11,8 +12,6 @@ class IngredientsTabWidget extends StatefulWidget {
 }
 
 class _IngredientsTabWidgetState extends State<IngredientsTabWidget> {
-  RecipesDatabase db = RecipesDatabase();
-
   void _showDialog(BuildContext context, String comment) {
     showDialog(
         context: context,
@@ -44,12 +43,13 @@ class _IngredientsTabWidgetState extends State<IngredientsTabWidget> {
                 for (IngredientModel ingredient in snapshot.data)
                   Column(
                     children: <Widget>[
-                      ListTile(
-                        title: Text(
-                          ingredient.target,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                      if (ingredient.target.isNotEmpty)
+                        ListTile(
+                          title: Text(
+                            ingredient.target,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Column(
@@ -64,20 +64,8 @@ class _IngredientsTabWidgetState extends State<IngredientsTabWidget> {
                                             context, ingredients.comment),
                                       )
                                     : null,
-                                title: TextButton(
-                                  style: ButtonStyle(
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  child: Text(
-                                    "${ingredients.amount} ${ingredients.measure} de ${ingredients.ingredient}",
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2!
-                                            .color),
-                                  ),
-                                  onLongPress: () {},
-                                  onPressed: () {},
+                                title: IngredientWidget(
+                                  ingredients: ingredients,
                                 ),
                               )
                           ],

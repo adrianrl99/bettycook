@@ -27,7 +27,7 @@ class HomeTip extends StatelessWidget {
               ),
             ),
             ValueListenableBuilder(
-              valueListenable: Hive.box(tipsBox).listenable(),
+              valueListenable: Hive.box(tipsBoxKey).listenable(),
               builder: (BuildContext context, Box box, _) {
                 if (box.isNotEmpty)
                   return ListTile(

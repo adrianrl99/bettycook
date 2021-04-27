@@ -22,7 +22,7 @@ class NotesWidget extends StatelessWidget {
     return AlertDialog(
       title: Text("Notas de ${this.recipe.title}"),
       content: ValueListenableBuilder(
-          valueListenable: Hive.box(notesBox).listenable(),
+          valueListenable: Hive.box(notesBoxKey).listenable(),
           builder: (BuildContext context, Box box, _) {
             if (box.isNotEmpty)
               return ListView(

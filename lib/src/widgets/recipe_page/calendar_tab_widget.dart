@@ -1,5 +1,4 @@
 import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/hive_functions.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
@@ -17,8 +16,6 @@ class CalendarTabWidget extends StatefulWidget {
 }
 
 class _CalendarTabWidgetState extends State<CalendarTabWidget> {
-  RecipesDatabase db = RecipesDatabase();
-
   Future<void> _showDialogDelete(
       BuildContext context, Box box, boxRecipe, DateTime dateTime) async {
     await showDialog(
@@ -50,7 +47,7 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: Hive.box(calendarBox).listenable(),
+      valueListenable: Hive.box(calendarBoxKey).listenable(),
       builder: (BuildContext context, Box box, _) {
         var boxRecipe = box.get(widget.recipe.id);
         boxRecipe?[2].sort();

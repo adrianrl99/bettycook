@@ -1,3 +1,4 @@
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/database.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
@@ -20,8 +21,6 @@ class SubCategoryPage extends StatefulWidget {
 }
 
 class _SubCategoryPageState extends State<SubCategoryPage> {
-  RecipesDatabase db = RecipesDatabase();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

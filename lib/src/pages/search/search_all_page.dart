@@ -1,4 +1,4 @@
-import 'package:bettycook/src/database.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
@@ -15,7 +15,6 @@ class SearchAllPage extends StatefulWidget {
 }
 
 class _SearchAllPageState extends State<SearchAllPage> {
-  RecipesDatabase db = RecipesDatabase();
   final String title = "Buscar";
   final _timeSleepSearch = TimeSleepSearch(milliseconds: 1000);
   String _text = "";

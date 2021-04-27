@@ -114,7 +114,7 @@ class RecipePage extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ValueListenableBuilder(
-        valueListenable: Hive.box(notesBox).listenable(),
+        valueListenable: Hive.box(notesBoxKey).listenable(),
         builder: (BuildContext context, Box box, _) {
           return Badge(
               position: BadgePosition.bottomStart(),
