@@ -1,7 +1,9 @@
-import 'package:bettycook/src/constants.dart';
+import 'dart:math';
+
+import 'package:bettycook/src/adapters/adapters.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeTip extends StatelessWidget {
   const HomeTip({Key? key}) : super(key: key);
@@ -27,18 +29,14 @@ class HomeTip extends StatelessWidget {
               ),
             ),
             ValueListenableBuilder(
-              valueListenable: Hive.box(tipsBoxKey).listenable(),
-              builder: (BuildContext context, Box box, _) {
-                if (box.isNotEmpty)
-                  return ListTile(
-                    title: Text(box.get('tip')[1]),
-                  );
-                else
-                  return ListTile(
-                    title: Center(
-                      child: Text("No hay tip hoy"),
-                    ),
-                  );
+              valueListenable: hiveDB.tipsBoxListable(),
+              builder:
+                  (BuildContext context, Box<TipHive> tipsBox, Widget? child) {
+                Random random = Random();
+                TipHive? tip = tipsBox.getAt(random.nextInt(tipsBox.length));
+                return ListTile(
+                  title: Text(tip!.tip),
+                );
               },
             ),
           ],

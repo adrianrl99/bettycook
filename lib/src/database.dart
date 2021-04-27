@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:bettycook/src/adapters/adapters.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/models/ingredient_model.dart';
 import 'package:bettycook/src/models/models.dart';
@@ -15,38 +17,60 @@ import 'models/preparation_model.dart';
 
 class RecipesDatabase {
   late Database _db;
-  initDB() async {
+  init() async {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, "bettycook.db");
 
     // Check if the database exists
     var exists = await databaseExists(path);
 
-    if (!exists || !(await _checkDBVersion()) || kDebugMode) {
-      // Should happen only the first time you launch your application
-      // Make sure the parent directory exists
-      try {
-        await Directory(dirname(path)).create(recursive: true);
-      } catch (_) {}
-
-      // Copy from asset
-      ByteData data = await rootBundle.load(join("assets", "database.db"));
-      List<int> bytes =
-          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-
-      // Write and flush the bytes written
-      await File(path).writeAsBytes(bytes, flush: true);
+    if (!exists || kDebugMode) {
+      await _createDB(path);
     }
+    await _openDB();
+    if (!(await _checkDBVersion())) await _createDB(path);
+
+    if (kDebugMode || !(await _checkDBVersion())) await _initHiveDB();
+  }
+
+  Future<void> _createDB(path) async {
+    // Should happen only the first time you launch your application
+    // Make sure the parent directory exists
+    try {
+      await Directory(dirname(path)).create(recursive: true);
+    } catch (_) {}
+
+    // Copy from asset
+    ByteData data = await rootBundle.load(join("assets", "database.db"));
+    List<int> bytes =
+        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+    // Write and flush the bytes written
+    await File(path).writeAsBytes(bytes, flush: true);
+  }
+
+  Future<void> _initHiveDB() async {
+    await _initTipsHive();
+    await _initCategoriesHive();
+  }
+
+  // init Hive Database boxes
+  Future<void> _initTipsHive() async {
+    for (TipModel tip in (await getTips()))
+      hiveDB.tipsBox.put(tip.id, TipHive(tip.tip));
+  }
+
+  Future<void> _initCategoriesHive() async {
+    for (CategoryModel category in (await getCategories()))
+      hiveDB.categoriesBox.put(category.id, CategoryHive(category.name));
   }
 
   Future<bool> _checkDBVersion() async {
-    await openDB();
     bool checkVersion = await _db.getVersion() == db_version;
-    await closeDB();
     return checkVersion;
   }
 
-  Future<void> openDB() async {
+  Future<void> _openDB() async {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, "bettycook.db");
 

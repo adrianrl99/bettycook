@@ -14,7 +14,6 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    _getTips();
     currentTheme.addListener(() {
       setState(() {});
     });
@@ -22,17 +21,13 @@ class _AppState extends State<App> {
 
   @override
   Future<void> dispose() async {
+    await hiveDB.compactBoxes();
     await Future.wait(boxes.map((String box) async {
       await Hive.box(box).compact();
     }));
     await Hive.close();
     await db.closeDB();
     super.dispose();
-  }
-
-  void _getTips() async {
-    TipModel tip = await db.getTipRandom();
-    Hive.box(tipsBoxKey).put('tip', [tip.id, tip.tip]);
   }
 
   MaterialColor createMaterialColor(Color color) {
@@ -64,7 +59,6 @@ class _AppState extends State<App> {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         indicatorColor: Color(0xFF5B178E),
-        splashColor: Color(0xFF5B178E),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(

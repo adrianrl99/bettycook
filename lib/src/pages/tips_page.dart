@@ -1,6 +1,7 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
-import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class TipsPage extends StatefulWidget {
   static const routeName = "/tips";
@@ -21,20 +22,17 @@ class _TipsPageState extends State<TipsPage> {
         title: Text(TipsPage.title),
       ),
       body: Container(
-        child: FutureBuilder(
-          future: db.getTips(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return ListView(
-                children: <Widget>[
-                  for (TipModel tip in snapshot.data)
-                    ListTile(
-                      title: Text(tip.tip),
-                    )
-                ],
-              );
-            } else
-              return Container();
+        child: ValueListenableBuilder(
+          valueListenable: hiveDB.tipsBoxListable(),
+          builder: (BuildContext context, Box<TipHive> tipsBox, Widget? child) {
+            return ListView(
+              children: <ListTile>[
+                for (TipHive tip in tipsBox.values)
+                  ListTile(
+                    title: Text(tip.tip),
+                  ),
+              ],
+            );
           },
         ),
       ),
