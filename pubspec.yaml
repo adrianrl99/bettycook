@@ -102,8 +102,7 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: false
-  image_path: "assets/icon/splash.png"
-  adaptive_icon_background: "#90caf9"
+  image_path: "assets/icon/icon.png"
 
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen
