@@ -5,11 +5,13 @@ const tipsBoxKey = 'tips_box';
 const calendarBoxKey = 'calendar_box';
 const notesBoxKey = 'notes_box';
 const categoriesBoxKey = "categories_box";
+const subCategoriesBoxKey = "sub_categories_box";
+const recipesBoxKey = "recipes_box";
 
 // Delete this
 const boxes = [settingsBoxKey, favoritesBoxKey, calendarBoxKey, notesBoxKey];
 
-// Box Keys
+// Boxes Keys
 const settingsBoxDarkModeKey = 'dark_mode';
 
 // DB Version

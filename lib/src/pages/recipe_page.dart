@@ -1,9 +1,9 @@
 import 'package:badges/badges.dart';
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
-import 'package:bettycook/src/widgets/drawer_widget.dart';
 import 'package:bettycook/src/widgets/fullscreen_photo_widget.dart';
 import 'package:bettycook/src/widgets/recipe_page/calendar_tab_widget.dart';
 import 'package:bettycook/src/widgets/recipe_page/ingredients_tab_widget.dart';
@@ -16,7 +16,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 class RecipePage extends StatelessWidget {
   static const routeName = "/recipe";
 
-  final RecipeModel recipe;
+  final RecipeHive recipe;
 
   const RecipePage({required this.recipe, Key? key}) : super(key: key);
 
@@ -35,20 +35,12 @@ class RecipePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerWidget(),
       body: DefaultTabController(
         length: 3,
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                automaticallyImplyLeading: false,
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
                 title: Text(this.recipe.title.inCaps),
                 actions: <Widget>[
                   IconButton(
@@ -102,8 +94,8 @@ class RecipePage extends StatelessWidget {
           },
           body: TabBarView(
             children: <Widget>[
-              IngredientsTabWidget(id: this.recipe.id),
-              PreparationTabWidget(id: this.recipe.id),
+              IngredientsTabWidget(ingredients: this.recipe.ingredients),
+              PreparationTabWidget(id: this.recipe.key),
               CalendarTabWidget(recipe: this.recipe),
             ],
           ),
@@ -118,13 +110,9 @@ class RecipePage extends StatelessWidget {
         builder: (BuildContext context, Box box, _) {
           return Badge(
               position: BadgePosition.bottomStart(),
-              badgeColor: Theme.of(context).primaryColor,
               showBadge: box.isNotEmpty,
               badgeContent: Text(
                 (box.length).toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
               ),
               child: FloatingActionButton(
                 child: Icon(Icons.notes),

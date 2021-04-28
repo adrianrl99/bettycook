@@ -1,32 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'category.dart';
+part of 'ingredient.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CategoryHiveAdapter extends TypeAdapter<CategoryHive> {
+class IngredientHiveAdapter extends TypeAdapter<IngredientHive> {
   @override
-  final int typeId = 1;
+  final int typeId = 4;
 
   @override
-  CategoryHive read(BinaryReader reader) {
+  IngredientHive read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CategoryHive(
-      name: fields[0] as String,
+    return IngredientHive(
+      target: fields[0] as String,
+      ingredients: (fields[1] as List).cast<IngredientsHive>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, CategoryHive obj) {
+  void write(BinaryWriter writer, IngredientHive obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.name);
+      ..write(obj.target)
+      ..writeByte(1)
+      ..write(obj.ingredients);
   }
 
   @override
@@ -35,7 +38,7 @@ class CategoryHiveAdapter extends TypeAdapter<CategoryHive> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CategoryHiveAdapter &&
+      other is IngredientHiveAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

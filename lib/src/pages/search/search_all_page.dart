@@ -60,44 +60,44 @@ class _SearchAllPageState extends State<SearchAllPage> {
                 },
               ),
             ),
-            if (_isStop && _text.length > 3)
-              FutureBuilder(
-                future: db.getRecipeByTitle(_text),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return Expanded(
-                    child: ListView(
-                      children: <Widget>[
-                        if (snapshot.connectionState == ConnectionState.done)
-                          if (snapshot.data != null)
-                            for (RecipeModel recipe in snapshot.data)
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    top: 8.0,
-                                    bottom: 8.0,
-                                    left: 16.0,
-                                    right: 16.0),
-                                child: RecipeWidget(recipe: recipe),
-                              )
-                          else
-                            Container(
-                              alignment: Alignment.center,
-                              child: Text("No se encontraron resultados"),
-                            )
-                        else
-                          Container(
-                            alignment: Alignment.center,
-                            child: Text("Buscando..."),
-                          )
-                      ],
-                    ),
-                  );
-                },
-              )
-            else
-              Container(
-                alignment: Alignment.center,
-                child: Text(_text),
-              )
+            // if (_isStop && _text.length > 3)
+            //   FutureBuilder(
+            //     future: db.getRecipeByTitle(_text),
+            //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+            //       return Expanded(
+            //         child: ListView(
+            //           children: <Widget>[
+            //             if (snapshot.connectionState == ConnectionState.done)
+            //               if (snapshot.data != null)
+            //                 for (RecipeModel recipe in snapshot.data)
+            //                   Container(
+            //                     padding: const EdgeInsets.only(
+            //                         top: 8.0,
+            //                         bottom: 8.0,
+            //                         left: 16.0,
+            //                         right: 16.0),
+            //                     child: RecipeWidget(recipe: recipe),
+            //                   )
+            //               else
+            //                 Container(
+            //                   alignment: Alignment.center,
+            //                   child: Text("No se encontraron resultados"),
+            //                 )
+            //             else
+            //               Container(
+            //                 alignment: Alignment.center,
+            //                 child: Text("Buscando..."),
+            //               )
+            //           ],
+            //         ),
+            //       );
+            //     },
+            //   )
+            // else
+            Container(
+              alignment: Alignment.center,
+              child: Text(_text),
+            )
           ],
         ),
       ),

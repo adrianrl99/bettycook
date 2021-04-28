@@ -1,3 +1,4 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/recipe_page/add_note_widget.dart';
@@ -6,7 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class NotesWidget extends StatelessWidget {
-  final RecipeModel recipe;
+  final RecipeHive recipe;
   const NotesWidget({required this.recipe, Key? key}) : super(key: key);
 
   void _addNotes(BuildContext context, {String? initialText, int? noteKey}) {

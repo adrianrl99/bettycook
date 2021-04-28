@@ -1,17 +1,12 @@
-import 'package:bettycook/src/config.dart';
-import 'package:bettycook/src/models/ingredient_model.dart';
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/widgets/recipe_page/ingredient_widget.dart';
 import 'package:flutter/material.dart';
 
-class IngredientsTabWidget extends StatefulWidget {
-  final int id;
-  const IngredientsTabWidget({required this.id, Key? key}) : super(key: key);
+class IngredientsTabWidget extends StatelessWidget {
+  final List<IngredientHive> ingredients;
+  const IngredientsTabWidget({required this.ingredients, Key? key})
+      : super(key: key);
 
-  @override
-  _IngredientsTabWidgetState createState() => _IngredientsTabWidgetState();
-}
-
-class _IngredientsTabWidgetState extends State<IngredientsTabWidget> {
   void _showDialog(BuildContext context, String comment) {
     showDialog(
         context: context,
@@ -32,60 +27,54 @@ class _IngredientsTabWidgetState extends State<IngredientsTabWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: db.getRecipeIngredients(widget.id),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.data.length > 0)
-            return ListView(
-              padding: EdgeInsets.zero,
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        if (this.ingredients.isNotEmpty)
+          for (IngredientHive ingredient in this.ingredients)
+            Column(
               children: <Widget>[
-                for (IngredientModel ingredient in snapshot.data)
-                  Column(
+                if (ingredient.target.isNotEmpty)
+                  ListTile(
+                    title: Text(
+                      ingredient.target,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
                     children: <Widget>[
-                      if (ingredient.target.isNotEmpty)
+                      for (IngredientsHive _ingredients
+                          in ingredient.ingredients)
                         ListTile(
-                          title: Text(
-                            ingredient.target,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          trailing: _ingredients.comment.isNotEmpty
+                              ? IconButton(
+                                  icon: Icon(
+                                    Icons.help_outline,
+                                  ),
+                                  onPressed: () => _showDialog(
+                                      context, _ingredients.comment),
+                                )
+                              : null,
+                          title: IngredientWidget(
+                            ingredients: _ingredients,
                           ),
-                        ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Column(
-                          children: <Widget>[
-                            for (IngredientsModel ingredients
-                                in ingredient.ingredients)
-                              ListTile(
-                                trailing: ingredients.comment.isNotEmpty
-                                    ? IconButton(
-                                        icon: Icon(Icons.help_outline),
-                                        onPressed: () => _showDialog(
-                                            context, ingredients.comment),
-                                      )
-                                    : null,
-                                title: IngredientWidget(
-                                  ingredients: ingredients,
-                                ),
-                              )
-                          ],
-                        ),
-                      )
+                        )
                     ],
-                  )
+                  ),
+                )
               ],
-            );
-          else
-            return Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Container(
-                alignment: Alignment.topCenter,
-                child: Text("Esta receta no tiene ingredientes"),
-              ),
-            );
-        } else
-          return Container();
-      },
+            )
+        else
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Container(
+              alignment: Alignment.topCenter,
+              child: Text("Esta receta no tiene ingredientes"),
+            ),
+          ),
+      ],
     );
   }
 }

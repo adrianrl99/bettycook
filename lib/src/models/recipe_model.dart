@@ -1,9 +1,12 @@
+import 'dart:convert';
+
+import 'package:bettycook/src/models/models.dart';
+
 class RecipeModel {
   late int id;
   late String title;
-  late String details;
-  late String ingredients;
-  late String preparation;
+  List<IngredientModel> ingredients = [];
+  List<PreparationModel> preparation = [];
   late int category;
   late int subcategory;
 
@@ -15,14 +18,19 @@ class RecipeModel {
   }
 
   // Full constructors
-  RecipeModel(this.id, this.title, this.details, this.ingredients,
-      this.preparation, this.category, this.subcategory);
   RecipeModel.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     title = map['title'];
-    details = map['details'];
-    ingredients = map['ingredientes'];
-    preparation = map['preparation'];
+    jsonDecode(map["ingredients"])
+        .map((_map) => IngredientModel.fromMap(_map))
+        .toList()
+        .forEach((i) => ingredients.add(i));
+    jsonDecode(map["preparation"])
+        .map((_map) => PreparationModel.fromMap(_map))
+        .toList()
+        .forEach((i) => preparation.add(i));
+
+    // preparation = map['preparation'];
     category = map['category'];
     subcategory = map['subcategory'];
   }

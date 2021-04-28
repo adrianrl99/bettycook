@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/utils.dart';
@@ -7,7 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class CalendarButtonWidget extends StatelessWidget {
-  final RecipeModel recipe;
+  final RecipeHive recipe;
   const CalendarButtonWidget({required this.recipe, Key? key})
       : super(key: key);
 
@@ -16,21 +17,17 @@ class CalendarButtonWidget extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Hive.box(calendarBoxKey).listenable(),
       builder: (BuildContext context, Box box, _) {
-        var boxRecipe = box.get(this.recipe.id);
+        var boxRecipe = box.get(this.recipe.key);
         return IconButton(
           icon: Badge(
             badgeContent: Text(
               boxRecipe != null ? boxRecipe[2].length.toString() : "",
-              style: TextStyle(
-                color: Colors.white,
-              ),
             ),
-            badgeColor: Theme.of(context).primaryColor,
             showBadge:
-                box.containsKey(this.recipe.id) && boxRecipe[2].length > 0,
+                box.containsKey(this.recipe.key) && boxRecipe[2].length > 0,
             child: Icon(
               Icons.calendar_today,
-              color: box.containsKey(this.recipe.id) && boxRecipe[2].length > 0
+              color: box.containsKey(this.recipe.key) && boxRecipe[2].length > 0
                   ? Colors.green
                   : Colors.white,
             ),

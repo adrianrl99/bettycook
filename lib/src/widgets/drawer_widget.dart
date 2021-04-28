@@ -42,7 +42,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
               ],
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).primaryColor.withOpacity(0.8),
               ),
               accountName: Text("BettyCook"),
               accountEmail: Text("Tus recetas en un solo lugar"),

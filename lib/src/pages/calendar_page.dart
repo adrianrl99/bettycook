@@ -139,9 +139,9 @@ class _CalendarPageState extends State<CalendarPage> {
                     return Container(
                       padding: const EdgeInsets.only(
                           top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
-                      child: RecipeWidget(
-                          recipe: RecipeModel.basic(
-                              value[index].id, value[index].title)),
+                      // child: RecipeWidget(
+                      //     recipe: RecipeModel.basic(
+                      //         value[index].id, value[index].title)),
                     );
                   },
                 );

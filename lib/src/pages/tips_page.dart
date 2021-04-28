@@ -3,17 +3,12 @@ import 'package:bettycook/src/config.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class TipsPage extends StatefulWidget {
+class TipsPage extends StatelessWidget {
   static const routeName = "/tips";
   static const String title = "Tips";
 
   const TipsPage({Key? key}) : super(key: key);
 
-  @override
-  _TipsPageState createState() => _TipsPageState();
-}
-
-class _TipsPageState extends State<TipsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

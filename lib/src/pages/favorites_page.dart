@@ -30,17 +30,17 @@ class _FavoritesPageState extends State<FavoritesPage> {
           builder: (BuildContext context, Box box, _) {
             if (box.isNotEmpty)
               return ListView(
-                children: <Widget>[
-                  for (List recipe in box.values)
-                    Container(
-                      padding: const EdgeInsets.only(
-                          top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
-                      child: RecipeWidget(
-                        recipe: RecipeModel.basic(recipe[0], recipe[1]),
-                      ),
-                    )
-                ],
-              );
+                  // children: <Widget>[
+                  //   for (List recipe in box.values)
+                  //     Container(
+                  //       padding: const EdgeInsets.only(
+                  //           top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
+                  //       child: RecipeWidget(
+                  //         recipe: RecipeModel.basic(recipe[0], recipe[1]),
+                  //       ),
+                  //     )
+                  // ],
+                  );
             else
               return HomeNotFavoriteWidget();
           },

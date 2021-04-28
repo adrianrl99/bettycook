@@ -7,5 +7,5 @@ class CategoryHive extends HiveObject {
   @HiveField(0)
   String name;
 
-  CategoryHive(this.name);
+  CategoryHive({required this.name});
 }

@@ -1,10 +1,10 @@
-import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 
 class HomeCategoryWidget extends StatelessWidget {
-  final CategoryModel category;
+  final CategoryHive category;
   const HomeCategoryWidget({required this.category, Key? key})
       : super(key: key);
 
@@ -12,7 +12,7 @@ class HomeCategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: this.category.id == 1
+        padding: this.category.key == 1
             ? const EdgeInsets.only(right: 8.0)
             : const EdgeInsets.only(left: 8.0),
         child: GestureDetector(

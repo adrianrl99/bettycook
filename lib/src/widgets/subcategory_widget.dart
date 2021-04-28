@@ -1,10 +1,10 @@
-import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/subcategory_page.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 
 class SubCategoryWidget extends StatelessWidget {
-  final SubCategoryModel subcategory;
+  final SubCategoryHive subcategory;
   const SubCategoryWidget({required this.subcategory, Key? key})
       : super(key: key);
 

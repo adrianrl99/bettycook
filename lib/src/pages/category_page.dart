@@ -1,24 +1,20 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
-import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/widgets/drawer_widget.dart';
 import 'package:bettycook/src/widgets/floating_home_widget.dart';
 import 'package:bettycook/src/widgets/subcategory_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
+import 'package:hive/hive.dart';
 
-class CategoryPage extends StatefulWidget {
+class CategoryPage extends StatelessWidget {
   static const routeName = "/category";
 
-  final CategoryModel category;
+  final CategoryHive category;
 
   const CategoryPage({required this.category, Key? key}) : super(key: key);
 
-  @override
-  _CategoryPageState createState() => _CategoryPageState();
-}
-
-class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,32 +27,33 @@ class _CategoryPageState extends State<CategoryPage> {
           },
         ),
         centerTitle: true,
-        title: Text(widget.category.name.inCaps),
+        title: Text(this.category.name.inCaps),
       ),
       drawer: DrawerWidget(),
       body: Container(
-        child: FutureBuilder(
-          future: db.getSubCategories(widget.category.id),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return GridView.count(
-                crossAxisCount: 2,
-                padding: const EdgeInsets.all(8),
-                children: [
-                  for (SubCategoryModel subcategory in snapshot.data)
-                    SubCategoryWidget(subcategory: subcategory),
-                ],
-              );
-            } else {
-              return Container();
-            }
+        child: ValueListenableBuilder(
+          valueListenable: hiveDB.subCategoriesBoxListable(),
+          builder: (BuildContext context, Box<SubCategoryHive> subcategoryBox,
+              Widget? child) {
+            Iterable<SubCategoryHive> subCategoryList = subcategoryBox.values
+                .where((element) => element.category.key == this.category.key);
+            return GridView.count(
+              crossAxisCount: 2,
+              padding: const EdgeInsets.all(8.0),
+              children: <Widget>[
+                for (SubCategoryHive subCategory in subCategoryList)
+                  SubCategoryWidget(
+                    subcategory: subCategory,
+                  ),
+              ],
+            );
           },
         ),
       ),
       floatingActionButton: FloatingHomeWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavBar(
-        category: widget.category,
+        category: this.category,
       ),
     );
   }

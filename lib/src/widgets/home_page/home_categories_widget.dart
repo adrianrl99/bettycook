@@ -1,6 +1,5 @@
 import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
-import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/home_page/home_category_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -28,7 +27,7 @@ class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
                 children: <HomeCategoryWidget>[
                   for (CategoryHive category in categoriesBox.values)
                     HomeCategoryWidget(
-                      category: CategoryModel(category.key, category.name),
+                      category: category,
                     )
                 ],
               );

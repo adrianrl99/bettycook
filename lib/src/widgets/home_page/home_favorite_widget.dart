@@ -24,20 +24,20 @@ class _HomeFavoriteWidgetState extends State<HomeFavoriteWidget> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ValueListenableBuilder(
-            valueListenable: Hive.box(favoritesBoxKey).listenable(),
-            builder: (context, Box box, _) {
-              if (box.isNotEmpty) {
-                List favorite = box.getAt(random.nextInt(box.length));
-                return Expanded(
-                  child: RecipeWidget(
-                    recipe: RecipeModel.basic(favorite[0], favorite[1]),
-                  ),
-                );
-              } else
-                return Expanded(child: HomeNotFavoriteWidget());
-            },
-          ),
+          // ValueListenableBuilder(
+          //   valueListenable: Hive.box(favoritesBoxKey).listenable(),
+          //   builder: (context, Box box, _) {
+          //     if (box.isNotEmpty) {
+          //       List favorite = box.getAt(random.nextInt(box.length));
+          //       return Expanded(
+          //         child: RecipeWidget(
+          //           recipe: RecipeModel.basic(favorite[0], favorite[1]),
+          //         ),
+          //       );
+          //     } else
+          //       return Expanded(child: HomeNotFavoriteWidget());
+          //   },
+          // ),
         ],
       ),
     );

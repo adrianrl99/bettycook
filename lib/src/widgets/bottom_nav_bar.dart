@@ -1,3 +1,4 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/calendar_button_widget.dart';
@@ -6,9 +7,9 @@ import 'package:bettycook/src/widgets/share_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
-  final CategoryModel? category;
-  final SubCategoryModel? subcategory;
-  final RecipeModel? recipe;
+  final CategoryHive? category;
+  final SubCategoryHive? subcategory;
+  final RecipeHive? recipe;
   BottomNavBar({Key? key, this.subcategory, this.category, this.recipe})
       : super(key: key);
 
@@ -27,13 +28,15 @@ class BottomNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.menu),
-              color: Colors.white,
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            ),
+            route == RecipePage.routeName
+                ? ShareButtonWidget(recipe: this.recipe!)
+                : IconButton(
+                    icon: Icon(Icons.menu),
+                    color: Colors.white,
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
             if (route != RecipePage.routeName)
               IconButton(
                 icon: Icon(Icons.search),
@@ -56,7 +59,6 @@ class BottomNavBar extends StatelessWidget {
             else
               Row(
                 children: <Widget>[
-                  ShareButtonWidget(recipe: this.recipe!),
                   CalendarButtonWidget(recipe: this.recipe!),
                   FavoriteButtonWidget(recipe: this.recipe!),
                 ],

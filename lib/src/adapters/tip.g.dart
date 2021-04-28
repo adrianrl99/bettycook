@@ -17,7 +17,7 @@ class TipHiveAdapter extends TypeAdapter<TipHive> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TipHive(
-      fields[0] as String,
+      tip: fields[0] as String,
     );
   }
 

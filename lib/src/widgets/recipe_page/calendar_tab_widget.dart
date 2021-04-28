@@ -1,3 +1,4 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/hive_functions.dart';
 import 'package:bettycook/src/models/models.dart';
@@ -8,7 +9,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class CalendarTabWidget extends StatefulWidget {
-  final RecipeModel recipe;
+  final RecipeHive recipe;
   const CalendarTabWidget({required this.recipe, Key? key}) : super(key: key);
 
   @override
@@ -37,7 +38,7 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
                   onPressed: () {
                     Navigator.pop(context);
                     removeRecipeDateTimeInCalendar(
-                        box, boxRecipe, widget.recipe.id, dateTime);
+                        box, boxRecipe, widget.recipe.key, dateTime);
                   })
             ],
           );
@@ -49,7 +50,7 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
     return ValueListenableBuilder(
       valueListenable: Hive.box(calendarBoxKey).listenable(),
       builder: (BuildContext context, Box box, _) {
-        var boxRecipe = box.get(widget.recipe.id);
+        var boxRecipe = box.get(widget.recipe.key);
         boxRecipe?[2].sort();
 
         return ListView(

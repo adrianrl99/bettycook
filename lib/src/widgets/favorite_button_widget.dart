@@ -1,3 +1,4 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/hive_functions.dart';
 import 'package:bettycook/src/models/models.dart';
@@ -6,7 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class FavoriteButtonWidget extends StatelessWidget {
-  final RecipeModel recipe;
+  final RecipeHive recipe;
   const FavoriteButtonWidget({required this.recipe, Key? key})
       : super(key: key);
 
@@ -17,15 +18,15 @@ class FavoriteButtonWidget extends StatelessWidget {
       builder: (BuildContext context, Box box, _) {
         return IconButton(
           icon: Icon(
-            box.containsKey(this.recipe.id)
+            box.containsKey(this.recipe.key)
                 ? Icons.favorite
                 : Icons.favorite_border,
-            color: box.containsKey(this.recipe.id)
+            color: box.containsKey(this.recipe.key)
                 ? Colors.red[800]
                 : Colors.white,
           ),
           onPressed: () =>
-              toggleFavorite(box, this.recipe.id, this.recipe.title),
+              toggleFavorite(box, this.recipe.key, this.recipe.title),
         );
       },
     );

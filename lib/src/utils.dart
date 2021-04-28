@@ -1,3 +1,4 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/hive_functions.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ void launchURL(url) async =>
 // Funcions for Edit Calendar
 
 void showPickerCalendar(
-    BuildContext context, Box box, boxRecipe, RecipeModel recipe,
+    BuildContext context, Box box, boxRecipe, RecipeHive recipe,
     {DateTime? oldDateTime}) async {
   DateTime? date = await showDatePicker(
       context: context,
@@ -60,7 +61,7 @@ void showPickerCalendar(
 }
 
 void showDialogCalendar(BuildContext context, DateTime dateTime, Box box,
-    boxRecipe, RecipeModel recipe, bool isEdit,
+    boxRecipe, RecipeHive recipe, bool isEdit,
     {DateTime? oldDateTime}) async {
   await showDialog(
       context: context,
@@ -91,7 +92,7 @@ void showDialogCalendar(BuildContext context, DateTime dateTime, Box box,
                   Navigator.pop(context);
                   if (!isEdit)
                     addRecipeInCalendar(
-                        box, boxRecipe, recipe.id, recipe.title, dateTime,
+                        box, boxRecipe, recipe.key, recipe.title, dateTime,
                         oldDateTime: oldDateTime);
                 })
           ],

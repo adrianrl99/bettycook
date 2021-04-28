@@ -1,3 +1,4 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/models/models.dart';
@@ -58,41 +59,15 @@ class _AppState extends State<App> {
       themeMode: currentTheme.currentTheme(),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        indicatorColor: Color(0xFF5B178E),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              Color(0xFF5B178E),
-            ),
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all(
-              Colors.white,
-            ),
-          ),
-        ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          foregroundColor: Colors.white,
-          backgroundColor: Color(0xFF5B178E),
-        ),
-        bottomNavigationBarTheme:
-            BottomNavigationBarThemeData(selectedItemColor: Colors.white),
-        primarySwatch: createMaterialColor(
-          Color(0xFF5B178E),
-        ),
-        primaryColor: Color(0xFF5B178E),
+        accentColor: Color(0xFF9c40e3),
       ),
       theme: ThemeData(
-        brightness: Brightness.light,
         appBarTheme: AppBarTheme(
           brightness: Brightness.dark,
         ),
         primarySwatch: createMaterialColor(
           Color(0xFF5B178E),
         ),
-        primaryColor: Color(0xFF5B178E),
       ),
       home: HomePage(),
       initialRoute: HomePage.routeName,
@@ -112,12 +87,12 @@ class _AppState extends State<App> {
                 return TipsPage();
               case CategoryPage.routeName:
                 return CategoryPage(
-                    category: settings.arguments as CategoryModel);
+                    category: settings.arguments as CategoryHive);
               case SubCategoryPage.routeName:
                 return SubCategoryPage(
-                    subcategory: settings.arguments as SubCategoryModel);
+                    subcategory: settings.arguments as SubCategoryHive);
               case RecipePage.routeName:
-                return RecipePage(recipe: settings.arguments as RecipeModel);
+                return RecipePage(recipe: settings.arguments as RecipeHive);
               case IWantCookPage.routeName:
                 return IWantCookPage();
               case CalendarPage.routeName:

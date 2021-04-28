@@ -1,3 +1,4 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
@@ -6,11 +7,12 @@ import 'package:bettycook/src/widgets/floating_home_widget.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class SubCategoryPage extends StatefulWidget {
   static const routeName = "/subcategory";
 
-  final SubCategoryModel subcategory;
+  final SubCategoryHive subcategory;
 
   const SubCategoryPage({required this.subcategory, Key? key})
       : super(key: key);
@@ -36,27 +38,22 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
       ),
       drawer: DrawerWidget(),
       body: Container(
-        child: FutureBuilder(
-          future:
-              db.getRecipes(widget.subcategory.category, widget.subcategory.id),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return ListView(
-                children: <Widget>[
-                  if (snapshot.data != null)
-                    for (RecipeModel recipe in snapshot.data)
-                      Container(
-                        padding: const EdgeInsets.only(
-                            top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
-                        child: RecipeWidget(recipe: recipe),
-                      )
-                  else
-                    Container()
-                ],
-              );
-            } else {
-              return Container();
-            }
+        child: ValueListenableBuilder(
+          valueListenable: hiveDB.recipesBoxListable(),
+          builder:
+              (BuildContext context, Box<RecipeHive> recipeBox, Widget? child) {
+            Iterable<RecipeHive> recipes = recipeBox.values.where(
+                (element) => element.subcategory.key == widget.subcategory.key);
+            return ListView(
+              children: <Widget>[
+                for (RecipeHive recipe in recipes)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8.0),
+                    child: RecipeWidget(recipe: recipe),
+                  )
+              ],
+            );
           },
         ),
       ),

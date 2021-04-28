@@ -7,5 +7,5 @@ class TipHive extends HiveObject {
   @HiveField(0)
   String tip;
 
-  TipHive(this.tip);
+  TipHive({required this.tip});
 }

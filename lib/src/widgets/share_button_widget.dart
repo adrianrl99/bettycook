@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,7 @@ import 'package:path/path.dart';
 import 'package:share/share.dart';
 
 class ShareButtonWidget extends StatelessWidget {
-  final RecipeModel recipe;
+  final RecipeHive recipe;
   const ShareButtonWidget({required this.recipe, Key? key}) : super(key: key);
 
   @override
