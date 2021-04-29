@@ -1,24 +1,16 @@
 import 'package:bettycook/src/adapters/adapters.dart';
-import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/hive_functions.dart';
-import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:bettycook/src/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-class CalendarTabWidget extends StatefulWidget {
+class CalendarTabWidget extends StatelessWidget {
   final RecipeHive recipe;
   const CalendarTabWidget({required this.recipe, Key? key}) : super(key: key);
 
-  @override
-  _CalendarTabWidgetState createState() => _CalendarTabWidgetState();
-}
-
-class _CalendarTabWidgetState extends State<CalendarTabWidget> {
-  Future<void> _showDialogDelete(
-      BuildContext context, Box box, boxRecipe, DateTime dateTime) async {
+  Future<void> _showDialogDelete(BuildContext context,
+      Box<RecipeHive> recipesBox, DateTime dateTime) async {
     await showDialog(
         context: context,
         useSafeArea: true,
@@ -37,8 +29,8 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
                   child: Text("SÍ"),
                   onPressed: () {
                     Navigator.pop(context);
-                    removeRecipeDateTimeInCalendar(
-                        box, boxRecipe, widget.recipe.key, dateTime);
+                    this.recipe.calendar.remove(dateTime);
+                    recipesBox.put(this.recipe.key, this.recipe);
                   })
             ],
           );
@@ -48,34 +40,30 @@ class _CalendarTabWidgetState extends State<CalendarTabWidget> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: Hive.box(calendarBoxKey).listenable(),
-      builder: (BuildContext context, Box box, _) {
-        var boxRecipe = box.get(widget.recipe.key);
-        boxRecipe?[2].sort();
-
+      valueListenable: hiveDB.recipesBoxListable(),
+      builder:
+          (BuildContext context, Box<RecipeHive> recipesBox, Widget? child) {
         return ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            if (boxRecipe != null && boxRecipe[2].length > 0)
-              for (DateTime dateTime in boxRecipe[2])
+            if (this.recipe.calendar.isNotEmpty)
+              for (DateTime dateTime in this.recipe.calendar)
                 ListTile(
-                  title: Text(
-                    dateTime.toString().dateString,
-                  ),
+                  title: Text(dateTime.toString().dateString),
                   trailing: Wrap(
-                    children: [
+                    children: <IconButton>[
                       IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () {
-                          showDialogCalendar(context, dateTime, box, boxRecipe,
-                              widget.recipe, true,
+                          showDialogCalendar(
+                              context, dateTime, this.recipe, recipesBox, true,
                               oldDateTime: dateTime);
                         },
                       ),
                       IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () {
-                          _showDialogDelete(context, box, boxRecipe, dateTime);
+                          _showDialogDelete(context, recipesBox, dateTime);
                         },
                       ),
                     ],

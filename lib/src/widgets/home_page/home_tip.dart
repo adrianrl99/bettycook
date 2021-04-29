@@ -33,9 +33,10 @@ class HomeTip extends StatelessWidget {
               builder:
                   (BuildContext context, Box<TipHive> tipsBox, Widget? child) {
                 Random random = Random();
-                TipHive? tip = tipsBox.getAt(random.nextInt(tipsBox.length));
                 return ListTile(
-                  title: Text(tip!.tip),
+                  title: Text(tipsBox.values
+                      .toList()[random.nextInt(tipsBox.length)]
+                      .tip),
                 );
               },
             ),

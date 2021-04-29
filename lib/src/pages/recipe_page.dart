@@ -1,7 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:bettycook/src/adapters/adapters.dart';
-import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:bettycook/src/widgets/fullscreen_photo_widget.dart';
@@ -11,7 +10,6 @@ import 'package:bettycook/src/widgets/recipe_page/notes_widget.dart';
 import 'package:bettycook/src/widgets/recipe_page/preparation_tab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class RecipePage extends StatelessWidget {
   static const routeName = "/recipe";
@@ -95,7 +93,7 @@ class RecipePage extends StatelessWidget {
           body: TabBarView(
             children: <Widget>[
               IngredientsTabWidget(ingredients: this.recipe.ingredients),
-              PreparationTabWidget(id: this.recipe.key),
+              PreparationTabWidget(preparation: this.recipe.preparation),
               CalendarTabWidget(recipe: this.recipe),
             ],
           ),
@@ -106,20 +104,18 @@ class RecipePage extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ValueListenableBuilder(
-        valueListenable: Hive.box(notesBoxKey).listenable(),
-        builder: (BuildContext context, Box box, _) {
+        valueListenable: hiveDB.recipesBoxListable(),
+        builder:
+            (BuildContext context, Box<RecipeHive> recipexBox, Widget? child) {
           return Badge(
-              position: BadgePosition.bottomStart(),
-              showBadge: box.isNotEmpty,
-              badgeContent: Text(
-                (box.length).toString(),
-              ),
-              child: FloatingActionButton(
-                child: Icon(Icons.notes),
-                onPressed: () {
-                  showNotesDialog(context);
-                },
-              ));
+            position: BadgePosition.bottomStart(),
+            showBadge: this.recipe.notes.isNotEmpty,
+            badgeContent: Text(this.recipe.notes.length.toString()),
+            child: FloatingActionButton(
+              child: Icon(Icons.notes),
+              onPressed: () => showNotesDialog(context),
+            ),
+          );
         },
       ),
     );

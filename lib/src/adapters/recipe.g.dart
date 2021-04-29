@@ -23,13 +23,14 @@ class RecipeHiveAdapter extends TypeAdapter<RecipeHive> {
       subcategory: fields[3] as SubCategoryHive,
     )
       ..favorite = fields[4] as bool
-      ..calendar = (fields[5] as List).cast<DateTime>();
+      ..calendar = (fields[5] as List).cast<DateTime>()
+      ..notes = (fields[6] as List).cast<String>();
   }
 
   @override
   void write(BinaryWriter writer, RecipeHive obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class RecipeHiveAdapter extends TypeAdapter<RecipeHive> {
       ..writeByte(4)
       ..write(obj.favorite)
       ..writeByte(5)
-      ..write(obj.calendar);
+      ..write(obj.calendar)
+      ..writeByte(6)
+      ..write(obj.notes);
   }
 
   @override

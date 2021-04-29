@@ -1,3 +1,5 @@
+import 'package:bettycook/src/adapters/adapters.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/utils.dart';
@@ -42,15 +44,15 @@ class _CalendarPageState extends State<CalendarPage> {
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
-    Box box = Hive.box(calendarBoxKey);
+    List<RecipeHive> recipes = hiveDB.recipesBox.values
+        .where((recipe) => recipe.calendar.isNotEmpty)
+        .toList();
     List<Event> events = [];
-    if (box.isNotEmpty) {
-      for (List event in box.values)
-        if (event[2].length > 0)
-          for (DateTime dateTime in event[2])
-            if (dateTime.toString().getDate == day.toString().getDate)
-              events.add(Event(id: event[0], title: event[1]));
-    }
+    for (RecipeHive recipe in recipes)
+      for (DateTime dateTime in recipe.calendar)
+        if (dateTime.toString().getDate == day.toString().getDate)
+          events.add(Event(recipe: recipe));
+
     return events;
   }
 
@@ -132,18 +134,18 @@ class _CalendarPageState extends State<CalendarPage> {
           Expanded(
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
-              builder: (BuildContext context, List<Event> value, _) {
-                return ListView.builder(
-                  itemCount: value.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      padding: const EdgeInsets.only(
-                          top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
-                      // child: RecipeWidget(
-                      //     recipe: RecipeModel.basic(
-                      //         value[index].id, value[index].title)),
-                    );
-                  },
+              builder: (BuildContext context, List<Event> events, _) {
+                return ListView(
+                  children: <Widget>[
+                    for (Event event in events)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 16.0),
+                        child: RecipeWidget(
+                          recipe: event.recipe,
+                        ),
+                      )
+                  ],
                 );
               },
             ),

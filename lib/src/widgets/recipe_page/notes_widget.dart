@@ -1,10 +1,8 @@
 import 'package:bettycook/src/adapters/adapters.dart';
-import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/widgets/recipe_page/add_note_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class NotesWidget extends StatelessWidget {
   final RecipeHive recipe;
@@ -14,7 +12,8 @@ class NotesWidget extends StatelessWidget {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AddNoteWidget(initialText: initialText, noteKey: noteKey);
+          return AddNoteWidget(
+              recipe: this.recipe, initialText: initialText, noteKey: noteKey);
         });
   }
 
@@ -23,16 +22,17 @@ class NotesWidget extends StatelessWidget {
     return AlertDialog(
       title: Text("Notas de ${this.recipe.title}"),
       content: ValueListenableBuilder(
-          valueListenable: Hive.box(notesBoxKey).listenable(),
-          builder: (BuildContext context, Box box, _) {
-            if (box.isNotEmpty)
+          valueListenable: hiveDB.recipesBoxListable(),
+          builder: (BuildContext context, Box<RecipeHive> box, Widget? child) {
+            if (this.recipe.notes.isNotEmpty)
               return ListView(
                 children: [
-                  for (int noteKey in box.keys)
+                  for (String note in this.recipe.notes)
                     ListTile(
-                      title: Text(box.get(noteKey).toString()),
+                      title: Text(note),
                       onLongPress: () => _addNotes(context,
-                          initialText: box.get(noteKey), noteKey: noteKey),
+                          initialText: note,
+                          noteKey: this.recipe.notes.indexOf(note)),
                     ),
                 ],
               );

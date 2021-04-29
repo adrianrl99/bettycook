@@ -18,6 +18,8 @@ class RecipeHive extends HiveObject {
   bool favorite = false;
   @HiveField(5)
   List<DateTime> calendar = [];
+  @HiveField(6)
+  List<String> notes = [];
 
   RecipeHive(
       {required this.title,
