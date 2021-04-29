@@ -5,3 +5,4 @@ export './recipe.dart';
 export './ingredient.dart';
 export './ingredients.dart';
 export './preparation.dart';
+export './settings.dart';

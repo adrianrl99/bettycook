@@ -9,7 +9,7 @@ const subCategoriesBoxKey = "sub_categories_box";
 const recipesBoxKey = "recipes_box";
 
 // Delete this
-const boxes = [settingsBoxKey, favoritesBoxKey, calendarBoxKey, notesBoxKey];
+const boxes = [settingsBoxKey];
 
 // Boxes Keys
 const settingsBoxDarkModeKey = 'dark_mode';
