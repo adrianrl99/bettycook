@@ -1,18 +1,14 @@
 // Boxes
 const settingsBoxKey = 'settings_box';
-const favoritesBoxKey = 'favorites_box';
 const tipsBoxKey = 'tips_box';
-const calendarBoxKey = 'calendar_box';
-const notesBoxKey = 'notes_box';
 const categoriesBoxKey = "categories_box";
 const subCategoriesBoxKey = "sub_categories_box";
 const recipesBoxKey = "recipes_box";
 
-// Delete this
-const boxes = [settingsBoxKey];
-
 // Boxes Keys
-const settingsBoxDarkModeKey = 'dark_mode';
+const settingsBoxThemeModeKey = 'theme_mode';
+const settingsBoxAppVersionKey = 'app_version';
+const settingsBoxDBVersionKey = 'db_version';
 
 // DB Version
 const db_version = 0;

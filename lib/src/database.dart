@@ -4,9 +4,10 @@ import 'dart:math';
 
 import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
+import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/models/ingredient_model.dart';
 import 'package:bettycook/src/models/models.dart';
-import 'package:flutter/foundation.dart';
+import 'package:package_info/package_info.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:typed_data';
@@ -16,33 +17,26 @@ import 'models/preparation_model.dart';
 
 class RecipesDatabase {
   late Database _db;
-  late Database _dbTemp;
   init() async {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, "bettycook.db");
-    var tempPath = join(databasesPath, "bettycook_temp.db");
 
-    // Check if the database exists
-    var exists = await databaseExists(path);
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    var appVersion = hiveDB.settingsBox.get(settingsBoxAppVersionKey);
+    var dbVersion = hiveDB.settingsBox.get(settingsBoxDBVersionKey);
+    if (appVersion == null || appVersion != packageInfo.version) {
+      await _createDB(path);
+      await _openDB();
+      int tempDBVersion = await _db.getVersion();
 
-    if (!exists || kDebugMode) {
-      await _initDB(path);
-    } else {
-      await _createDB(tempPath);
-      await _openDB(false);
-      await _openDB(true);
-      if (!(await _checkDBVersion())) {
-        await closeDB();
-        await File(path).delete();
-        await _initDB(path);
-      }
+      if (dbVersion == null || dbVersion != tempDBVersion) await _initHiveDB();
+
+      await closeDB();
+      await File(path).delete();
+
+      hiveDB.settingsBox.put(settingsBoxAppVersionKey, packageInfo.version);
+      hiveDB.settingsBox.put(settingsBoxDBVersionKey, tempDBVersion);
     }
-  }
-
-  Future<void> _initDB(path) async {
-    await _createDB(path);
-    await _openDB(false);
-    await _initHiveDB();
   }
 
   Future<void> _createDB(path) async {
@@ -68,15 +62,19 @@ class RecipesDatabase {
 
   // init Hive Database boxes
   Future<void> _initTipsHive() async {
-    for (TipModel tip in (await getTips()))
-      await hiveDB.tipsBox.put(tip.id, TipHive(tip: tip.tip));
+    for (TipModel tip in (await getTips())) {
+      TipHive tipHive = TipHive(tip: tip.tip);
+
+      await hiveDB.tipsBox.put(tip.id, tipHive);
+    }
   }
 
   Future<void> _initCategoriesHive() async {
     for (CategoryModel category in (await getCategories())) {
       CategoryHive categoryHive = CategoryHive(name: category.name);
-      await _initSubCategoriesHive(category.id, categoryHive);
+
       await hiveDB.categoriesBox.put(category.id, categoryHive);
+      await _initSubCategoriesHive(category.id, categoryHive);
     }
   }
 
@@ -85,21 +83,29 @@ class RecipesDatabase {
     for (SubCategoryModel subCategory in (await getSubCategories(categoryId))) {
       SubCategoryHive subCategoryHive =
           SubCategoryHive(name: subCategory.name, category: categoryHive);
-      await _initRecipesHive(categoryId, subCategory.id, subCategoryHive);
+
       await hiveDB.subCategoriesBox.put(subCategory.id, subCategoryHive);
+      await _initRecipesHive(categoryId, subCategory.id, subCategoryHive);
     }
   }
 
   Future<void> _initRecipesHive(int categoryId, int subCategoryId,
       SubCategoryHive subCategoryHive) async {
     for (RecipeModel recipe in (await getRecipes(categoryId, subCategoryId))) {
-      hiveDB.recipesBox.put(
-          recipe.id,
-          RecipeHive(
-              title: recipe.title,
-              ingredients: _initRecipeIngredientHive(recipe.ingredients),
-              preparation: _initRecipePreparationHive(recipe.preparation),
-              subcategory: subCategoryHive));
+      RecipeHive recipeHive = RecipeHive(
+          title: recipe.title,
+          ingredients: _initRecipeIngredientHive(recipe.ingredients),
+          preparation: _initRecipePreparationHive(recipe.preparation),
+          subcategory: subCategoryHive);
+      RecipeHive? recipeHiveBox = hiveDB.recipesBox.get(recipe.id);
+
+      if (recipeHiveBox != null) {
+        recipeHive.favorite = recipeHiveBox.favorite;
+        recipeHive.notes.addAll(recipeHiveBox.notes);
+        recipeHive.calendar.addAll(recipeHiveBox.calendar);
+      }
+
+      hiveDB.recipesBox.put(recipe.id, recipeHive);
     }
   }
 
@@ -131,21 +137,12 @@ class RecipesDatabase {
     return preparations;
   }
 
-  Future<bool> _checkDBVersion() async {
-    bool checkVersion = await _db.getVersion() == await _dbTemp.getVersion();
-    return checkVersion;
-  }
-
-  Future<void> _openDB(bool isTemp) async {
+  Future<void> _openDB() async {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, "bettycook.db");
-    var tempPath = join(databasesPath, "bettycook_temp.db");
 
     // open the database
-    if (!isTemp)
-      _db = await openReadOnlyDatabase(path);
-    else
-      _db = await openReadOnlyDatabase(tempPath);
+    _db = await openReadOnlyDatabase(path);
   }
 
   Future<void> closeDB() async {

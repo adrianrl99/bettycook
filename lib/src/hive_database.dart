@@ -9,6 +9,7 @@ class HiveDatabase {
   late Box<CategoryHive> categoriesBox;
   late Box<SubCategoryHive> subCategoriesBox;
   late Box<RecipeHive> recipesBox;
+  late Box settingsBox;
 
   // Initialize hive flutter database, register all adapters and open all boxes
   Future<void> init() async {
@@ -41,6 +42,7 @@ class HiveDatabase {
     categoriesBox = await Hive.openBox<CategoryHive>(categoriesBoxKey);
     subCategoriesBox = await Hive.openBox<SubCategoryHive>(subCategoriesBoxKey);
     recipesBox = await Hive.openBox<RecipeHive>(recipesBoxKey);
+    settingsBox = await Hive.openBox(settingsBoxKey);
   }
 
   // Compact all boxes
@@ -49,6 +51,7 @@ class HiveDatabase {
     await categoriesBox.compact();
     await subCategoriesBox.compact();
     await recipesBox.compact();
+    await settingsBox.compact();
   }
 
   // ValueListenable of boxes (This is because the argumentBox.listenable() not is accesible outside of class)
@@ -59,4 +62,5 @@ class HiveDatabase {
       subCategoriesBox.listenable();
   ValueListenable<Box<RecipeHive>> recipesBoxListable() =>
       recipesBox.listenable();
+  ValueListenable<Box> settingsBoxListable() => settingsBox.listenable();
 }

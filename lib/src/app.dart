@@ -15,17 +15,11 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    currentTheme.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
   Future<void> dispose() async {
     await hiveDB.compactBoxes();
-    await Future.wait(boxes.map((String box) async {
-      await Hive.box(box).compact();
-    }));
     await Hive.close();
     await db.closeDB();
     super.dispose();
@@ -53,63 +47,73 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "BettyCook",
-      themeMode: currentTheme.currentTheme(),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        accentColor: Color(0xFF9c40e3),
-      ),
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
-        ),
-        primarySwatch: createMaterialColor(
-          Color(0xFF5B178E),
-        ),
-      ),
-      home: HomePage(),
-      initialRoute: HomePage.routeName,
-      onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (BuildContext context) {
-            switch (settings.name) {
-              case SearchAllPage.routeName:
-                return SearchAllPage();
-              case SearchSubCategoryPage.routeName:
-                return SearchSubCategoryPage(
-                    subcategory: settings.arguments as SubCategoryModel);
-              case FavoritesPage.routeName:
-                return FavoritesPage();
-              case TipsPage.routeName:
-                return TipsPage();
-              case CategoryPage.routeName:
-                return CategoryPage(
-                    category: settings.arguments as CategoryHive);
-              case SubCategoryPage.routeName:
-                return SubCategoryPage(
-                    subcategory: settings.arguments as SubCategoryHive);
-              case RecipePage.routeName:
-                return RecipePage(recipe: settings.arguments as RecipeHive);
-              case IWantCookPage.routeName:
-                return IWantCookPage();
-              case CalendarPage.routeName:
-                return CalendarPage();
-              case ToBuyPage.routeName:
-                return ToBuyPage();
-              case ConverterPage.routeName:
-                return ConverterPage();
-              case AboutPage.routeName:
-                return AboutPage();
-              default:
-                return Center(
-                  child: Container(
-                    child: Text("404"),
-                  ),
-                );
-            }
+    return ValueListenableBuilder(
+      valueListenable: hiveDB.settingsBoxListable(),
+      builder: (BuildContext context, Box settingsBox, Widget? child) {
+        bool? settingsThemeMode = settingsBox.get(settingsBoxThemeModeKey);
+        ThemeMode? themeMode;
+        if (settingsThemeMode == true)
+          themeMode = ThemeMode.dark;
+        else if (settingsThemeMode == false) themeMode = ThemeMode.light;
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: "BettyCook",
+          themeMode: themeMode,
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            accentColor: Color(0xFF9c40e3),
+          ),
+          theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              brightness: Brightness.dark,
+            ),
+            primarySwatch: createMaterialColor(
+              Color(0xFF5B178E),
+            ),
+          ),
+          home: HomePage(),
+          initialRoute: HomePage.routeName,
+          onGenerateRoute: (RouteSettings settings) {
+            return MaterialPageRoute(
+              settings: settings,
+              builder: (BuildContext context) {
+                switch (settings.name) {
+                  case SearchAllPage.routeName:
+                    return SearchAllPage();
+                  case SearchSubCategoryPage.routeName:
+                    return SearchSubCategoryPage(
+                        subcategory: settings.arguments as SubCategoryModel);
+                  case FavoritesPage.routeName:
+                    return FavoritesPage();
+                  case TipsPage.routeName:
+                    return TipsPage();
+                  case CategoryPage.routeName:
+                    return CategoryPage(
+                        category: settings.arguments as CategoryHive);
+                  case SubCategoryPage.routeName:
+                    return SubCategoryPage(
+                        subcategory: settings.arguments as SubCategoryHive);
+                  case RecipePage.routeName:
+                    return RecipePage(recipe: settings.arguments as RecipeHive);
+                  case IWantCookPage.routeName:
+                    return IWantCookPage();
+                  case CalendarPage.routeName:
+                    return CalendarPage();
+                  case ToBuyPage.routeName:
+                    return ToBuyPage();
+                  case ConverterPage.routeName:
+                    return ConverterPage();
+                  case AboutPage.routeName:
+                    return AboutPage();
+                  default:
+                    return Center(
+                      child: Container(
+                        child: Text("404"),
+                      ),
+                    );
+                }
+              },
+            );
           },
         );
       },

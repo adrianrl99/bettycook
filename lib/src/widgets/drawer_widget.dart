@@ -22,21 +22,29 @@ class DrawerWidget extends StatelessWidget {
                 Container(
                   alignment: Alignment.topRight,
                   child: ValueListenableBuilder(
-                    valueListenable: Hive.box(settingsBoxKey).listenable(),
-                    builder: (context, Box box, _) {
-                      bool? darkMode = box.get(settingsBoxDarkModeKey);
-
-                      bool iconMode = darkMode == null
-                          ? MediaQuery.platformBrightnessOf(context) ==
-                              Brightness.dark
-                          : darkMode;
+                    valueListenable: hiveDB.settingsBoxListable(),
+                    builder: (context, Box settingsBox, _) {
+                      bool? themeMode =
+                          settingsBox.get(settingsBoxThemeModeKey);
+                      IconData? icon;
+                      if (themeMode == null) {
+                        if (MediaQuery.platformBrightnessOf(context) ==
+                            Brightness.dark)
+                          themeMode = true;
+                        else
+                          themeMode = false;
+                      }
+                      if (themeMode == true)
+                        icon = Icons.wb_sunny;
+                      else
+                        icon = Icons.nights_stay;
                       return IconButton(
-                        icon: Icon(
-                          iconMode ? Icons.wb_sunny : Icons.nights_stay,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => currentTheme.switchTheme(context),
-                      );
+                          icon: Icon(
+                            icon,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => settingsBox.put(
+                              settingsBoxThemeModeKey, !themeMode!));
                     },
                   ),
                 ),
