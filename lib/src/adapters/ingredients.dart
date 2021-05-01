@@ -1,3 +1,4 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:hive/hive.dart';
 
 part 'ingredients.g.dart';
@@ -5,17 +6,18 @@ part 'ingredients.g.dart';
 @HiveType(typeId: 5)
 class IngredientsHive {
   @HiveField(0)
-  double amount;
+  final double amount;
   @HiveField(1)
-  String measure;
+  final String measure;
   @HiveField(2)
-  String ingredient;
+  final String ingredient;
   @HiveField(3)
-  String comment;
+  final String comment;
 
-  IngredientsHive(
-      {required this.amount,
-      required this.measure,
-      required this.ingredient,
-      required this.comment});
+  IngredientsHive({
+    required this.amount,
+    required this.measure,
+    required this.ingredient,
+    required this.comment,
+  });
 }

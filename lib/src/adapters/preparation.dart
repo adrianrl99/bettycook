@@ -5,9 +5,9 @@ part 'preparation.g.dart';
 @HiveType(typeId: 6)
 class PreparationHive {
   @HiveField(0)
-  String target;
+  final String target;
   @HiveField(1)
-  List<String> preparation;
+  final List<String> preparation;
 
   PreparationHive({required this.target, required this.preparation});
 }
