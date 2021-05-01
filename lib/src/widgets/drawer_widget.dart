@@ -1,9 +1,9 @@
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/pages/pages.dart';
-import 'package:bettycook/src/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:share/share.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -20,34 +20,42 @@ class DrawerWidget extends StatelessWidget {
                 Container(
                   alignment: Alignment.topRight,
                   child: ValueListenableBuilder(
-                    valueListenable: Hive.box(settingsBox).listenable(),
-                    builder: (context, Box box, _) {
-                      bool? darkMode = box.get(settingsBoxDarkModeKey);
-                      bool iconMode = darkMode == null
-                          ? MediaQuery.platformBrightnessOf(context) ==
-                              Brightness.dark
-                          : darkMode;
+                    valueListenable: hiveDB.settingsBoxListable(),
+                    builder: (context, Box settingsBox, _) {
+                      bool? themeMode =
+                          settingsBox.get(settingsBoxThemeModeKey);
+                      IconData? icon;
+                      if (themeMode == null) {
+                        if (MediaQuery.platformBrightnessOf(context) ==
+                            Brightness.dark)
+                          themeMode = true;
+                        else
+                          themeMode = false;
+                      }
+                      if (themeMode == true)
+                        icon = Icons.wb_sunny;
+                      else
+                        icon = Icons.nights_stay;
                       return IconButton(
-                        icon: Icon(
-                          iconMode ? Icons.wb_sunny : Icons.nights_stay,
-                          color: Colors.white,
-                        ),
-                        onPressed: () =>
-                            box.put(settingsBoxDarkModeKey, !iconMode),
-                      );
+                          icon: Icon(
+                            icon,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => settingsBox.put(
+                              settingsBoxThemeModeKey, !themeMode!));
                     },
                   ),
                 ),
               ],
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).primaryColor.withOpacity(0.8),
               ),
               accountName: Text("BettyCook"),
               accountEmail: Text("Tus recetas en un solo lugar"),
               currentAccountPicture: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/icon/icon.png"),
+                    image: AssetImage("assets/icon/splash.png"),
                   ),
                 ),
               ),
@@ -55,53 +63,81 @@ class DrawerWidget extends StatelessWidget {
             Expanded(
               child: ListView(
                 padding: EdgeInsets.zero,
-                children: <ListTile>[
+                children: <Widget>[
+                  ListTile(
+                      leading: Icon(Icons.favorite),
+                      title: Text(FavoritesPage.title),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context)
+                            .pushNamed(FavoritesPage.routeName);
+                      }),
+                  ListTile(
+                    leading: Icon(Icons.lightbulb),
+                    title: Text(TipsPage.title),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(TipsPage.routeName);
+                    },
+                  ),
                   ListTile(
                     leading: Icon(Icons.kitchen),
                     title: Text(IWantCookPage.title),
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(IWantCookPage.routeName),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(IWantCookPage.routeName);
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.calendar_today),
                     title: Text(CalendarPage.title),
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(CalendarPage.routeName),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(CalendarPage.routeName);
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.shopping_cart),
                     title: Text(ToBuyPage.title),
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(ToBuyPage.routeName),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(ToBuyPage.routeName);
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.swap_horiz),
                     title: Text(ConverterPage.title),
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(ConverterPage.routeName),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(ConverterPage.routeName);
+                    },
+                  ),
+                  Divider(),
+                  ListTile(
+                    leading: Icon(Icons.share),
+                    title: Text("Comparte nuestra app"),
+                    onTap: () => Share.share(
+                        "Descarga BettyCook en https://www.apklis.cu/\nTus recetas en un solo lugar",
+                        subject: "BettyCook"),
                   ),
                   ListTile(
-                      title: Text(
-                    "Contáctanos",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-                  ListTile(
-                    leading: Icon(Icons.send),
-                    title: Text("Telegram"),
-                    onTap: () => launchURL("https://t.me/bettycook"),
+                    leading: Icon(Icons.help_outline),
+                    title: Text(AboutPage.title),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(AboutPage.routeName);
+                    },
                   ),
                   ListTile(
-                    leading: Icon(Icons.mail),
-                    title: Text("Correo"),
-                    onTap: () => launchURL("mailto:bettycooksoporte@gmail.com"),
-                  ),
+                    leading: Icon(Icons.settings),
+                    title: Text(SettingsPage.title),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(SettingsPage.routeName);
+                    },
+                  )
                 ],
               ),
-            ),
-            ListTile(
-              leading: Icon(Icons.help_outline),
-              title: Text(AboutPage.title),
-              onTap: () => Navigator.of(context).pushNamed(AboutPage.routeName),
             ),
           ],
         ),

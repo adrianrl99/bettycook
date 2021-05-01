@@ -1,10 +1,12 @@
-import 'package:bettycook/src/models/models.dart';
+import 'dart:convert';
+
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 
 class HomeCategoryWidget extends StatelessWidget {
-  final CategoryModel category;
+  final CategoryHive category;
   const HomeCategoryWidget({required this.category, Key? key})
       : super(key: key);
 
@@ -29,8 +31,7 @@ class HomeCategoryWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                      "assets/images/categories/${this.category.name}.png"),
+                  image: MemoryImage(base64Decode(category.image)),
                   fit: BoxFit.cover,
                 ),
               ),

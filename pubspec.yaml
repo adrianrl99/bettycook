@@ -25,7 +25,7 @@ dependencies:
     sdk: flutter
 
   # Databases
-  hive: ^2.0.2
+  hive: ^2.0.4
   hive_flutter: ^1.0.0
   sqflite: ^2.0.0+3
 
@@ -36,19 +36,22 @@ dependencies:
   path_provider: ^2.0.1
   url_launcher: ^6.0.3
   share: ^2.0.1
+  package_info: ^2.0.0
+  flutter_secure_storage: ^4.2.0
 
   # UI
   photo_view: ^0.11.1
   table_calendar: ^3.0.0
   badges: ^2.0.0-nullsafety.1
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  hive_generator: ^1.0.1
-  build_runner: ^1.12.2
+  hive_generator: ^1.1.0
+  build_runner: ^2.0.1
   flutter_launcher_icons: ^0.9.0
-  flutter_native_splash: ^1.1.7+1
+  flutter_native_splash: ^1.1.8+4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -67,10 +70,6 @@ flutter:
   assets:
     - assets/icon/icon.png
     - assets/icon/splash.png
-    - assets/images/
-    - assets/images/categories/
-    - assets/images/subcategories/
-    - assets/images/recipes/
     - assets/database.db
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -101,7 +100,7 @@ flutter:
 
 flutter_icons:
   android: "launcher_icon"
-  # ios: true
+  ios: false
   image_path: "assets/icon/icon.png"
 
 flutter_native_splash:
@@ -116,7 +115,7 @@ flutter_native_splash:
   # of your splash screen to a solid color.  Use background_image to set the background of your
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
-  color: "#75414e"
+  color: "#90caf9"
   #background_image: "assets/background.png"
 
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing
@@ -131,15 +130,15 @@ flutter_native_splash:
   # parameters from above. If the image_dark parameter is specified, color_dark or
   # background_image_dark must be specified.  color_dark and background_image_dark cannot both be
   # set.
-  #color_dark: "#042a49"
+  color_dark: "#212121"
   #background_image_dark: "assets/dark-background.png"
   #image_dark: assets/splash-invert.png
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
   # platform.
   android: true
-  #ios: false
-  #web: false
+  ios: false
+  web: false
 
   # The position of the splash image can be set with android_gravity, ios_content_mode, and
   # web_image_mode parameters.  All default to center.

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,13 +9,16 @@ import 'package:path/path.dart';
 import 'package:share/share.dart';
 
 class ShareButtonWidget extends StatelessWidget {
-  final RecipeModel recipe;
+  final RecipeHive recipe;
   const ShareButtonWidget({required this.recipe, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.share),
+      icon: Icon(
+        Icons.share,
+        color: Colors.white,
+      ),
       onPressed: () async {
         final path = await getApplicationDocumentsDirectory();
         final RenderBox box = context.findRenderObject() as RenderBox;
@@ -26,8 +29,8 @@ class ShareButtonWidget extends StatelessWidget {
             data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
         await imgFile.writeAsBytes(bytes, flush: true);
         await Share.shareFiles([imgFile.path],
-            subject: 'BettyCook',
-            text: this.recipe.title,
+            text:
+                "${this.recipe.title} en BettyCook\nDescarga BettyCook en https://www.apklis.cu/\nTus recetas en un solo lugar",
             sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
         await imgFile.delete();
       },

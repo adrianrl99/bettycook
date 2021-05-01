@@ -1,24 +1,14 @@
 import 'dart:math';
 
-import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/database.dart';
-import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/adapters/adapters.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/widgets/home_page/home_not_favorite_widget.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-class HomeFavoriteWidget extends StatefulWidget {
+class HomeFavoriteWidget extends StatelessWidget {
   const HomeFavoriteWidget({Key? key}) : super(key: key);
-
-  @override
-  _HomeFavoriteWidgetState createState() => _HomeFavoriteWidgetState();
-}
-
-class _HomeFavoriteWidgetState extends State<HomeFavoriteWidget> {
-  RecipesDatabase db = RecipesDatabase();
-  Random random = Random();
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +17,20 @@ class _HomeFavoriteWidgetState extends State<HomeFavoriteWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ValueListenableBuilder(
-            valueListenable: Hive.box(favoritesBox).listenable(),
-            builder: (context, Box box, _) {
-              if (box.isNotEmpty) {
-                List favorite = box.getAt(random.nextInt(box.length));
+            valueListenable: hiveDB.recipesBoxListable(),
+            builder: (BuildContext context, Box<RecipeHive> recipesBox,
+                Widget? child) {
+              Random random = Random();
+
+              List<RecipeHive> favorites = recipesBox.values
+                  .where((recipe) => recipe.favorite == true)
+                  .toList();
+              if (favorites.isNotEmpty)
                 return Expanded(
                   child: RecipeWidget(
-                    recipe: RecipeModel.basic(favorite[0], favorite[1]),
-                  ),
+                      recipe: favorites[random.nextInt(favorites.length)]),
                 );
-              } else
+              else
                 return Expanded(child: HomeNotFavoriteWidget());
             },
           ),

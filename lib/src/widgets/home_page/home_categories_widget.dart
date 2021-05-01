@@ -1,7 +1,8 @@
-import 'package:bettycook/src/database.dart';
-import 'package:bettycook/src/models/models.dart';
+import 'package:bettycook/src/adapters/adapters.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/widgets/home_page/home_category_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class HomeCategoriesWidget extends StatefulWidget {
   const HomeCategoriesWidget({Key? key}) : super(key: key);
@@ -11,8 +12,6 @@ class HomeCategoriesWidget extends StatefulWidget {
 }
 
 class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
-  RecipesDatabase db = RecipesDatabase();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,23 +19,19 @@ class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
         fit: FlexFit.tight,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Container(
-            child: FutureBuilder(
-              future: db.getCategories(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      for (CategoryModel category in snapshot.data)
-                        HomeCategoryWidget(category: category)
-                    ],
-                  );
-                } else {
-                  return Container();
-                }
-              },
-            ),
+          child: ValueListenableBuilder(
+            valueListenable: hiveDB.categoriesBoxListable(),
+            builder: (BuildContext context, Box<CategoryHive> categoriesBox,
+                Widget? child) {
+              return Row(
+                children: <HomeCategoryWidget>[
+                  for (CategoryHive category in categoriesBox.values)
+                    HomeCategoryWidget(
+                      category: category,
+                    )
+                ],
+              );
+            },
           ),
         ),
       ),

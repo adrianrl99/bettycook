@@ -1,4 +1,6 @@
-import 'package:bettycook/src/models/models.dart';
+import 'dart:convert';
+
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:bettycook/src/widgets/calendar_button_widget.dart';
@@ -6,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:bettycook/src/widgets/favorite_button_widget.dart';
 
 class RecipeWidget extends StatelessWidget {
-  final RecipeModel recipe;
+  final RecipeHive recipe;
   const RecipeWidget({required this.recipe, Key? key}) : super(key: key);
 
   @override
@@ -27,8 +29,8 @@ class RecipeWidget extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(
-                  "assets/images/recipes/${this.recipe.title.format}.png",
+                image: MemoryImage(
+                  base64Decode(recipe.image),
                 ),
                 fit: BoxFit.cover,
               ),

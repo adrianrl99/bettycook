@@ -1,15 +1,14 @@
+import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/hive_functions.dart';
-import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 
 class Event {
-  final int id;
-  final String title;
+  final RecipeHive recipe;
 
-  const Event({required this.id, required this.title});
+  const Event({required this.recipe});
 }
 
 int getHashCode(DateTime key) {
@@ -35,7 +34,7 @@ void launchURL(url) async =>
 // Funcions for Edit Calendar
 
 void showPickerCalendar(
-    BuildContext context, Box box, boxRecipe, RecipeModel recipe,
+    BuildContext context, RecipeHive recipe, Box<RecipeHive> recipesBox,
     {DateTime? oldDateTime}) async {
   DateTime? date = await showDatePicker(
       context: context,
@@ -53,14 +52,14 @@ void showPickerCalendar(
         timeOfDay.hour,
         timeOfDay.minute,
       );
-      showDialogCalendar(context, dateTime, box, boxRecipe, recipe, false,
+      showDialogCalendar(context, dateTime, recipe, recipesBox, false,
           oldDateTime: oldDateTime);
     }
   }
 }
 
-void showDialogCalendar(BuildContext context, DateTime dateTime, Box box,
-    boxRecipe, RecipeModel recipe, bool isEdit,
+void showDialogCalendar(BuildContext context, DateTime dateTime,
+    RecipeHive recipe, Box<RecipeHive> recipesBox, bool isEdit,
     {DateTime? oldDateTime}) async {
   await showDialog(
       context: context,
@@ -75,7 +74,7 @@ void showDialogCalendar(BuildContext context, DateTime dateTime, Box box,
             ),
             onTap: () {
               Navigator.pop(context);
-              showPickerCalendar(context, box, boxRecipe, recipe,
+              showPickerCalendar(context, recipe, recipesBox,
                   oldDateTime: oldDateTime);
             },
           ),
@@ -90,8 +89,7 @@ void showDialogCalendar(BuildContext context, DateTime dateTime, Box box,
                 onPressed: () {
                   Navigator.pop(context);
                   if (!isEdit)
-                    addRecipeInCalendar(
-                        box, boxRecipe, recipe.id, recipe.title, dateTime,
+                    addRecipeInCalendar(recipe, recipesBox, dateTime,
                         oldDateTime: oldDateTime);
                 })
           ],

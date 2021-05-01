@@ -1,15 +1,17 @@
-import 'package:bettycook/src/database.dart';
-import 'package:bettycook/src/models/models.dart';
-import 'package:bettycook/src/pages/pages.dart';
+import 'package:bettycook/src/adapters/adapters.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
+import 'package:bettycook/src/widgets/drawer_widget.dart';
+import 'package:bettycook/src/widgets/floating_home_widget.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class SubCategoryPage extends StatefulWidget {
   static const routeName = "/subcategory";
 
-  final SubCategoryModel subcategory;
+  final SubCategoryHive subcategory;
 
   const SubCategoryPage({required this.subcategory, Key? key})
       : super(key: key);
@@ -19,49 +21,44 @@ class SubCategoryPage extends StatefulWidget {
 }
 
 class _SubCategoryPageState extends State<SubCategoryPage> {
-  RecipesDatabase db = RecipesDatabase();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        centerTitle: true,
         title: Text(this.widget.subcategory.name.inCaps),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              Navigator.of(context).pushNamed(SearchSubCategoryPage.routeName,
-                  arguments: widget.subcategory);
-            },
-          ),
-        ],
       ),
+      drawer: DrawerWidget(),
       body: Container(
-        child: FutureBuilder(
-          future:
-              db.getRecipes(widget.subcategory.category, widget.subcategory.id),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return ListView(
-                children: <Widget>[
-                  if (snapshot.data != null)
-                    for (RecipeModel recipe in snapshot.data)
-                      Container(
-                        padding: const EdgeInsets.only(
-                            top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
-                        child: RecipeWidget(recipe: recipe),
-                      )
-                  else
-                    Container()
-                ],
-              );
-            } else {
-              return Container();
-            }
+        child: ValueListenableBuilder(
+          valueListenable: hiveDB.recipesBoxListable(),
+          builder:
+              (BuildContext context, Box<RecipeHive> recipeBox, Widget? child) {
+            Iterable<RecipeHive> recipes = recipeBox.values.where(
+                (element) => element.subcategory.id == widget.subcategory.id);
+            return ListView(
+              children: <Widget>[
+                for (RecipeHive recipe in recipes)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8.0),
+                    child: RecipeWidget(recipe: recipe),
+                  )
+              ],
+            );
           },
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      floatingActionButton: FloatingHomeWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavBar(subcategory: widget.subcategory),
     );
   }
 }

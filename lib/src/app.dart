@@ -1,10 +1,9 @@
+import 'package:bettycook/src/adapters/adapters.dart';
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/constants.dart';
-import 'package:bettycook/src/database.dart';
-import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class App extends StatefulWidget {
   @override
@@ -15,19 +14,14 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    _getTips();
   }
 
   @override
-  void dispose() {
-    for (String box in boxes) Hive.box(box).compact();
-    Hive.close();
+  Future<void> dispose() async {
+    await hiveDB.compactBoxes();
+    await Hive.close();
+    await db.closeDB();
     super.dispose();
-  }
-
-  void _getTips() async {
-    TipModel tip = await RecipesDatabase().getTipRandom();
-    Hive.box(tipsBox).put('tip', [tip.id, tip.tip]);
   }
 
   MaterialColor createMaterialColor(Color color) {
@@ -53,30 +47,27 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: Hive.box(settingsBox).listenable(),
-      builder: (BuildContext context, Box box, _) {
-        bool? darkMode = box.get(settingsBoxDarkModeKey);
-        ThemeMode? darkThemeMode;
-        if (darkMode != null)
-          darkThemeMode = darkMode ? ThemeMode.dark : ThemeMode.light;
-        else
-          darkThemeMode = ThemeMode.system;
+      valueListenable: hiveDB.settingsBoxListable(),
+      builder: (BuildContext context, Box settingsBox, Widget? child) {
+        bool? settingsThemeMode = settingsBox.get(settingsBoxThemeModeKey);
+        ThemeMode? themeMode;
+        if (settingsThemeMode == true)
+          themeMode = ThemeMode.dark;
+        else if (settingsThemeMode == false) themeMode = ThemeMode.light;
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: "BettyCook",
-          themeMode: darkThemeMode,
+          themeMode: themeMode,
           darkTheme: ThemeData(
             brightness: Brightness.dark,
-            bottomNavigationBarTheme:
-                BottomNavigationBarThemeData(selectedItemColor: Colors.white),
+            accentColor: Color(0xFF9c40e3),
           ),
           theme: ThemeData(
-            brightness: Brightness.light,
             appBarTheme: AppBarTheme(
               brightness: Brightness.dark,
             ),
             primarySwatch: createMaterialColor(
-              Color(0xFF75414e),
+              Color(0xFF5B178E),
             ),
           ),
           home: HomePage(),
@@ -88,22 +79,24 @@ class _AppState extends State<App> {
                 switch (settings.name) {
                   case SearchAllPage.routeName:
                     return SearchAllPage();
+                  case SearchCategoryPage.routeName:
+                    return SearchCategoryPage(
+                        category: settings.arguments as CategoryHive);
                   case SearchSubCategoryPage.routeName:
                     return SearchSubCategoryPage(
-                        subcategory: settings.arguments as SubCategoryModel);
+                        subcategory: settings.arguments as SubCategoryHive);
                   case FavoritesPage.routeName:
                     return FavoritesPage();
                   case TipsPage.routeName:
                     return TipsPage();
                   case CategoryPage.routeName:
                     return CategoryPage(
-                        category: settings.arguments as CategoryModel);
+                        category: settings.arguments as CategoryHive);
                   case SubCategoryPage.routeName:
                     return SubCategoryPage(
-                        subcategory: settings.arguments as SubCategoryModel);
+                        subcategory: settings.arguments as SubCategoryHive);
                   case RecipePage.routeName:
-                    return RecipePage(
-                        recipe: settings.arguments as RecipeModel);
+                    return RecipePage(recipe: settings.arguments as RecipeHive);
                   case IWantCookPage.routeName:
                     return IWantCookPage();
                   case CalendarPage.routeName:
@@ -114,6 +107,8 @@ class _AppState extends State<App> {
                     return ConverterPage();
                   case AboutPage.routeName:
                     return AboutPage();
+                  case SettingsPage.routeName:
+                    return SettingsPage();
                   default:
                     return Center(
                       child: Container(
