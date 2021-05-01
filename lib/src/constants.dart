@@ -10,9 +10,6 @@ const settingsBoxThemeModeKey = 'theme_mode';
 const settingsBoxAppVersionKey = 'app_version';
 const settingsBoxDBVersionKey = 'db_version';
 
-// DB Version
-const db_version = 0;
-
 // Units
 const Map<String, String> listUnits = {
   "mg": "Miligramos (mg)",
