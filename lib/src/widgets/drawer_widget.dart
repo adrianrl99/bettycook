@@ -65,7 +65,7 @@ class DrawerWidget extends StatelessWidget {
             Expanded(
               child: ListView(
                 padding: EdgeInsets.zero,
-                children: <ListTile>[
+                children: <Widget>[
                   ListTile(
                       leading: Icon(Icons.favorite),
                       title: Text(FavoritesPage.title),
@@ -114,38 +114,32 @@ class DrawerWidget extends StatelessWidget {
                       Navigator.of(context).pushNamed(ConverterPage.routeName);
                     },
                   ),
+                  Divider(),
                   ListTile(
-                      title: Text(
-                    "Contáctanos",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-                  ListTile(
-                    leading: Icon(Icons.send),
-                    title: Text("Telegram"),
-                    onTap: () => launchURL("https://t.me/bettycook"),
+                    leading: Icon(Icons.share),
+                    title: Text("Comparte nuestra app"),
+                    onTap: () => Share.share(
+                        "Descarga BettyCook en https://www.apklis.cu/\nTus recetas en un solo lugar",
+                        subject: "BettyCook"),
                   ),
                   ListTile(
-                    leading: Icon(Icons.mail),
-                    title: Text("Correo"),
-                    onTap: () => launchURL("mailto:bettycooksoporte@gmail.com"),
+                    leading: Icon(Icons.help_outline),
+                    title: Text(AboutPage.title),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(AboutPage.routeName);
+                    },
                   ),
+                  ListTile(
+                    leading: Icon(Icons.settings),
+                    title: Text(SettingsPage.title),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(SettingsPage.routeName);
+                    },
+                  )
                 ],
               ),
-            ),
-            ListTile(
-              leading: Icon(Icons.share),
-              title: Text("Comparte nuestra app"),
-              onTap: () => Share.share(
-                  "Descarga BettyCook en https://www.apklis.cu/\nTus recetas en un solo lugar",
-                  subject: "BettyCook"),
-            ),
-            ListTile(
-              leading: Icon(Icons.help_outline),
-              title: Text(AboutPage.title),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushNamed(AboutPage.routeName);
-              },
             ),
           ],
         ),

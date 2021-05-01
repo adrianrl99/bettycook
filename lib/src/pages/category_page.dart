@@ -36,7 +36,7 @@ class CategoryPage extends StatelessWidget {
           builder: (BuildContext context, Box<SubCategoryHive> subcategoryBox,
               Widget? child) {
             Iterable<SubCategoryHive> subCategoryList = subcategoryBox.values
-                .where((element) => element.category.key == this.category.key);
+                .where((element) => element.category.id == this.category.id);
             return GridView.count(
               crossAxisCount: 2,
               padding: const EdgeInsets.all(8.0),

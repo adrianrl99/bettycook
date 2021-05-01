@@ -21,7 +21,7 @@ class FavoriteButtonWidget extends StatelessWidget {
             ),
             onPressed: () async {
               this.recipe.favorite = !this.recipe.favorite;
-              await recipesBox.put(this.recipe.key, this.recipe);
+              await recipesBox.put(this.recipe.id, this.recipe);
             });
       },
     );

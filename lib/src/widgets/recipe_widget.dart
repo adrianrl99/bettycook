@@ -1,5 +1,4 @@
 import 'package:bettycook/src/adapters/adapters.dart';
-import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:bettycook/src/widgets/calendar_button_widget.dart';

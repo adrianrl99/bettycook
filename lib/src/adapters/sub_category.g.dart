@@ -17,18 +17,21 @@ class SubCategoryHiveAdapter extends TypeAdapter<SubCategoryHive> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return SubCategoryHive(
-      name: fields[0] as String,
-      category: fields[1] as CategoryHive,
+      id: fields[0] as int,
+      name: fields[1] as String,
+      category: fields[2] as CategoryHive,
     );
   }
 
   @override
   void write(BinaryWriter writer, SubCategoryHive obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj.id)
       ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
       ..write(obj.category);
   }
 

@@ -10,6 +10,6 @@ void addRecipeInCalendar(
   if (!recipe.calendar.contains(dateTime)) {
     recipe.calendar.add(dateTime);
     recipe.calendar.sort();
-    recipesBox.put(recipe.key, recipe);
+    recipesBox.put(recipe.id, recipe);
   }
 }

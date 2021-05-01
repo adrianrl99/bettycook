@@ -7,6 +7,7 @@ import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/models/ingredient_model.dart';
 import 'package:bettycook/src/models/models.dart';
+import 'package:flutter/foundation.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -29,7 +30,8 @@ class RecipesDatabase {
       await _openDB();
       int tempDBVersion = await _db.getVersion();
 
-      if (dbVersion == null || dbVersion != tempDBVersion) await _initHiveDB();
+      if (kDebugMode || dbVersion == null || dbVersion != tempDBVersion)
+        await _initHiveDB();
 
       await closeDB();
       await File(path).delete();
@@ -63,7 +65,7 @@ class RecipesDatabase {
   // init Hive Database boxes
   Future<void> _initTipsHive() async {
     for (TipModel tip in (await getTips())) {
-      TipHive tipHive = TipHive(tip: tip.tip);
+      TipHive tipHive = TipHive(id: tip.id, tip: tip.tip);
 
       await hiveDB.tipsBox.put(tip.id, tipHive);
     }
@@ -71,21 +73,22 @@ class RecipesDatabase {
 
   Future<void> _initCategoriesHive() async {
     for (CategoryModel category in (await getCategories())) {
-      CategoryHive categoryHive = CategoryHive(name: category.name);
+      CategoryHive categoryHive =
+          CategoryHive(id: category.id, name: category.name);
 
-      await hiveDB.categoriesBox.put(category.id, categoryHive);
       await _initSubCategoriesHive(category.id, categoryHive);
+      await hiveDB.categoriesBox.put(category.id, categoryHive);
     }
   }
 
   Future<void> _initSubCategoriesHive(
       int categoryId, CategoryHive categoryHive) async {
     for (SubCategoryModel subCategory in (await getSubCategories(categoryId))) {
-      SubCategoryHive subCategoryHive =
-          SubCategoryHive(name: subCategory.name, category: categoryHive);
+      SubCategoryHive subCategoryHive = SubCategoryHive(
+          id: subCategory.id, name: subCategory.name, category: categoryHive);
 
-      await hiveDB.subCategoriesBox.put(subCategory.id, subCategoryHive);
       await _initRecipesHive(categoryId, subCategory.id, subCategoryHive);
+      await hiveDB.subCategoriesBox.put(subCategory.id, subCategoryHive);
     }
   }
 
@@ -93,6 +96,7 @@ class RecipesDatabase {
       SubCategoryHive subCategoryHive) async {
     for (RecipeModel recipe in (await getRecipes(categoryId, subCategoryId))) {
       RecipeHive recipeHive = RecipeHive(
+          id: recipe.id,
           title: recipe.title,
           ingredients: _initRecipeIngredientHive(recipe.ingredients),
           preparation: _initRecipePreparationHive(recipe.preparation),

@@ -80,9 +80,12 @@ class _AppState extends State<App> {
                 switch (settings.name) {
                   case SearchAllPage.routeName:
                     return SearchAllPage();
+                  case SearchCategoryPage.routeName:
+                    return SearchCategoryPage(
+                        category: settings.arguments as CategoryHive);
                   case SearchSubCategoryPage.routeName:
                     return SearchSubCategoryPage(
-                        subcategory: settings.arguments as SubCategoryModel);
+                        subcategory: settings.arguments as SubCategoryHive);
                   case FavoritesPage.routeName:
                     return FavoritesPage();
                   case TipsPage.routeName:
@@ -105,6 +108,8 @@ class _AppState extends State<App> {
                     return ConverterPage();
                   case AboutPage.routeName:
                     return AboutPage();
+                  case SettingsPage.routeName:
+                    return SettingsPage();
                   default:
                     return Center(
                       child: Container(

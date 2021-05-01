@@ -30,7 +30,7 @@ class CalendarTabWidget extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                     this.recipe.calendar.remove(dateTime);
-                    recipesBox.put(this.recipe.key, this.recipe);
+                    recipesBox.put(this.recipe.id, this.recipe);
                   })
             ],
           );

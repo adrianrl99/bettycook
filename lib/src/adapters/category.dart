@@ -5,7 +5,9 @@ part 'category.g.dart';
 @HiveType(typeId: 1)
 class CategoryHive extends HiveObject {
   @HiveField(0)
-  String name;
+  final int id;
+  @HiveField(1)
+  final String name;
 
-  CategoryHive({required this.name});
+  CategoryHive({required this.id, required this.name});
 }

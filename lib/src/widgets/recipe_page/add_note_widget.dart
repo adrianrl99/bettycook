@@ -49,7 +49,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
                 child: Text("BORRAR"),
                 onPressed: () {
                   widget.recipe.notes.remove(widget.initialText);
-                  hiveDB.recipesBox.put(widget.recipe.key, widget.recipe);
+                  hiveDB.recipesBox.put(widget.recipe.id, widget.recipe);
                   Navigator.pop(context);
                 }),
           TextButton(
@@ -72,7 +72,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
                     widget.recipe.notes.remove(widget.initialText);
                     widget.recipe.notes.insert(widget.noteKey!, _text!);
                   }
-                  hiveDB.recipesBox.put(widget.recipe.key, widget.recipe);
+                  hiveDB.recipesBox.put(widget.recipe.id, widget.recipe);
 
                   Navigator.pop(context);
                 }

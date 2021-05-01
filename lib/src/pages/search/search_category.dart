@@ -1,24 +1,26 @@
 import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
-import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
+import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:bettycook/src/widgets/time_sleep_search.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 
-class SearchAllPage extends StatefulWidget {
-  static const routeName = "/search";
+class SearchCategoryPage extends StatefulWidget {
+  static const routeName =
+      "${SearchAllPage.routeName}${CategoryPage.routeName}";
+  final CategoryHive category;
 
-  const SearchAllPage({Key? key}) : super(key: key);
+  const SearchCategoryPage({required this.category, Key? key})
+      : super(key: key);
 
   @override
-  _SearchAllPageState createState() => _SearchAllPageState();
+  _SearchCategoryPageState createState() => _SearchCategoryPageState();
 }
 
-class _SearchAllPageState extends State<SearchAllPage> {
-  final String title = "Buscar";
+class _SearchCategoryPageState extends State<SearchCategoryPage> {
   final _timeSleepSearch = TimeSleepSearch(milliseconds: 1000);
   String _text = "";
   bool _isStop = false;
@@ -27,7 +29,7 @@ class _SearchAllPageState extends State<SearchAllPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.title),
+        title: Text("Buscar en ${this.widget.category.name}"),
       ),
       body: Center(
         child: Column(
@@ -69,7 +71,10 @@ class _SearchAllPageState extends State<SearchAllPage> {
                 builder: (BuildContext context, Box<RecipeHive> recipesBox,
                     Widget? child) {
                   Iterable<RecipeHive> recipes = recipesBox.values.where(
-                      (element) => element.title.format.contains(_text.format));
+                      (element) =>
+                          element.title.format.contains(_text.format) &&
+                          element.subcategory.category.id ==
+                              widget.category.id);
                   return Expanded(
                     child: ListView(
                       children: <Widget>[

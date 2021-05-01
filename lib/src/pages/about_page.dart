@@ -1,4 +1,7 @@
 import 'package:bettycook/src/utils.dart';
+import 'package:bettycook/src/widgets/about_page/app_version_widget.dart';
+import 'package:bettycook/src/widgets/about_page/contact_widget.dart';
+import 'package:bettycook/src/widgets/about_page/work_team_widget.dart';
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
@@ -16,58 +19,11 @@ class AboutPage extends StatelessWidget {
       body: Container(
         child: ListView(
           children: <Widget>[
-            ListTile(
-              title: Center(
-                child: Text(
-                  "Desarrollador y diseñador UI/UX",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              subtitle: Center(
-                  child: GestureDetector(
-                onTap: () =>
-                    launchURL("https://porfolio-adrianrl99.vercel.app/"),
-                child: Text(
-                  "Adrian López Cintas",
-                ),
-              )),
-            ),
-            ListTile(
-              title: Center(
-                child: Text(
-                  "Diseñador audiovisual",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              subtitle: Center(
-                  child: GestureDetector(
-                onTap: () =>
-                    launchURL("https://www.instagram.com/markus_anthony.film"),
-                child: Text(
-                  "Marcos",
-                ),
-              )),
-            ),
-            ListTile(
-              title: Center(
-                child: Text(
-                  "Editora de contenido",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              subtitle: Center(
-                  child: GestureDetector(
-                child: Text(
-                  "Betsy Cintas",
-                ),
-              )),
-            ),
+            ContactWidget(),
+            SizedBox(height: 20),
+            WordTeamWidget(),
+            SizedBox(height: 20),
+            AppVersionWidget(),
           ],
         ),
       ),

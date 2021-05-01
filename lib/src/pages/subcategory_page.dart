@@ -43,7 +43,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
           builder:
               (BuildContext context, Box<RecipeHive> recipeBox, Widget? child) {
             Iterable<RecipeHive> recipes = recipeBox.values.where(
-                (element) => element.subcategory.key == widget.subcategory.key);
+                (element) => element.subcategory.id == widget.subcategory.id);
             return ListView(
               children: <Widget>[
                 for (RecipeHive recipe in recipes)

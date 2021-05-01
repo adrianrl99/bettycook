@@ -5,7 +5,9 @@ part 'tip.g.dart';
 @HiveType(typeId: 0)
 class TipHive extends HiveObject {
   @HiveField(0)
-  String tip;
+  final int id;
+  @HiveField(1)
+  final String tip;
 
-  TipHive({required this.tip});
+  TipHive({required this.id, required this.tip});
 }

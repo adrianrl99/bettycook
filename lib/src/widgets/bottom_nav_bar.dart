@@ -2,6 +2,7 @@ import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/calendar_button_widget.dart';
 import 'package:bettycook/src/widgets/favorite_button_widget.dart';
+import 'package:bettycook/src/widgets/rating_button_recipe_widget.dart';
 import 'package:bettycook/src/widgets/share_button_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -27,41 +28,59 @@ class BottomNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            route == RecipePage.routeName
-                ? ShareButtonWidget(recipe: this.recipe!)
-                : IconButton(
+            Row(
+              children: <Widget>[
+                if (route == RecipePage.routeName)
+                  Row(
+                    children: [
+                      ShareButtonWidget(recipe: this.recipe!),
+                      RatingButtonRecipeWidget(recipe: this.recipe!),
+                    ],
+                  ),
+                if (route != RecipePage.routeName)
+                  IconButton(
                     icon: Icon(Icons.menu),
                     color: Colors.white,
                     onPressed: () {
                       Scaffold.of(context).openDrawer();
                     },
                   ),
-            if (route != RecipePage.routeName)
-              IconButton(
-                icon: Icon(Icons.search),
-                color: Colors.white,
-                onPressed: () {
-                  switch (route) {
-                    case HomePage.routeName:
-                      Navigator.of(context).pushNamed(SearchAllPage.routeName);
-                      break;
-                    case CategoryPage.routeName:
-                      break;
-                    case SubCategoryPage.routeName:
-                      Navigator.of(context).pushNamed(
-                          SearchSubCategoryPage.routeName,
-                          arguments: this.subcategory);
-                      break;
-                  }
-                },
-              )
-            else
-              Row(
-                children: <Widget>[
-                  CalendarButtonWidget(recipe: this.recipe!),
-                  FavoriteButtonWidget(recipe: this.recipe!),
-                ],
-              )
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                if (route == RecipePage.routeName)
+                  Row(
+                    children: <Widget>[
+                      CalendarButtonWidget(recipe: this.recipe!),
+                      FavoriteButtonWidget(recipe: this.recipe!),
+                    ],
+                  )
+                else
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    color: Colors.white,
+                    onPressed: () {
+                      switch (route) {
+                        case HomePage.routeName:
+                          Navigator.of(context)
+                              .pushNamed(SearchAllPage.routeName);
+                          break;
+                        case CategoryPage.routeName:
+                          Navigator.of(context).pushNamed(
+                              SearchCategoryPage.routeName,
+                              arguments: this.category);
+                          break;
+                        case SubCategoryPage.routeName:
+                          Navigator.of(context).pushNamed(
+                              SearchSubCategoryPage.routeName,
+                              arguments: this.subcategory);
+                          break;
+                      }
+                    },
+                  )
+              ],
+            ),
           ],
         ),
       ),

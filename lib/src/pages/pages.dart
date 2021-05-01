@@ -9,7 +9,9 @@ export './calendar_page.dart';
 export './to_buy_page.dart';
 export './converter_page.dart';
 export './about_page.dart';
+export './settings_page.dart';
 
 // Search Pages
 export './search/search_all_page.dart';
+export './search/search_category.dart';
 export './search/search_subcategory.dart';
