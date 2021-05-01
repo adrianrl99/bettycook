@@ -19,17 +19,20 @@ class CategoryHiveAdapter extends TypeAdapter<CategoryHive> {
     return CategoryHive(
       id: fields[0] as int,
       name: fields[1] as String,
+      image: fields[2] == null ? '' : fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, CategoryHive obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.image);
   }
 
   @override

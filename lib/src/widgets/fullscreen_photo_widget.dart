@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class FullScreenPhotoWidget extends StatelessWidget {
-  final String imagePath;
-  const FullScreenPhotoWidget({required this.imagePath, Key? key})
+  final ImageProvider<Object> image;
+  const FullScreenPhotoWidget({required this.image, Key? key})
       : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class FullScreenPhotoWidget extends StatelessWidget {
       ),
       body: Container(
         child: PhotoView(
-          imageProvider: AssetImage(this.imagePath),
+          imageProvider: image,
         ),
       ),
     );

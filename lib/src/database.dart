@@ -25,7 +25,7 @@ class RecipesDatabase {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     var appVersion = hiveDB.settingsBox.get(settingsBoxAppVersionKey);
     var dbVersion = hiveDB.settingsBox.get(settingsBoxDBVersionKey);
-    if (appVersion == null || appVersion != packageInfo.version) {
+    if (kDebugMode || appVersion == null || appVersion != packageInfo.version) {
       await _createDB(path);
       await _openDB();
       int tempDBVersion = await _db.getVersion();
@@ -73,8 +73,8 @@ class RecipesDatabase {
 
   Future<void> _initCategoriesHive() async {
     for (CategoryModel category in (await getCategories())) {
-      CategoryHive categoryHive =
-          CategoryHive(id: category.id, name: category.name);
+      CategoryHive categoryHive = CategoryHive(
+          id: category.id, name: category.name, image: category.image);
 
       await _initSubCategoriesHive(category.id, categoryHive);
       await hiveDB.categoriesBox.put(category.id, categoryHive);
@@ -85,7 +85,10 @@ class RecipesDatabase {
       int categoryId, CategoryHive categoryHive) async {
     for (SubCategoryModel subCategory in (await getSubCategories(categoryId))) {
       SubCategoryHive subCategoryHive = SubCategoryHive(
-          id: subCategory.id, name: subCategory.name, category: categoryHive);
+          id: subCategory.id,
+          name: subCategory.name,
+          category: categoryHive,
+          image: subCategory.image);
 
       await _initRecipesHive(categoryId, subCategory.id, subCategoryHive);
       await hiveDB.subCategoriesBox.put(subCategory.id, subCategoryHive);
@@ -96,11 +99,13 @@ class RecipesDatabase {
       SubCategoryHive subCategoryHive) async {
     for (RecipeModel recipe in (await getRecipes(categoryId, subCategoryId))) {
       RecipeHive recipeHive = RecipeHive(
-          id: recipe.id,
-          title: recipe.title,
-          ingredients: _initRecipeIngredientHive(recipe.ingredients),
-          preparation: _initRecipePreparationHive(recipe.preparation),
-          subcategory: subCategoryHive);
+        id: recipe.id,
+        title: recipe.title,
+        ingredients: _initRecipeIngredientHive(recipe.ingredients),
+        preparation: _initRecipePreparationHive(recipe.preparation),
+        subcategory: subCategoryHive,
+        image: recipe.image,
+      );
       RecipeHive? recipeHiveBox = hiveDB.recipesBox.get(recipe.id);
 
       if (recipeHiveBox != null) {
@@ -175,40 +180,6 @@ class RecipesDatabase {
     return results.map((map) => RecipeModel.fromMap(map)).toList();
   }
 
-  Future<List<RecipeModel>> getRecipesBasic(
-      int categoryId, int subcategoryId) async {
-    List<Map<String, dynamic>> results = await _db.query("recipes",
-        where: "category = ? AND subcategory = ?",
-        whereArgs: [categoryId, subcategoryId],
-        columns: ["id", "title"]);
-    return results.map((map) => RecipeModel.fromMapBasic(map)).toList();
-  }
-
-  Future<RecipeModel> getRecipe(int id) async {
-    List<Map<String, dynamic>> results = await _db.query('recipes',
-        where: 'id = ?', whereArgs: [id], columns: ["id", "title"]);
-    return results.map((map) => RecipeModel.fromMapBasic(map)).toList()[0];
-  }
-
-  Future<List<RecipeModel>> getRecipeByTitle(String title) async {
-    List<Map<String, dynamic>> results = await _db.query('recipes',
-        where: "title LIKE ?",
-        whereArgs: ["%$title%"],
-        columns: ["id", "title"]);
-
-    return results.map((map) => RecipeModel.fromMapBasic(map)).toList();
-  }
-
-  Future<List<RecipeModel>> getRecipeByTitleAndCategory(
-      String title, int category, int subcategory) async {
-    List<Map<String, dynamic>> results = await _db.query('recipes',
-        where: "title LIKE ? AND category = ? AND subcategory = ?",
-        whereArgs: ["%$title%", category, subcategory],
-        columns: ["id", "title"]);
-
-    return results.map((map) => RecipeModel.fromMapBasic(map)).toList();
-  }
-
   Future<List<PreparationModel>> getRecipePreparation(int id) async {
     List<Map<String, dynamic>> results = await _db.query('recipes',
         where: 'id = ?', whereArgs: [id], columns: ["preparation"]);
@@ -224,16 +195,6 @@ class RecipesDatabase {
     List ingredients = jsonDecode(results[0]['ingredients']);
 
     return ingredients.map((map) => IngredientModel.fromMap(map)).toList();
-  }
-
-  Future<List<RecipeModel>> getRecipesById(List ids) async {
-    List<RecipeModel> recipes = await Future.wait(ids.map((id) async {
-      List<Map<String, dynamic>> results = await _db.query("recipes",
-          where: 'id = ?', whereArgs: [id], columns: ["id", "title"]);
-      return results.map((map) => RecipeModel.fromMapBasic(map)).toList()[0];
-    }));
-
-    return recipes;
   }
 
   Future<List<TipModel>> getTips() async {

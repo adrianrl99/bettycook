@@ -1,5 +1,4 @@
 import 'package:bettycook/src/adapters/adapters.dart';
-import 'package:bettycook/src/models/ingredient_model.dart';
 import 'package:flutter/material.dart';
 
 class IngredientWidget extends StatefulWidget {

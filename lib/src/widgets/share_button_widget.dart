@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bettycook/src/adapters/adapters.dart';
-import 'package:bettycook/src/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';

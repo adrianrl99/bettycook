@@ -8,6 +8,8 @@ class CategoryHive extends HiveObject {
   final int id;
   @HiveField(1)
   final String name;
+  @HiveField(2, defaultValue: "")
+  final String image;
 
-  CategoryHive({required this.id, required this.name});
+  CategoryHive({required this.id, required this.name, required this.image});
 }

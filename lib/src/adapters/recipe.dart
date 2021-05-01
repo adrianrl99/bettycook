@@ -24,11 +24,14 @@ class RecipeHive extends HiveObject {
   List<String> notes = [];
   @HiveField(8, defaultValue: 0)
   double rating = 0;
+  @HiveField(9, defaultValue: "")
+  final String image;
 
   RecipeHive(
       {required this.id,
       required this.title,
       required this.ingredients,
       required this.preparation,
-      required this.subcategory});
+      required this.subcategory,
+      required this.image});
 }

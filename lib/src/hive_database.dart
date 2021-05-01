@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:bettycook/src/constants.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -38,11 +41,26 @@ class HiveDatabase {
 
   // Open all boxes
   Future<void> _openBoxes() async {
-    tipsBox = await Hive.openBox<TipHive>(tipsBoxKey);
-    categoriesBox = await Hive.openBox<CategoryHive>(categoriesBoxKey);
-    subCategoriesBox = await Hive.openBox<SubCategoryHive>(subCategoriesBoxKey);
-    recipesBox = await Hive.openBox<RecipeHive>(recipesBoxKey);
-    settingsBox = await Hive.openBox(settingsBoxKey);
+    final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+    var containsEncryptionKey = await secureStorage.containsKey(key: 'key');
+    if (!containsEncryptionKey) {
+      var key = Hive.generateSecureKey();
+      await secureStorage.write(key: 'key', value: base64UrlEncode(key));
+    }
+
+    var encryptionKey =
+        base64Url.decode((await secureStorage.read(key: 'key'))!);
+
+    tipsBox = await Hive.openBox<TipHive>(tipsBoxKey,
+        encryptionCipher: HiveAesCipher(encryptionKey));
+    categoriesBox = await Hive.openBox<CategoryHive>(categoriesBoxKey,
+        encryptionCipher: HiveAesCipher(encryptionKey));
+    subCategoriesBox = await Hive.openBox<SubCategoryHive>(subCategoriesBoxKey,
+        encryptionCipher: HiveAesCipher(encryptionKey));
+    recipesBox = await Hive.openBox<RecipeHive>(recipesBoxKey,
+        encryptionCipher: HiveAesCipher(encryptionKey));
+    settingsBox = await Hive.openBox(settingsBoxKey,
+        encryptionCipher: HiveAesCipher(encryptionKey));
   }
 
   // Compact all boxes

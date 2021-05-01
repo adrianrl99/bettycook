@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/category_page.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +31,7 @@ class HomeCategoryWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                      "assets/images/categories/${this.category.name}.png"),
+                  image: MemoryImage(base64Decode(category.image)),
                   fit: BoxFit.cover,
                 ),
               ),

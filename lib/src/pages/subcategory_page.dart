@@ -1,6 +1,5 @@
 import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
-import 'package:bettycook/src/models/models.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/widgets/drawer_widget.dart';
 import 'package:bettycook/src/widgets/floating_home_widget.dart';

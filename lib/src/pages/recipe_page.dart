@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:badges/badges.dart';
 import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
@@ -49,10 +51,13 @@ class RecipePage extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return FullScreenPhotoWidget(
-                                imagePath:
-                                    "assets/images/recipes/${this.recipe.title.format}.png");
+                                image: MemoryImage(base64Decode(recipe.image)));
                           });
                     },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {},
                   ),
                 ],
                 centerTitle: true,
@@ -60,9 +65,7 @@ class RecipePage extends StatelessWidget {
                 flexibleSpace: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(
-                          "assets/images/recipes/${this.recipe.title.format}.png",
-                        ),
+                        image: MemoryImage(base64Decode(recipe.image)),
                         fit: BoxFit.cover),
                   ),
                   child: Container(

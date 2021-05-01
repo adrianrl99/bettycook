@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/subcategory_page.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
@@ -27,8 +29,8 @@ class SubCategoryWidget extends StatelessWidget {
             height: 160,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(
-                  "assets/images/subcategories/${this.subcategory.name}.png",
+                image: MemoryImage(
+                  base64Decode(subcategory.image),
                 ),
                 fit: BoxFit.cover,
               ),

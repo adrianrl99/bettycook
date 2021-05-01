@@ -9,13 +9,7 @@ class RecipeModel {
   List<PreparationModel> preparation = [];
   late int category;
   late int subcategory;
-
-  // Basic constructors
-  RecipeModel.basic(this.id, this.title);
-  RecipeModel.fromMapBasic(Map<String, dynamic> map) {
-    id = map['id'];
-    title = map['title'];
-  }
+  late String image;
 
   // Full constructors
   RecipeModel.fromMap(Map<String, dynamic> map) {
@@ -33,5 +27,6 @@ class RecipeModel {
     // preparation = map['preparation'];
     category = map['category'];
     subcategory = map['subcategory'];
+    image = map['image'];
   }
 }

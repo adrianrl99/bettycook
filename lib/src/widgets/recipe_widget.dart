@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
@@ -27,8 +29,8 @@ class RecipeWidget extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(
-                  "assets/images/recipes/${this.recipe.title.format}.png",
+                image: MemoryImage(
+                  base64Decode(recipe.image),
                 ),
                 fit: BoxFit.cover,
               ),

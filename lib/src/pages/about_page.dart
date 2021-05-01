@@ -1,4 +1,3 @@
-import 'package:bettycook/src/utils.dart';
 import 'package:bettycook/src/widgets/about_page/app_version_widget.dart';
 import 'package:bettycook/src/widgets/about_page/contact_widget.dart';
 import 'package:bettycook/src/widgets/about_page/work_team_widget.dart';

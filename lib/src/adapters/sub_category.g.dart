@@ -20,19 +20,22 @@ class SubCategoryHiveAdapter extends TypeAdapter<SubCategoryHive> {
       id: fields[0] as int,
       name: fields[1] as String,
       category: fields[2] as CategoryHive,
+      image: fields[3] == null ? '' : fields[3] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, SubCategoryHive obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.category);
+      ..write(obj.category)
+      ..writeByte(3)
+      ..write(obj.image);
   }
 
   @override

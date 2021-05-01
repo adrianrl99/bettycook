@@ -12,7 +12,12 @@ class SubCategoryHive extends HiveObject {
   final String name;
   @HiveField(2)
   final CategoryHive category;
+  @HiveField(3, defaultValue: "")
+  final String image;
 
   SubCategoryHive(
-      {required this.id, required this.name, required this.category});
+      {required this.id,
+      required this.name,
+      required this.category,
+      required this.image});
 }
