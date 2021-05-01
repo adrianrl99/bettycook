@@ -41,16 +41,6 @@ class HiveDatabase {
 
   // Open all boxes
   Future<void> _openBoxes() async {
-    final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
-    var containsEncryptionKey = await secureStorage.containsKey(key: 'key');
-    if (!containsEncryptionKey) {
-      var key = Hive.generateSecureKey();
-      await secureStorage.write(key: 'key', value: base64UrlEncode(key));
-    }
-
-    var encryptionKey =
-        base64Url.decode((await secureStorage.read(key: 'key'))!);
-
     tipsBox = await Hive.openBox<TipHive>(tipsBoxKey,
         encryptionCipher: HiveAesCipher(encryptionKey));
     categoriesBox = await Hive.openBox<CategoryHive>(categoriesBoxKey,
