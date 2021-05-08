@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.0+1
+version: 1.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -26,11 +26,6 @@ dependencies:
 
   # Databases
   hive: ^2.0.4
-  hive_flutter: ^1.0.0
-  sqflite: ^2.0.0+3
-
-  # Provider
-  provider: ^5.0.0
 
   # Utilities
   path_provider: ^2.0.1
@@ -44,6 +39,12 @@ dependencies:
   table_calendar: ^3.0.0
   badges: ^2.0.0-nullsafety.1
   flutter_rating_bar: ^4.0.0
+
+  # BettyCook Plugins
+  bettycookplugins:
+    git:
+      url: ../bettycookplugins
+      ref: dev
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +71,7 @@ flutter:
   assets:
     - assets/icon/icon.png
     - assets/icon/splash.png
-    - assets/database.db
+    - assets/database/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

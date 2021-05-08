@@ -1,4 +1,4 @@
-package cu.bettycook.apk
+package cu.bettycook.android
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:badges/badges.dart';
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
@@ -16,111 +15,114 @@ import 'package:hive/hive.dart';
 class RecipePage extends StatelessWidget {
   static const routeName = "/recipe";
 
-  final RecipeHive recipe;
+  // final RecipeHive recipe;
 
-  const RecipePage({required this.recipe, Key? key}) : super(key: key);
+  const RecipePage({
+    // required this.recipe,
+    Key? key,
+  }) : super(key: key);
 
-  void showNotesDialog(BuildContext context) async {
-    await showDialog(
-        context: context,
-        useSafeArea: true,
-        useRootNavigator: true,
-        builder: (BuildContext context) {
-          return NotesWidget(
-            recipe: this.recipe,
-          );
-        });
-  }
+  // void showNotesDialog(BuildContext context) async {
+  //   await showDialog(
+  //       context: context,
+  //       useSafeArea: true,
+  //       useRootNavigator: true,
+  //       builder: (BuildContext context) {
+  //         return NotesWidget(
+  //           recipe: this.recipe,
+  //         );
+  //       });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DefaultTabController(
-        length: 3,
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                title: Text(this.recipe.title.inCaps),
-                actions: <Widget>[
-                  IconButton(
-                    color: Colors.white,
-                    icon: Icon(Icons.fullscreen),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return FullScreenPhotoWidget(
-                                image: MemoryImage(base64Decode(recipe.image)));
-                          });
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {},
-                  ),
-                ],
-                centerTitle: true,
-                expandedHeight: 320,
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: MemoryImage(base64Decode(recipe.image)),
-                        fit: BoxFit.cover),
-                  ),
-                  child: Container(
-                    color: Colors.black.withOpacity(.5),
-                  ),
-                ),
-                pinned: true,
-                snap: true,
-                floating: true,
-                bottom: TabBar(
-                  indicatorWeight: 4,
-                  labelColor: Colors.white,
-                  tabs: <Tab>[
-                    Tab(
-                      child: Text("Ingredientes"),
-                    ),
-                    Tab(
-                      child: Text("Preparacion"),
-                    ),
-                    Tab(
-                      child: Text("Calendario"),
-                    ),
-                  ],
-                ),
-              )
-            ];
-          },
-          body: TabBarView(
-            children: <Widget>[
-              IngredientsTabWidget(ingredients: this.recipe.ingredients),
-              PreparationTabWidget(preparation: this.recipe.preparation),
-              CalendarTabWidget(recipe: this.recipe),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        recipe: this.recipe,
-      ),
+      // body: DefaultTabController(
+      //   length: 3,
+      //   child: NestedScrollView(
+      //     headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+      //       return <Widget>[
+      //         SliverAppBar(
+      //           title: Text(this.recipe.title.inCaps),
+      //           actions: <Widget>[
+      //             IconButton(
+      //               color: Colors.white,
+      //               icon: Icon(Icons.fullscreen),
+      //               onPressed: () {
+      //                 showDialog(
+      //                     context: context,
+      //                     builder: (BuildContext context) {
+      //                       return FullScreenPhotoWidget(
+      //                           image: MemoryImage(base64Decode(recipe.image)));
+      //                     });
+      //               },
+      //             ),
+      //             IconButton(
+      //               icon: Icon(Icons.delete),
+      //               onPressed: () {},
+      //             ),
+      //           ],
+      //           centerTitle: true,
+      //           expandedHeight: 320,
+      //           flexibleSpace: Container(
+      //             decoration: BoxDecoration(
+      //               image: DecorationImage(
+      //                   image: MemoryImage(base64Decode(recipe.image)),
+      //                   fit: BoxFit.cover),
+      //             ),
+      //             child: Container(
+      //               color: Colors.black.withOpacity(.5),
+      //             ),
+      //           ),
+      //           pinned: true,
+      //           snap: true,
+      //           floating: true,
+      //           bottom: TabBar(
+      //             indicatorWeight: 4,
+      //             labelColor: Colors.white,
+      //             tabs: <Tab>[
+      //               Tab(
+      //                 child: Text("Ingredientes"),
+      //               ),
+      //               Tab(
+      //                 child: Text("Preparacion"),
+      //               ),
+      //               Tab(
+      //                 child: Text("Calendario"),
+      //               ),
+      //             ],
+      //           ),
+      //         )
+      //       ];
+      //     },
+      //     body: TabBarView(
+      //       children: <Widget>[
+      //         IngredientsTabWidget(ingredients: this.recipe.ingredients),
+      //         PreparationTabWidget(preparation: this.recipe.preparation),
+      //         CalendarTabWidget(recipe: this.recipe),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      // bottomNavigationBar: BottomNavBar(
+      //   recipe: this.recipe,
+      // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: ValueListenableBuilder(
-        valueListenable: hiveDB.recipesBoxListable(),
-        builder:
-            (BuildContext context, Box<RecipeHive> recipexBox, Widget? child) {
-          return Badge(
-            position: BadgePosition.bottomStart(),
-            showBadge: this.recipe.notes.isNotEmpty,
-            badgeContent: Text(this.recipe.notes.length.toString()),
-            child: FloatingActionButton(
-              child: Icon(Icons.notes),
-              onPressed: () => showNotesDialog(context),
-            ),
-          );
-        },
-      ),
+      // floatingActionButton: ValueListenableBuilder(
+      //   valueListenable: hiveDB.recipesBoxListable(),
+      //   builder:
+      //       (BuildContext context, Box<RecipeHive> recipexBox, Widget? child) {
+      //     return Badge(
+      //       position: BadgePosition.bottomStart(),
+      //       showBadge: this.recipe.notes.isNotEmpty,
+      //       badgeContent: Text(this.recipe.notes.length.toString()),
+      //       child: FloatingActionButton(
+      //         child: Icon(Icons.notes),
+      //         onPressed: () => showNotesDialog(context),
+      //       ),
+      //     );
+      //   },
+      // ),
     );
   }
 }

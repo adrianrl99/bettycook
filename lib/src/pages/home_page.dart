@@ -20,40 +20,40 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         title: Text("BettyCook"),
       ),
-      drawer: DrawerWidget(),
+      // drawer: DrawerWidget(),
       body: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            HomeCategoriesWidget(),
-            Flexible(
-              fit: FlexFit.tight,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    HomeFavoriteWidget(),
-                  ],
-                ),
-              ),
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    HomeTip(),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavBar(),
+          // padding: const EdgeInsets.all(16.0),
+          // child: Column(
+          //   children: [
+          //     HomeCategoriesWidget(),
+          //     Flexible(
+          //       fit: FlexFit.tight,
+          //       child: Padding(
+          //         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+          //         child: Row(
+          //           crossAxisAlignment: CrossAxisAlignment.stretch,
+          //           children: [
+          //             HomeFavoriteWidget(),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //     Flexible(
+          //       fit: FlexFit.tight,
+          //       child: Padding(
+          //         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+          //         child: Row(
+          //           crossAxisAlignment: CrossAxisAlignment.stretch,
+          //           children: [
+          //             HomeTip(),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          ),
+      // bottomNavigationBar: BottomNavBar(),
     );
   }
 }

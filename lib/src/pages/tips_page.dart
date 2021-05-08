@@ -1,4 +1,3 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -17,19 +16,19 @@ class TipsPage extends StatelessWidget {
         title: Text(TipsPage.title),
       ),
       body: Container(
-        child: ValueListenableBuilder(
-          valueListenable: hiveDB.tipsBoxListable(),
-          builder: (BuildContext context, Box<TipHive> tipsBox, Widget? child) {
-            return ListView(
-              children: <ListTile>[
-                for (TipHive tip in tipsBox.values)
-                  ListTile(
-                    title: Text(tip.tip),
-                  ),
-              ],
-            );
-          },
-        ),
+        // child: ValueListenableBuilder(
+        //   valueListenable: hiveDB.tipsBoxListable(),
+        //   builder: (BuildContext context, Box<TipHive> tipsBox, Widget? child) {
+        //     return ListView(
+        //       children: <ListTile>[
+        //         for (TipHive tip in tipsBox.values)
+        //           ListTile(
+        //             title: Text(tip.tip),
+        //           ),
+        //       ],
+        //     );
+        //   },
+        // ),
       ),
     );
   }
