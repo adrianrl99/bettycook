@@ -1,7 +1,7 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:bettycook/src/utils.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -30,7 +30,7 @@ class CalendarTabWidget extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                     this.recipe.calendar.remove(dateTime);
-                    recipesBox.put(this.recipe.id, this.recipe);
+                    recipesBox.put(this.recipe.key, this.recipe);
                   })
             ],
           );
@@ -40,7 +40,7 @@ class CalendarTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: hiveDB.recipesBoxListable(),
+      valueListenable: hiveDB.recipesBoxBaseListable(),
       builder:
           (BuildContext context, Box<RecipeHive> recipesBox, Widget? child) {
         return ListView(

@@ -1,5 +1,15 @@
-import 'package:bettycook/src/constants.dart';
 import 'package:flutter/material.dart';
+
+const Map<String, String> listUnits = {
+  "mg": "Miligramos (mg)",
+  "cg": "Centigramos (cg)",
+  "dg": "Decigramos (dg)",
+  "g": "Gramos (g)",
+  "dag": "Decagramos (dag)",
+  "hg": "Hectogramos (hg)",
+  "kg": "Kilogramos (kg)",
+  "t": "Toneladas (t)"
+};
 
 class DropDownUnitsWidget extends StatelessWidget {
   final String dropdownValueTop;

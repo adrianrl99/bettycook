@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/utils.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -13,7 +13,7 @@ class CalendarButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: hiveDB.recipesBoxListable(),
+      valueListenable: hiveDB.recipesBoxBaseListable(),
       builder:
           (BuildContext context, Box<RecipeHive> recipesBox, Widget? child) {
         return IconButton(

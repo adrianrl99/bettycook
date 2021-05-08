@@ -1,7 +1,5 @@
-import 'dart:convert';
-
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/category_page.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 
@@ -14,7 +12,7 @@ class HomeCategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: this.category.id == 1
+        padding: this.category.key == 1
             ? const EdgeInsets.only(right: 8.0)
             : const EdgeInsets.only(left: 8.0),
         child: GestureDetector(
@@ -31,7 +29,7 @@ class HomeCategoryWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: MemoryImage(base64Decode(category.image)),
+                  image: MemoryImage(decodeImage(category.image)),
                   fit: BoxFit.cover,
                 ),
               ),

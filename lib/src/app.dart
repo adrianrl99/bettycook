@@ -1,7 +1,6 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
-import 'package:bettycook/src/constants.dart';
 import 'package:bettycook/src/pages/pages.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -11,19 +10,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Future<void> dispose() async {
-    await hiveDB.compactBoxes();
-    await Hive.close();
-    await db.closeDB();
-    super.dispose();
-  }
-
   MaterialColor createMaterialColor(Color color) {
     List strengths = <double>[.05];
     Map<int, Color> swatch = {};
@@ -47,9 +33,9 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: hiveDB.settingsBoxListable(),
-      builder: (BuildContext context, Box settingsBox, Widget? child) {
-        bool? settingsThemeMode = settingsBox.get(settingsBoxThemeModeKey);
+      valueListenable: hiveDB.settingsBoxBaseListable(),
+      builder: (BuildContext context, Box settingsBoxBase, Widget? child) {
+        bool? settingsThemeMode = settingsBoxBase.get(settingsBoxThemeModeKey);
         ThemeMode? themeMode;
         if (settingsThemeMode == true)
           themeMode = ThemeMode.dark;
@@ -94,7 +80,7 @@ class _AppState extends State<App> {
                         category: settings.arguments as CategoryHive);
                   case SubCategoryPage.routeName:
                     return SubCategoryPage(
-                        subcategory: settings.arguments as SubCategoryHive);
+                        subCategory: settings.arguments as SubCategoryHive);
                   case RecipePage.routeName:
                     return RecipePage(recipe: settings.arguments as RecipeHive);
                   case IWantCookPage.routeName:

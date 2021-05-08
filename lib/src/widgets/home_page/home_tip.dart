@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -10,7 +10,9 @@ class HomeTip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
+      margin: const EdgeInsets.only(top: 8.0),
+      height: 200,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
@@ -29,7 +31,7 @@ class HomeTip extends StatelessWidget {
               ),
             ),
             ValueListenableBuilder(
-              valueListenable: hiveDB.tipsBoxListable(),
+              valueListenable: hiveDB.tipsBoxBaseListable(),
               builder:
                   (BuildContext context, Box<TipHive> tipsBox, Widget? child) {
                 Random random = Random();

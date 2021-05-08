@@ -1,5 +1,5 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/hive_functions.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:url_launcher/url_launcher.dart';

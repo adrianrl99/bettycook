@@ -1,5 +1,5 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -11,7 +11,7 @@ class FavoriteButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: hiveDB.recipesBoxListable(),
+      valueListenable: hiveDB.recipesBoxBaseListable(),
       builder:
           (BuildContext context, Box<RecipeHive> recipesBox, Widget? child) {
         return IconButton(
@@ -21,7 +21,7 @@ class FavoriteButtonWidget extends StatelessWidget {
             ),
             onPressed: () async {
               this.recipe.favorite = !this.recipe.favorite;
-              await recipesBox.put(this.recipe.id, this.recipe);
+              await recipesBox.put(this.recipe.key, this.recipe);
             });
       },
     );

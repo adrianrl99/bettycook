@@ -1,10 +1,11 @@
-import 'package:bettycook/src/adapters/adapters.dart';
-import 'package:bettycook/src/widgets/recipe_page/ingredient_widget.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 
 class IngredientsTabWidget extends StatelessWidget {
   final List<IngredientHive> ingredients;
-  const IngredientsTabWidget({required this.ingredients, Key? key})
+  final String title;
+  const IngredientsTabWidget(
+      {required this.ingredients, required this.title, Key? key})
       : super(key: key);
 
   void _showDialog(BuildContext context, String comment) {
@@ -34,7 +35,7 @@ class IngredientsTabWidget extends StatelessWidget {
           for (IngredientHive ingredient in this.ingredients)
             Column(
               children: <Widget>[
-                if (ingredient.target.isNotEmpty)
+                if (ingredient.target != this.title)
                   ListTile(
                     title: Text(
                       ingredient.target,
@@ -57,8 +58,13 @@ class IngredientsTabWidget extends StatelessWidget {
                                       context, _ingredients.comment),
                                 )
                               : null,
-                          title: IngredientWidget(
-                            ingredients: _ingredients,
+                          title: Text(
+                            "${_ingredients.amount} ${_ingredients.measure} de ${_ingredients.ingredient}",
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .color),
                           ),
                         )
                     ],

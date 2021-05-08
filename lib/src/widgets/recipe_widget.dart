@@ -1,9 +1,7 @@
-import 'dart:convert';
-
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:bettycook/src/widgets/calendar_button_widget.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:bettycook/src/widgets/favorite_button_widget.dart';
 
@@ -30,7 +28,7 @@ class RecipeWidget extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: MemoryImage(
-                  base64Decode(recipe.image),
+                  decodeImage(recipe.image),
                 ),
                 fit: BoxFit.cover,
               ),

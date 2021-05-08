@@ -1,8 +1,8 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:bettycook/src/widgets/time_sleep_search.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
@@ -64,7 +64,7 @@ class _SearchAllPageState extends State<SearchAllPage> {
             ),
             if (_isStop && _text.length > 3)
               ValueListenableBuilder(
-                valueListenable: hiveDB.recipesBoxListable(),
+                valueListenable: hiveDB.recipesBoxBaseListable(),
                 builder: (BuildContext context, Box<RecipeHive> recipesBox,
                     Widget? child) {
                   Iterable<RecipeHive> recipes = recipesBox.values.where(

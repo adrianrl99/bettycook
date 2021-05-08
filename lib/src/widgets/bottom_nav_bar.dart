@@ -1,9 +1,9 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/calendar_button_widget.dart';
 import 'package:bettycook/src/widgets/favorite_button_widget.dart';
 import 'package:bettycook/src/widgets/rating_button_recipe_widget.dart';
 import 'package:bettycook/src/widgets/share_button_widget.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {

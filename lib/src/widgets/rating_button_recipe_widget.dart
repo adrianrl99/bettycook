@@ -1,5 +1,5 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hive/hive.dart';
@@ -35,7 +35,7 @@ class RatingButtonRecipeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: hiveDB.recipesBoxListable(),
+      valueListenable: hiveDB.recipesBoxBaseListable(),
       builder: (BuildContext context, Box<RecipeHive> value, Widget? child) {
         return Row(
           children: [

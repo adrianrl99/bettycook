@@ -1,5 +1,5 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 
 class AddNoteWidget extends StatefulWidget {
@@ -47,7 +47,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
                 child: Text("BORRAR"),
                 onPressed: () {
                   widget.recipe.notes.remove(widget.initialText);
-                  hiveDB.recipesBox.put(widget.recipe.id, widget.recipe);
+                  hiveDB.recipesBoxBase.put(widget.recipe.key, widget.recipe);
                   Navigator.pop(context);
                 }),
           TextButton(
@@ -70,7 +70,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
                     widget.recipe.notes.remove(widget.initialText);
                     widget.recipe.notes.insert(widget.noteKey!, _text!);
                   }
-                  hiveDB.recipesBox.put(widget.recipe.id, widget.recipe);
+                  hiveDB.recipesBoxBase.put(widget.recipe.key, widget.recipe);
 
                   Navigator.pop(context);
                 }

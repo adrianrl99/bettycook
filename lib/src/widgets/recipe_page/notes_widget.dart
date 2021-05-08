@@ -1,6 +1,6 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/widgets/recipe_page/add_note_widget.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -22,7 +22,7 @@ class NotesWidget extends StatelessWidget {
     return AlertDialog(
       title: Text("Notas de ${this.recipe.title}"),
       content: ValueListenableBuilder(
-          valueListenable: hiveDB.recipesBoxListable(),
+          valueListenable: hiveDB.recipesBoxBaseListable(),
           builder: (BuildContext context, Box<RecipeHive> box, Widget? child) {
             if (this.recipe.notes.isNotEmpty)
               return ListView(

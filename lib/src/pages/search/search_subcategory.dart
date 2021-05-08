@@ -1,9 +1,9 @@
-import 'package:bettycook/src/adapters/adapters.dart';
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:bettycook/src/widgets/time_sleep_search.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
@@ -13,8 +13,10 @@ class SearchSubCategoryPage extends StatefulWidget {
       "${SearchAllPage.routeName}${SubCategoryPage.routeName}";
   final SubCategoryHive subcategory;
 
-  const SearchSubCategoryPage({required this.subcategory, Key? key})
-      : super(key: key);
+  const SearchSubCategoryPage({
+    required this.subcategory,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SearchSubCategoryPageState createState() => _SearchSubCategoryPageState();
@@ -67,13 +69,13 @@ class _SearchSubCategoryPageState extends State<SearchSubCategoryPage> {
             ),
             if (_isStop && _text.length > 3)
               ValueListenableBuilder(
-                valueListenable: hiveDB.recipesBoxListable(),
+                valueListenable: hiveDB.recipesBoxBaseListable(),
                 builder: (BuildContext context, Box<RecipeHive> recipesBox,
                     Widget? child) {
                   Iterable<RecipeHive> recipes = recipesBox.values.where(
                       (element) =>
                           element.title.format.contains(_text.format) &&
-                          element.subcategory.id == widget.subcategory.id);
+                          element.subCategory == widget.subcategory.key);
                   return Expanded(
                     child: ListView(
                       children: <Widget>[

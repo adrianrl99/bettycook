@@ -1,4 +1,4 @@
-import 'package:bettycook/src/adapters/adapters.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:hive/hive.dart';
 
 void addRecipeInCalendar(
@@ -10,6 +10,6 @@ void addRecipeInCalendar(
   if (!recipe.calendar.contains(dateTime)) {
     recipe.calendar.add(dateTime);
     recipe.calendar.sort();
-    recipesBox.put(recipe.id, recipe);
+    recipesBox.put(recipe.key, recipe);
   }
 }
