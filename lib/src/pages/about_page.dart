@@ -16,16 +16,16 @@ class AboutPage extends StatelessWidget {
         title: Text(title),
       ),
       body: Container(
-          // child: ListView(
-          //   children: <Widget>[
-          //     ContactWidget(),
-          //     SizedBox(height: 20),
-          //     WordTeamWidget(),
-          //     SizedBox(height: 20),
-          //     AppVersionWidget(),
-          //   ],
-          // ),
-          ),
+        child: ListView(
+          children: <Widget>[
+            ContactWidget(),
+            SizedBox(height: 20),
+            WordTeamWidget(),
+            SizedBox(height: 20),
+            AppVersionWidget(),
+          ],
+        ),
+      ),
     );
   }
 }

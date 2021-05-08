@@ -42,9 +42,10 @@ dependencies:
 
   # BettyCook Plugins
   bettycookplugins:
-    git:
-      url: ../bettycookplugins
-      ref: dev
+    # git:
+    path:
+      ../bettycookplugins
+      # ref: dev
 
 dev_dependencies:
   flutter_test:

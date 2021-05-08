@@ -5,9 +5,12 @@ class HomeNotFavoriteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Text("No has seleccionado ninguna receta como favorito"),
+    return Container(
+      height: 150,
+      child: Center(
+        child: Container(
+          child: Text("No has seleccionado ninguna receta como favorito"),
+        ),
       ),
     );
   }

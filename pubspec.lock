@@ -46,11 +46,9 @@ packages:
   bettycookplugins:
     dependency: "direct main"
     description:
-      path: "."
-      ref: dev
-      resolved-ref: a2f0581b6689e3a9f71c904297c6909a779d91fc
-      url: "../bettycookplugins"
-    source: git
+      path: "../bettycookplugins"
+      relative: true
+    source: path
     version: "1.0.1"
   boolean_selector:
     dependency: transitive

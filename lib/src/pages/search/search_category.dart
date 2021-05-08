@@ -3,6 +3,7 @@ import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:bettycook/src/widgets/time_sleep_search.dart';
+import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
@@ -10,10 +11,10 @@ import 'package:bettycook/src/extensions/extensions.dart';
 class SearchCategoryPage extends StatefulWidget {
   static const routeName =
       "${SearchAllPage.routeName}${CategoryPage.routeName}";
-  // final CategoryHive category;
+  final CategoryHive category;
 
   const SearchCategoryPage({
-    // required this.category,
+    required this.category,
     Key? key,
   }) : super(key: key);
 
@@ -30,8 +31,8 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          // title: Text("Buscar en ${this.widget.category.name}"),
-          ),
+        title: Text("Buscar en ${this.widget.category.name}"),
+      ),
       body: Center(
         child: Column(
           children: [
@@ -66,47 +67,46 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
                 },
               ),
             ),
-            // if (_isStop && _text.length > 3)
-            //   ValueListenableBuilder(
-            //     valueListenable: hiveDB.recipesBoxListable(),
-            //     builder: (BuildContext context, Box<RecipeHive> recipesBox,
-            //         Widget? child) {
-            //       Iterable<RecipeHive> recipes = recipesBox.values.where(
-            //           (element) =>
-            //               element.title.format.contains(_text.format) &&
-            //               element.subcategory.category.id ==
-            //                   widget.category.id);
-            //       return Expanded(
-            //         child: ListView(
-            //           children: <Widget>[
-            //             if (recipes.length > 0)
-            //               for (RecipeHive recipe in recipes)
-            //                 Container(
-            //                   padding: const EdgeInsets.symmetric(
-            //                       horizontal: 16.0, vertical: 8.0),
-            //                   child: RecipeWidget(
-            //                     recipe: recipe,
-            //                   ),
-            //                 )
-            //             else
-            //               Container(
-            //                 alignment: Alignment.center,
-            //                 child: Text("No se encontraron resultados"),
-            //               )
-            //           ],
-            //         ),
-            //       );
-            //     },
-            //   )
-            // else
-            //   Container(
-            //     alignment: Alignment.center,
-            //     child: Text(_text),
-            //   )
+            if (_isStop && _text.length > 3)
+              ValueListenableBuilder(
+                valueListenable: hiveDB.recipesBoxBaseListable(),
+                builder: (BuildContext context, Box<RecipeHive> recipesBox,
+                    Widget? child) {
+                  Iterable<RecipeHive> recipes = recipesBox.values.where(
+                      (element) =>
+                          element.title.format.contains(_text.format) &&
+                          element.category == widget.category.key);
+                  return Expanded(
+                    child: ListView(
+                      children: <Widget>[
+                        if (recipes.length > 0)
+                          for (RecipeHive recipe in recipes)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 8.0),
+                              child: RecipeWidget(
+                                recipe: recipe,
+                              ),
+                            )
+                        else
+                          Container(
+                            alignment: Alignment.center,
+                            child: Text("No se encontraron resultados"),
+                          )
+                      ],
+                    ),
+                  );
+                },
+              )
+            else
+              Container(
+                alignment: Alignment.center,
+                child: Text(_text),
+              )
           ],
         ),
       ),
-      // bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }
