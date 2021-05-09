@@ -17,7 +17,7 @@ void main() async {
     version: packageInfo.version,
   );
 
-  SystemChrome.setPreferredOrientations(
+  await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   );
 
