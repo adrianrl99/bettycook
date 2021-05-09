@@ -10,7 +10,7 @@ class PreparationTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.only(bottom: 16.0),
       children: <Widget>[
         if (this.preparation.isNotEmpty)
           for (PreparationHive _preparation in this.preparation)

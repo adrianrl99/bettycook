@@ -29,7 +29,7 @@ class IngredientsTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.only(bottom: 16.0),
       children: <Widget>[
         if (this.ingredients.isNotEmpty)
           for (IngredientHive ingredient in this.ingredients)
