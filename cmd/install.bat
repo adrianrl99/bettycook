@@ -1,1 +1,1 @@
-flutter build apk --split-per-abi --obfuscate --split-debug-info=./log && flutter install
+flutter clean && flutter build apk --split-per-abi --obfuscate --split-debug-info=./log && flutter install
