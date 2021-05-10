@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
+import 'package:path/path.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -116,9 +121,31 @@ class DrawerWidget extends StatelessWidget {
                   ListTile(
                     leading: Icon(Icons.share),
                     title: Text("Comparte nuestra app"),
-                    onTap: () => Share.share(
-                        "Descarga BettyCook en https://www.apklis.cu/\nTus recetas en un solo lugar",
-                        subject: "BettyCook"),
+                    onTap: () async {
+                      final path = await getApplicationDocumentsDirectory();
+                      final RenderBox box =
+                          context.findRenderObject() as RenderBox;
+
+                      File imgFile = File(join(path.path, 'share.png'));
+
+                      // Copy from asset
+                      ByteData data = await rootBundle
+                          .load(join("assets", "icon", "splash.png"));
+                      List<int> bytes = data.buffer
+                          .asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+                      await imgFile.writeAsBytes(bytes, flush: true);
+
+                      await Share.shareFiles(
+                        [imgFile.path],
+                        text:
+                            "Descarga BettyCook en https://www.apklis.cu/\nTus recetas en un solo lugar",
+                        sharePositionOrigin:
+                            box.localToGlobal(Offset.zero) & box.size,
+                      );
+
+                      await imgFile.delete();
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.help_outline),
