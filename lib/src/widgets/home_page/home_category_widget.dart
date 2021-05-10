@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/pages/category_page.dart';
 import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
+import 'package:path/path.dart';
 
 class HomeCategoryWidget extends StatelessWidget {
   final CategoryHive category;
@@ -29,7 +33,10 @@ class HomeCategoryWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: MemoryImage(decodeImage(category.image)),
+                  image: FileImage(File(
+                    join(hiveDB.settingsBoxBase.get(settingsBoxAppDirKey),
+                        "categories", this.category.name),
+                  )),
                   fit: BoxFit.cover,
                 ),
               ),

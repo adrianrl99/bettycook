@@ -26,6 +26,48 @@ class IngredientsTabWidget extends StatelessWidget {
         });
   }
 
+  String ingredientText(IngredientsHive _ingredients) {
+    String amount = "";
+    String measure = "";
+    String of = "";
+    String ingredient = "";
+    if (_ingredients.amount != 0.0) {
+      if (_ingredients.amount.toInt() == _ingredients.amount)
+        amount = _ingredients.amount.toInt().toString();
+      else if (_ingredients.amount == 0.25)
+        amount = "¼";
+      else if (_ingredients.amount == 0.5)
+        amount = "½";
+      else if (_ingredients.amount == 0.75)
+        amount = "¾";
+      else if (_ingredients.amount == 0.33)
+        amount = "⅓";
+      else if (_ingredients.amount == 0.66)
+        amount = "⅔";
+      else if (_ingredients.amount - _ingredients.amount.toInt() == 0.25)
+        amount = _ingredients.amount.toInt().toString() + "¼";
+      else if (_ingredients.amount - _ingredients.amount.toInt() == 0.5)
+        amount = _ingredients.amount.toInt().toString() + "½";
+      else if (_ingredients.amount - _ingredients.amount.toInt() == 0.75)
+        amount = _ingredients.amount.toInt().toString() + "¾";
+      else if (_ingredients.amount - _ingredients.amount.toInt() == 0.33)
+        amount = _ingredients.amount.toInt().toString() + "⅓";
+      else if (_ingredients.amount - _ingredients.amount.toInt() == 0.66)
+        amount = _ingredients.amount.toInt().toString() + "⅔";
+      else
+        amount = _ingredients.amount.toString();
+      amount = amount + " ";
+    }
+
+    if (_ingredients.measure.isNotEmpty) {
+      measure = _ingredients.measure;
+      of = " de ";
+    }
+    if (_ingredients.ingredient.isNotEmpty)
+      ingredient = _ingredients.ingredient;
+    return amount + measure + of + ingredient;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -59,7 +101,7 @@ class IngredientsTabWidget extends StatelessWidget {
                                 )
                               : null,
                           title: Text(
-                            "${_ingredients.amount} ${_ingredients.measure} de ${_ingredients.ingredient}",
+                            ingredientText(_ingredients),
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme

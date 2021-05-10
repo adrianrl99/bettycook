@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class TipsPage extends StatelessWidget {
   static const routeName = "/tips";
-  static const String title = "Tips";
+  static const String title = "Concejos";
 
   const TipsPage({Key? key}) : super(key: key);
 
@@ -18,14 +18,19 @@ class TipsPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           for (TipHive tip in hiveDB.tipsBoxBase.values)
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8.0,
-              ),
-              child: ListTile(
-                title: Text(tip.tip),
-              ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
+                  child: ListTile(
+                    title: Text(tip.tip),
+                  ),
+                ),
+                if (hiveDB.tipsBoxBase.values.last.key != tip.key) Divider(),
+              ],
             ),
         ],
       ),

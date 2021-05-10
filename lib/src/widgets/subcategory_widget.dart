@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/pages/subcategory_page.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
 import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class SubCategoryWidget extends StatelessWidget {
   final SubCategoryHive subcategory;
@@ -27,9 +31,10 @@ class SubCategoryWidget extends StatelessWidget {
             height: 160,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: MemoryImage(
-                  decodeImage(subcategory.image),
-                ),
+                image: FileImage(File(
+                  join(hiveDB.settingsBoxBase.get(settingsBoxAppDirKey),
+                      "subcategories", this.subcategory.name),
+                )),
                 fit: BoxFit.cover,
               ),
             ),

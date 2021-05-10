@@ -16,6 +16,7 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? route = ModalRoute.of(context)!.settings.name;
+
     return BottomAppBar(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: CircularNotchedRectangle(),
