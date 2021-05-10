@@ -47,7 +47,7 @@ class WordTeamWidget extends StatelessWidget {
             onTap: () =>
                 launchURL("https://www.instagram.com/markus_anthony.film"),
             child: Text(
-              "Marcos",
+              "Marcos Segura Valdés",
             ),
           )),
         ),
