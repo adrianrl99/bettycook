@@ -7,6 +7,8 @@ FOR /F %%i IN (' %cmd% ') DO SET branch=%%i
 
 if NOT exist F:\Releases\%name%\%branch% mkdir F:\Releases\%name%\%branch%
 
+call F:\Projects\%name%\cmd\apklis.bat
+
 tar -czf F:\Releases\%name%\%branch%\%name%.code.tar.gz^
  -C F:\Projects\%name%^
   --exclude .dart_tool^
