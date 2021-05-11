@@ -21,4 +21,4 @@ tar -czf F:\Releases\%name%\%branch%\%name%.code.tar.gz^
   --exclude .flutter-plugins^
   .
 
-if exist "F:\Projects\%name%\build\app\outputs\flutter-apk\app-release.apk" copy "F:\Projects\%name%\build\app\outputs\flutter-apk\app-release.apk" F:\Releases\%name%\%branch%\%name%.apk
+if exist "F:\Projects\%name%\build\app\outputs\flutter-apk\app-release.apk" copy "F:\Projects\%name%\build\app\outputs\flutter-apk\app-release.apk" "F:\Releases\%name%\%branch%\%name%.apk"
