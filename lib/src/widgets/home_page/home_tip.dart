@@ -23,7 +23,7 @@ class HomeTip extends StatelessWidget {
           children: [
             ListTile(
               title: Text(
-                "Tip para ti",
+                "Consejo para ti",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
