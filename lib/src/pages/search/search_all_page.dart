@@ -1,5 +1,4 @@
 import 'package:bettycook/src/config.dart';
-import 'package:bettycook/src/widgets/bottom_nav_bar.dart';
 import 'package:bettycook/src/widgets/recipe_widget.dart';
 import 'package:bettycook/src/widgets/time_sleep_search.dart';
 import 'package:bettycookplugins/bettycookplugins.dart';
