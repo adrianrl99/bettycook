@@ -1,0 +1,1 @@
+flutter clean && flutter build apk --obfuscate --split-debug-info=./log

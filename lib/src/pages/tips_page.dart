@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class TipsPage extends StatelessWidget {
   static const routeName = "/tips";
-  static const String title = "Concejos";
+  static const String title = "Consejos";
 
   const TipsPage({Key? key}) : super(key: key);
 

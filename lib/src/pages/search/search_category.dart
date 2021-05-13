@@ -40,6 +40,7 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               child: TextField(
+                autofocus: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Buscar',
@@ -106,7 +107,6 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }
