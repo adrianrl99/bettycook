@@ -94,18 +94,8 @@ class _AppState extends State<App> {
                         case RecipePage.routeName:
                           return RecipePage(
                               recipe: settings.arguments as RecipeHive);
-                        case IWantCookPage.routeName:
-                          return IWantCookPage();
-                        case CalendarPage.routeName:
-                          return CalendarPage();
-                        case ToBuyPage.routeName:
-                          return ToBuyPage();
-                        case ConverterPage.routeName:
-                          return ConverterPage();
                         case AboutPage.routeName:
                           return AboutPage();
-                        case SettingsPage.routeName:
-                          return SettingsPage();
                         default:
                           return Center(
                             child: Container(

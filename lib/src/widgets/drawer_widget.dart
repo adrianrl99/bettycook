@@ -85,38 +85,6 @@ class DrawerWidget extends StatelessWidget {
                       Navigator.of(context).pushNamed(TipsPage.routeName);
                     },
                   ),
-                  ListTile(
-                    leading: Icon(Icons.kitchen),
-                    title: Text(IWantCookPage.title),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed(IWantCookPage.routeName);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.calendar_today),
-                    title: Text(CalendarPage.title),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed(CalendarPage.routeName);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.shopping_cart),
-                    title: Text(ToBuyPage.title),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed(ToBuyPage.routeName);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.swap_horiz),
-                    title: Text(ConverterPage.title),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed(ConverterPage.routeName);
-                    },
-                  ),
                   Divider(),
                   ListTile(
                     leading: Icon(Icons.share),
@@ -155,14 +123,6 @@ class DrawerWidget extends StatelessWidget {
                       Navigator.of(context).pushNamed(AboutPage.routeName);
                     },
                   ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text(SettingsPage.title),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed(SettingsPage.routeName);
-                    },
-                  )
                 ],
               ),
             ),

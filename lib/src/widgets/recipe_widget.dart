@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:bettycook/src/config.dart';
 import 'package:bettycook/src/pages/pages.dart';
 import 'package:bettycook/src/extensions/extensions.dart';
-import 'package:bettycook/src/widgets/calendar_button_widget.dart';
 import 'package:bettycookplugins/bettycookplugins.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -53,7 +52,6 @@ class RecipeWidget extends StatelessWidget {
                 ),
                 trailing: Wrap(
                   children: [
-                    CalendarButtonWidget(recipe: this.recipe),
                     FavoriteButtonWidget(
                       recipe: this.recipe,
                     ),
