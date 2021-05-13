@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -32,20 +32,15 @@ dependencies:
   url_launcher: ^6.0.3
   share: ^2.0.1
   package_info: ^2.0.0
-  flutter_secure_storage: ^4.2.0
 
   # UI
   photo_view: ^0.11.1
-  table_calendar: ^3.0.0
-  badges: ^2.0.0-nullsafety.1
-  flutter_rating_bar: ^4.0.0
 
   # BettyCook Plugins
   bettycookplugins:
-    # git:
-    path:
-      ../bettycookplugins
-      # ref: dev
+    git:
+      url: ../bettycookplugins
+      ref: v1.0.3
 
 dev_dependencies:
   flutter_test:
