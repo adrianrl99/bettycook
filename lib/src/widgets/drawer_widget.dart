@@ -139,7 +139,7 @@ class DrawerWidget extends StatelessWidget {
                       await Share.shareFiles(
                         [imgFile.path],
                         text:
-                            "Descarga BettyCook en https://www.apklis.cu/es/application/cu.bettycook.android/\nTus recetas en un solo lugar",
+                            "Descarga BettyCook en https://www.apklis.cu/application/cu.bettycook.android/\nTus recetas en un solo lugar",
                         sharePositionOrigin:
                             box.localToGlobal(Offset.zero) & box.size,
                       );
