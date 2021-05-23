@@ -1,20 +1,23 @@
 @echo off
-set name=bettycook
+set project=bettycook
+set app_name=bettycook
+set release_path=F:\Releases\%project%\%app_name%\%branch%
+set project_path=F:\Projects\%project%\%app_name%
 
 set cmd="git branch --show-current"
 
 FOR /F %%i IN (' %cmd% ') DO SET branch=%%i
 
-if NOT exist F:\Releases\%name%\%branch% mkdir F:\Releases\%name%\%branch%
+if NOT exist %release_path% mkdir %release_path% 
 
 flutter clean &^
 flutter build apk --obfuscate --split-debug-info=./log &^
-tar -czf F:\Releases\%name%\%branch%\%name%.code.tar.gz^
-  -C F:\Projects\%name%^
+tar -czf %release_path%\%app_name%.code.tar.gz^
+  -C %project_path%^
     --exclude .dart_tool^
     --exclude android/.gradle^
     --exclude build^
-    --exclude %name%.code.tar.gz^
+    --exclude %app_name%.code.tar.gz^
     --exclude app.*.map.json^
     --exclude app.*.symbols^
     --exclude lib/generated_plugin_registrant.dart^
@@ -22,4 +25,4 @@ tar -czf F:\Releases\%name%\%branch%\%name%.code.tar.gz^
     --exclude .flutter-plugins-dependencies^
     --exclude .flutter-plugins^
     . &^
-copy "F:\Projects\%name%\build\app\outputs\flutter-apk\app-release.apk" "F:\Releases\%name%\%branch%\%name%.apk"
+copy "%project_path%\build\app\outputs\flutter-apk\app-release.apk" "%release_path%\%app_name%.apk"
